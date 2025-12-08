@@ -1,0 +1,198 @@
+[
+  {
+    "id": "vaquero-atomico",
+    "nombre": "Vaquero Atómico",
+    "rol": "Antihéroe / Entidad cuántica",
+    "origen": "Nace como una nebulosa consciente generada tras la explosión de un cuásar. La nebulosa viaja millones de años hasta el Sistema Solar, donde se solidifica y cae en forma de diamante al Polo Norte. Allí despierta gracias al calentamiento global y evoluciona imitando formas humanas.",
+    "descripcion": "Es una entidad ingenua, extremadamente poderosa y obsesionada con las narrativas del heroísmo humano que ve en películas del oeste. Adopta una forma antropomorfa con piel tornasol escamada y crea su propio poncho atómico. Su presencia altera la energía a su alrededor, encendiendo luces y generando descargas no controladas.",
+    "motivaciones": [
+      "Entender el bien y el mal desde una perspectiva humana",
+      "Proteger la vida, aunque a veces lo haga de forma torpe o excesiva",
+      "Buscar un propósito fuera del control de Musitoxic y Miguel Mafias",
+      "Explorar territorios desconocidos como la España vaciada"
+    ],
+    "habilidades": [
+      "Manipulación de energía a gran escala",
+      "Capacidad de alterar campos electromagnéticos",
+      "Resistencia extrema",
+      "Transformación parcial de su estructura cristalina"
+    ],
+    "relaciones": [
+      { "con": "musitoxic", "tipo": "fascinación / manipulación" },
+      { "con": "miguel-mafias", "tipo": "explotación" },
+      { "con": "jhonny", "tipo": "engaño" },
+      { "con": "sismico", "tipo": "encuentro futuro en la España vaciada" },
+      { "con": "tamen", "tipo": "objeto de estudio / curiosidad energética" },
+      { "con": "amethystos", "tipo": "sincronía ecológica" }
+    ],
+    "aparicion": "Cómic y canciones",
+    "etiquetas": ["entidad", "energia", "protagonista"]
+  },
+
+  {
+    "id": "sismico",
+    "nombre": "Sísmico",
+    "rol": "Felino cuántico / prófugo dimensional",
+    "origen": "Prisionero en una cárcel subterránea controlada por Musitoxic. Despierta por una señal enviada por Sirius. Durante su teletransporte, se descompone y entra en un plano cuántico donde enfrenta decisiones simbólicas antes de escapar al desierto español.",
+    "descripcion": "Es un ser que cambia de forma según el entorno. En España adopta la forma de un lince. Puede proyectar ilusiones, abrir portales y dividirse cuánticamente para atravesar caminos simultáneos. Su cuerpo genera ojos fractales cuando se prepara para cruzar dimensiones.",
+    "motivaciones": [
+      "Escapar de la influencia del Micelio Negro",
+      "Encontrar un territorio donde pueda existir libremente",
+      "Resolver su dualidad entre vida y muerte",
+      "Acompañar al Vaquero Atómico en un futuro encuentro"
+    ],
+    "habilidades": [
+      "Apertura de portales cuánticos",
+      "Desdoblamiento dimensional",
+      "Proyección de ilusiones",
+      "Transformación felina según ecosistema"
+    ],
+    "relaciones": [
+      { "con": "vaquero-atomico", "tipo": "destino común" },
+      { "con": "musitoxic", "tipo": "víctima / experimento" },
+      { "con": "sirius", "tipo": "guía" }
+    ],
+    "aparicion": "Cómic",
+    "etiquetas": ["cuantico", "felino", "protagonista"]
+  },
+
+  {
+    "id": "tamen",
+    "nombre": "Tamen",
+    "rol": "Periodista / narradora / enlace con los ecosistemas",
+    "origen": "Humana. Su sensibilidad hacia los ecosistemas surge de una vida dedicada a estudiar la península ibérica, sus climas, su fauna y su flora. Su obsesión por documentar la vida la convierte en una observadora excepcional del Micelio Negro.",
+    "descripcion": "Es un personaje completamente humano, pero con una intuición extraordinaria para percibir cambios ecológicos y energéticos. Es la narradora omnisciente del universo y quien consigue ver las conexiones invisibles entre los personajes y el Micelio Negro.",
+    "motivaciones": [
+      "Documentar la vida y denunciar los daños ambientales",
+      "Entender cómo se entrelazan los ecosistemas con fuerzas cuánticas",
+      "Desentrañar el origen del Vaquero Atómico",
+      "Detener al Micelio Negro a través del conocimiento"
+    ],
+    "habilidades": [
+      "Capacidad de análisis ecológico avanzado",
+      "Percepción de patrones energéticos",
+      "Narración transdimensional"
+    ],
+    "relaciones": [
+      { "con": "vaquero-atomico", "tipo": "curiosidad científica" },
+      { "con": "amethystos", "tipo": "colaboración espiritual/ecológica" },
+      { "con": "sirius", "tipo": "información indirecta" }
+    ],
+    "aparicion": "Relatos y documentación",
+    "etiquetas": ["humana", "narradora", "ecologia"]
+  },
+
+  {
+    "id": "musitoxic",
+    "nombre": "Musitoxic",
+    "rol": "Magnate musical / antagonista",
+    "origen": "Controla un imperio de música comercial generada por IA. Su poder proviene de años de monopolio en la industria musical. Es hermana de Miguel Mafias y financiadora de Inventrola.",
+    "descripcion": "Manipuladora, teatral y carismática. Se enamora del Vaquero Atómico por su apariencia tornasolada. En un intento torpe de seducción provoca un desastre nuclear en Inventrola.",
+    "motivaciones": [
+      "Mantener el control absoluto sobre la música",
+      "Usar el poder del Vaquero Atómico en su beneficio",
+      "Recuperar la hegemonía que está perdiendo",
+      "Manipular ecosistemas para obtener energía"
+    ],
+    "habilidades": [
+      "Manipulación emocional y psicológica",
+      "Control de industrias musicales",
+      "Acceso a tecnologías experimentales"
+    ],
+    "relaciones": [
+      { "con": "vaquero-atomico", "tipo": "seducción / manipulación" },
+      { "con": "miguel-mafias", "tipo": "alianza corrupta" },
+      { "con": "jhonny", "tipo": "control laboral" }
+    ],
+    "aparicion": "Cómic y lore",
+    "etiquetas": ["antagonista", "musica", "industria"]
+  },
+
+  {
+    "id": "miguel-mafias",
+    "nombre": "Miguel Mafias (El Muso)",
+    "rol": "Antagonista secundario / empresario",
+    "origen": "Hermano de Musitoxic, dueño de Inventrola. Usa talentos robados y experimentos energéticos basados en diseños de Tesla.",
+    "descripcion": "Más frío y calculador que su hermana. No busca fama, solo poder energético y dinero público.",
+    "motivaciones": [
+      "Control energético mundial",
+      "Explotar al Vaquero Atómico como generador",
+      "Crear una red de fábricas como Inventrola"
+    ],
+    "habilidades": [
+      "Ingeniería energética corrupta",
+      "Planificación estratégica",
+      "Lavado de imagen corporativa"
+    ],
+    "relaciones": [
+      { "con": "musitoxic", "tipo": "colaboración familiar corrupta" },
+      { "con": "vaquero-atomico", "tipo": "explotación" },
+      { "con": "jhonny", "tipo": "supervisión" }
+    ],
+    "aparicion": "Cómic / canciones",
+    "etiquetas": ["industria", "antagonista"]
+  },
+
+  {
+    "id": "jhonny",
+    "nombre": "Jhonny",
+    "rol": "Trabajador de Inventrola / antagonista menor",
+    "origen": "Empleado raso de Inventrola que ve al Vaquero Atómico como una oportunidad de ascenso.",
+    "descripcion": "Ambicioso, nervioso y servil. Engaña al Vaquero Atómico con promesas falsas.",
+    "motivaciones": [
+      "Ascender dentro de Inventrola",
+      "Ganar poder gracias al Vaquero",
+      "Impresionar a Miguel Mafias"
+    ],
+    "habilidades": ["Manipulación básica", "Conocimiento técnico de Inventrola"],
+    "relaciones": [
+      { "con": "vaquero-atomico", "tipo": "manipulación" },
+      { "con": "miguel-mafias", "tipo": "obediencia" }
+    ],
+    "aparicion": "Cómic",
+    "etiquetas": ["industria"]
+  },
+
+  {
+    "id": "sirius",
+    "nombre": "Sirius",
+    "rol": "Observador cósmico",
+    "origen": "Entidad del universo superior que observa desde una perspectiva energética. Envía señales a Sísmico para desencadenar la historia.",
+    "descripcion": "Silencioso, distante y enigmático. Su presencia es vista como un destello en el cielo.",
+    "motivaciones": [
+      "Guiar a entidades energéticas hacia su destino",
+      "Mantener equilibrio entre planos"
+    ],
+    "habilidades": ["Visión transdimensional", "Comunicación energética"],
+    "relaciones": [
+      { "con": "sismico", "tipo": "guía" },
+      { "con": "vaquero-atomico", "tipo": "observación" }
+    ],
+    "aparicion": "Cómic / lore",
+    "etiquetas": ["cosmico"]
+  },
+
+  {
+    "id": "amethystos",
+    "nombre": "Amethystos",
+    "rol": "Bruja del Orinoco / aliada ambigua",
+    "origen": "Bruja nacida en las Selvas sin Amor, un territorio devastado por incendios y tala masiva.",
+    "descripcion": "Poderosa pero contradictoria. Intenta hacer el mal pero siempre termina haciendo el bien. Su magia está ligada a la vida vegetal y al Micelio (sin ser una servidora de él).",
+    "motivaciones": [
+      "Proteger las Selvas sin Amor",
+      "Comprender el Micelio Negro",
+      "Acompañar a Tamen en su misión"
+    ],
+    "habilidades": [
+      "Magia vegetal",
+      "Control de hongos simbióticos",
+      "Hechizos impredecibles"
+    ],
+    "relaciones": [
+      { "con": "tamen", "tipo": "alianza espiritual" },
+      { "con": "vaquero-atomico", "tipo": "afinidad energética" }
+    ],
+    "aparicion": "Cómic / lore",
+    "etiquetas": ["bruja", "selva"]
+  }
+]
