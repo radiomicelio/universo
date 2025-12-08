@@ -4,7 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Biblia de Radio Micelio</title>
-  <link rel="stylesheet" href="style.css" />
+  
+  <!-- === ESTILOS (CSS) === -->
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      background: #fafafa;
+      color: #222;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    nav {
+      margin-top: 1rem;
+    }
+
+    nav a {
+      margin: 0 0.7rem;
+      color: #79c0ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+
+    .content-block {
+      margin-top: 1rem;
+      padding-left: 0.5rem;
+    }
+
+    article {
+      margin-bottom: 1.2rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #555;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -64,6 +130,132 @@
     <p>Radio Micelio — Documento interno • Generado desde JSON</p>
   </footer>
 
-  <script src="app.js"></script>
+  <!-- === JS: Cargar JSON y Renderizar === -->
+  <script>
+    async function cargarJSON(ruta) {
+      try {
+        const res = await fetch(ruta);
+        if (!res.ok) throw new Error(res.statusText);
+        return await res.json();
+      } catch (err) {
+        console.error("Error cargando " + ruta, err);
+        return null;
+      }
+    }
+
+    async function init() {
+      const meta = await cargarJSON("data/meta.json");
+      const personajes = await cargarJSON("data/personajes.json");
+      const tramas = await cargarJSON("data/tramas.json");
+      const localizaciones = await cargarJSON("data/localizaciones.json");
+      const canciones = await cargarJSON("data/canciones.json");
+      const timeline = await cargarJSON("data/timeline.json");
+
+      renderIntro(meta);
+      renderPersonajes(personajes);
+      renderTramas(tramas);
+      renderLocalizaciones(localizaciones);
+      renderCanciones(canciones);
+      renderTimeline(timeline);
+    }
+
+    function renderIntro(meta) {
+      const cont = document.getElementById("intro-content");
+      if (!meta) {
+        cont.innerHTML = "<p>No se pudo cargar la introducción.</p>";
+        return;
+      }
+
+      cont.innerHTML = `
+        <h3>Logline</h3>
+        <p>${meta.logline || ""}</p>
+
+        <h3>Sinopsis</h3>
+        <p>${meta.sinopsis || ""}</p>
+
+        <h3>Fundamentación</h3>
+        <p>${meta.fundamentacion || ""}</p>
+
+        <h3>Storyline</h3>
+        <ul>
+          ${(meta.storyline || [])
+            .map(p => `<li><strong>${p.titulo}:</strong> ${p.resumen}</li>`)
+            .join("")}
+        </ul>
+      `;
+    }
+
+    function renderPersonajes(personajes) {
+      const cont = document.getElementById("personajes-list");
+      if (!personajes) return;
+
+      cont.innerHTML = personajes
+        .map(p => `
+          <article id="personaje-${p.id}">
+            <h3>${p.nombre}</h3>
+            <p><strong>Rol:</strong> ${p.rol || ""}</p>
+            <p>${p.resumen || ""}</p>
+          </article>
+        `)
+        .join("");
+    }
+
+    function renderTramas(tramas) {
+      const cont = document.getElementById("tramas-list");
+      if (!tramas) return;
+
+      cont.innerHTML = tramas
+        .map(t => `
+          <article id="trama-${t.id}">
+            <h3>${t.titulo}</h3>
+            <p>${t.resumen || ""}</p>
+          </article>
+        `)
+        .join("");
+    }
+
+    function renderLocalizaciones(localizaciones) {
+      const cont = document.getElementById("localizaciones-list");
+      if (!localizaciones) return;
+
+      cont.innerHTML = localizaciones
+        .map(l => `
+          <article id="lugar-${l.id}">
+            <h3>${l.nombre}</h3>
+            <p>${l.descripcion || ""}</p>
+          </article>
+        `)
+        .join("");
+    }
+
+    function renderCanciones(canciones) {
+      const cont = document.getElementById("canciones-list");
+      if (!canciones) return;
+
+      cont.innerHTML = canciones
+        .map(c => `
+          <article id="song-${c.id}">
+            <h3>${c.titulo}</h3>
+            <p>${c.descripcion || ""}</p>
+          </article>
+        `)
+        .join("");
+    }
+
+    function renderTimeline(timeline) {
+      const cont = document.getElementById("timeline-content");
+      if (!timeline) return;
+
+      cont.innerHTML = `
+        <ol>
+          ${timeline
+            .map(e => `<li><strong>${e.titulo}:</strong> ${e.descripcion}</li>`)
+            .join("")}
+        </ol>
+      `;
+    }
+
+    init();
+  </script>
 </body>
 </html>
