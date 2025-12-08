@@ -144,14 +144,15 @@
     }
 
     async function init() {
-      const meta = await cargarJSON("data/meta.json");
+      // OJO: aquí usamos introduccion.json
+      const intro = await cargarJSON("data/introduccion.json");
       const personajes = await cargarJSON("data/personajes.json");
       const tramas = await cargarJSON("data/tramas.json");
       const localizaciones = await cargarJSON("data/localizaciones.json");
       const canciones = await cargarJSON("data/canciones.json");
       const timeline = await cargarJSON("data/timeline.json");
 
-      renderIntro(meta);
+      renderIntro(intro);
       renderPersonajes(personajes);
       renderTramas(tramas);
       renderLocalizaciones(localizaciones);
@@ -194,7 +195,7 @@
           <article id="personaje-${p.id}">
             <h3>${p.nombre}</h3>
             <p><strong>Rol:</strong> ${p.rol || ""}</p>
-            <p>${p.resumen || ""}</p>
+            <p>${p.descripcion || p.resumen || ""}</p>
           </article>
         `)
         .join("");
