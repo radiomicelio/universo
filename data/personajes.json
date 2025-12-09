@@ -54,19 +54,21 @@
     "id": "sismico",
     "nombre": "Sísmico",
     "rol": "Felino cuántico / prófugo dimensional",
-    "origen": "Prisionero en una cárcel subterránea controlada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>. Despierta por una señal enviada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sirius'); return false;\">Sirius</a>. Durante su teletransporte, se descompone y entra en un plano cuántico donde enfrenta decisiones simbólicas antes de escapar al desierto español.",
-    "descripcion": "Es un ser que cambia de forma según el entorno. En España adopta la forma de un lince. Puede proyectar ilusiones, abrir portales y dividirse cuánticamente para atravesar caminos simultáneos. Su cuerpo genera ojos fractales cuando se prepara para cruzar dimensiones.",
+    "origen": "Prisionero en una cárcel subterránea controlada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>. Despierta por una señal enviada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sirius'); return false;\">Sirius</a>. Durante su teletransporte, se descompone y entra en un plano cuántico donde enfrenta decisiones simbólicas antes de escapar al desierto español. Cuando comenzó a abrir portales entre realidades, la energía alteró las defensas de la torre de Musitoxic, permitiendo que se ejecutara el pacto de liberación con <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a>: él abriría la puerta del mundo mientras ella abría la del zoológico.",
+    "descripcion": "Es un ser que cambia de forma según el entorno. En España adopta la forma de un lince. Puede proyectar ilusiones, abrir portales y dividirse cuánticamente para atravesar caminos simultáneos. Su cuerpo genera ojos fractales cuando se prepara para cruzar dimensiones. Sabía del plan de liberación y colaboró activamente con <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> y <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('gab'); return false;\">Gab</a> para liberar a los prisioneros del zoológico de Musitoxic.",
     "motivaciones": [
       "Escapar de la influencia del Micelio Negro",
       "Encontrar un territorio donde pueda existir libremente",
       "Resolver su dualidad entre vida y muerte",
-      "Acompañar al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> en un futuro encuentro"
+      "Acompañar al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> en un futuro encuentro",
+      "Cumplir el pacto con <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a>: abrir la puerta del mundo mientras ella abre la del zoológico"
     ],
     "habilidades": [
       "Apertura de portales cuánticos",
       "Desdoblamiento dimensional",
       "Proyección de ilusiones",
-      "Transformación felina según ecosistema"
+      "Transformación felina según ecosistema",
+      "Alteración de defensas energéticas mediante portales"
     ],
     "relaciones": [
       {
@@ -80,13 +82,22 @@
       {
         "con": "sirius",
         "tipo": "guía"
+      },
+      {
+        "con": "amethystos",
+        "tipo": "pacto de liberación: él abre la puerta del mundo, ella la del zoológico"
+      },
+      {
+        "con": "gab",
+        "tipo": "colaboración en el plan de liberación"
       }
     ],
     "aparicion": "Cómic",
     "etiquetas": [
       "cuantico",
       "felino",
-      "protagonista"
+      "protagonista",
+      "liberacion"
     ]
   },
   {
@@ -132,17 +143,19 @@
     "nombre": "Musitoxic",
     "rol": "Magnate musical / antagonista",
     "origen": "Controla un imperio de música comercial generada por IA. Su poder proviene de años de monopolio en la industria musical. Es hermana de Miguel Mafias y financiadora de <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>.",
-    "descripcion": "Manipuladora, teatral y carismática. Se enamora del <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> por su apariencia tornasolada. En un intento torpe de seducción provoca un desastre nuclear en <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>.",
+    "descripcion": "Manipuladora, teatral y carismática. Se enamora del <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> por su apariencia tornasolada. En un intento torpe de seducción provoca un desastre nuclear en <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>. Controla un zoológico donde encierra bestias híbridas, músicos domesticados y entidades capturadas como <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> y <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('gab'); return false;\">Gab</a>. Fue víctima del pacto de liberación ejecutado por estos prisioneros cuando <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> alteró las defensas de su torre con sus portales cuánticos.",
     "motivaciones": [
       "Mantener el control absoluto sobre la música",
       "Usar el poder del <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> en su beneficio",
       "Recuperar la hegemonía que está perdiendo",
-      "Manipular ecosistemas para obtener energía"
+      "Manipular ecosistemas para obtener energía",
+      "Mantener su zoológico de prisioneros y experimentos"
     ],
     "habilidades": [
       "Manipulación emocional y psicológica",
       "Control de industrias musicales",
-      "Acceso a tecnologías experimentales"
+      "Acceso a tecnologías experimentales",
+      "Control de sistemas de contención energética"
     ],
     "relaciones": [
       {
@@ -160,6 +173,18 @@
       {
         "con": "marza",
         "tipo": "protección / explotación de su invento"
+      },
+      {
+        "con": "amethystos",
+        "tipo": "cautiverio / enemistad tras el pacto de liberación"
+      },
+      {
+        "con": "gab",
+        "tipo": "cautiverio / enemistad tras el pacto de liberación"
+      },
+      {
+        "con": "sismico",
+        "tipo": "víctima / experimento / enemistad tras el pacto de liberación"
       }
     ],
     "aparicion": "Cómic y lore",
@@ -272,28 +297,31 @@
     "id": "amethystos",
     "nombre": "Amethystos",
     "rol": "Bruja del Orinoco / avatar de Marú",
-    "origen": "Nacida en las <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-selvas-sin-amor').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Selvas sin Amor</a>, un territorio del Orinoco profundamente dañado por incendios, talas y extracción. Es la forma mítica que adopta Marú dentro del universo de Radio Micelio, conectada al Micelio Negro pero en conflicto con él.",
-    "descripcion": "Amethystos es una bruja poderosa que quiere ser mala, pero todo lo que hace termina siendo un acto de protección o de transformación positiva. Su magia está ligada al agua, a las raíces y al micelio. Se mueve entre túneles subterráneos y laberintos de hifas, y sus conjuros abren caminos entre vida y muerte.",
+    "origen": "Antes de que Invent'Rolla existiera, en lo más profundo de la selva venezolana, vivía Amethystos, una bruja buena que intentaba ser mala. Mataba a los cazadores furtivos que buscaban la piel de los leopardos, pero cada muerte le dolía tanto como la tala de un árbol. Cuando el fuego y las motosierras arrasaron su bosque, se refugió en una cueva que moldeó con su magia: la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-cueva-escucha').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Cueva de la Escucha</a>. Allí convirtió las rocas en resonadores, la humedad en eco, los murciélagos en afinadores del aire. Años más tarde, esa cueva sería encontrada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a>, quien diseñó los primeros oídos ultrasónicos basándose en sus frecuencias. Cuando Invent'Rolla se llevó la cueva para estudiarla, se llevó a Amethystos consigo, encerrándola en el zoológico de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>, junto a bestias híbridas y músicos domesticados.",
+    "descripcion": "Amethystos es una bruja poderosa que quiere ser mala, pero todo lo que hace termina siendo un acto de protección o de transformación positiva. Su magia está ligada al agua, a las raíces y al micelio. Se mueve entre túneles subterráneos y laberintos de hifas, y sus conjuros abren caminos entre vida y muerte. Su dolor por cada muerte que comete la define tanto como su poder mágico. Desde su celda de cristal en el zoológico de Musitoxic, conoció al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('gab'); return false;\">Vampiro encadenado Gab</a>, con quien formó un pacto de liberación.",
     "motivaciones": [
       "Proteger las <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-selvas-sin-amor').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Selvas sin Amor</a> de la destrucción absoluta",
       "Comprender y canalizar el poder del Micelio Negro sin someterse a él",
-      "Guiar y confundir a la vez a quienes atraviesan sus territorios (como <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a>)",
-      "Mantener un vínculo secreto con <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('tamen'); return false;\">Tamen</a> a través de la ecología y la magia"
+      "Liberar a los animales y productores musicales del zoológico de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>",
+      "Mantener un vínculo secreto con <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('tamen'); return false;\">Tamen</a> a través de la ecología y la magia",
+      "Cumplir el pacto con <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a>: abrir la puerta del zoológico mientras él abre la del mundo"
     ],
     "habilidades": [
       "Magia vegetal y micelial",
       "Conjuros de laberintos subterráneos",
       "Capacidad de invocar visiones de vida y muerte",
-      "Escuchar y hablar con las raíces y las aguas profundas"
+      "Escuchar y hablar con las raíces y las aguas profundas",
+      "Transformación de cuevas en sistemas acústicos resonantes",
+      "Manipulación de frecuencias naturales a través de la magia"
     ],
     "relaciones": [
       {
         "con": "tamen",
-        "tipo": "alianza espiritual/ecológica"
+        "tipo": "alianza espiritual/ecológica / narradora de su historia"
       },
       {
         "con": "sismico",
-        "tipo": "prueba iniciática a través de sus túneles"
+        "tipo": "pacto de liberación: ella abre la puerta del zoológico, él abre la del mundo"
       },
       {
         "con": "vaquero-atomico",
@@ -302,6 +330,18 @@
       {
         "con": "micelio-negro",
         "tipo": "tensión / dependencia mutua"
+      },
+      {
+        "con": "marza",
+        "tipo": "inspiración acústica: Marza diseñó los oídos ultrasónicos basándose en su cueva"
+      },
+      {
+        "con": "gab",
+        "tipo": "pacto de liberación desde el zoológico de Musitoxic"
+      },
+      {
+        "con": "musitoxic",
+        "tipo": "cautiverio / enemistad"
       }
     ],
     "aparicion": "Relatos, cómic y canción \"Serpenteando\"",
@@ -309,31 +349,35 @@
       "bruja",
       "selva",
       "micelio",
-      "maru"
+      "maru",
+      "acustica"
     ]
   },
   {
     "id": "marza",
     "nombre": "Marza",
     "rol": "Ingeniera de oídos ultrasónicos",
-    "origen": "Estudiante de ingeniería acústica y energía que entra como becaria en <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>, la empresa dirigida por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('miguel-mafias'); return false;\">Miguel Mafias (El Muso)</a>. Es protegida de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>, quien es hermana de Miguel y actúa como madrina de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a> dentro del sector. Durante sus prácticas, desarrolla un sistema de sensores acústicos que usa oídos artificiales capaces de mapear el trabajo de los operarios a través del sonido. Su proyecto la lleva a Venezuela, específicamente a las <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-selvas-sin-amor').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Selvas sin Amor</a> del Orinoco, donde en una mina de la selva amazónica descubre la acústica natural de las rocas y observa cómo los murciélagos reaccionan a frecuencias inaudibles para el ser humano. A partir de esa experiencia, diseña un sistema de \"oídos ultrasónicos\" que convierte el entorno en datos y melodías.",
-    "descripcion": "Brillante, intuitiva y un poco rebelde. No soporta las jerarquías, pero sabe moverse entre ellas. Tiene una mirada distinta: ve sonido donde los demás solo ven ruido. Su intención inicial al crear los oídos ultrasónicos era ética: mejorar la seguridad y la comunicación en la empresa. Sin embargo, cuando <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> descubre el invento, ve su potencial para la manipulación musical masiva y compra los derechos del proyecto, desviando los fondos y trasladando el desarrollo a su torre. Estos sistemas se convierten en la base de la industria musical tóxica que domina el mundo. <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a> es la científica inadvertida que crea la herramienta clave del poder de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>.",
+    "origen": "Estudiante de ingeniería acústica y energía que entra como becaria en <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>, la empresa dirigida por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('miguel-mafias'); return false;\">Miguel Mafias (El Muso)</a>. Es protegida de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>, quien es hermana de Miguel y actúa como madrina de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a> dentro del sector. Durante sus prácticas, desarrolla un sistema de sensores acústicos que usa oídos artificiales capaces de mapear el trabajo de los operarios a través del sonido. Su proyecto la lleva a Venezuela, específicamente a las <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-selvas-sin-amor').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Selvas sin Amor</a> del Orinoco, donde encuentra la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-cueva-escucha').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Cueva de la Escucha</a> moldeada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a>. Marza, una joven ingeniera que escuchaba con los ojos cerrados, midió las frecuencias de esa cueva donde las rocas eran resonadores, la humedad era eco y los murciélagos afinadores del aire. A partir de esa experiencia, diseñó los primeros oídos ultrasónicos —máquinas capaces de oír como los animales. Tras la caída del proyecto, fue declarada inestable e ingresada en un psiquiátrico, pero su mente sigue resonando con las frecuencias de aquella cueva. Desde su encierro, aún puede escuchar a los murciélagos, a las piedras, y a la voz de Amethystos, que en algún lugar del subsuelo sigue cantando.",
+    "descripcion": "Brillante, intuitiva y un poco rebelde. No soporta las jerarquías, pero sabe moverse entre ellas. Tiene una mirada distinta: ve sonido donde los demás solo ven ruido. Su intención inicial al crear los oídos ultrasónicos era ética: mejorar la seguridad y la comunicación en la empresa. Sin embargo, cuando <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> descubre el invento, ve su potencial para la manipulación musical masiva y compra los derechos del proyecto, desviando los fondos y trasladando el desarrollo a su torre. Estos sistemas se convierten en la base de la industria musical tóxica que domina el mundo. <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a> es la científica inadvertida que crea la herramienta clave del poder de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>. Tras ser internada, su conexión con las frecuencias de la cueva persiste, manteniéndola en un estado liminal entre la cordura y la percepción acústica expandida.",
     "motivaciones": [
       "Mejorar la seguridad y comunicación en el trabajo a través de la acústica",
       "Aprender el lenguaje de los animales y replicar su audición ultrasónica",
       "Crear tecnología que interprete frecuencias subhumanas de forma ética",
-      "Redimirse trabajando en contratecnología del \"micelio blanco\""
+      "Mantener la conexión con las frecuencias de la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-cueva-escucha').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Cueva de la Escucha</a>",
+      "Escuchar la voz de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> que aún resuena desde el subsuelo"
     ],
     "habilidades": [
       "Ingeniería acústica avanzada",
       "Diseño de sistemas de sensores ultrasónicos",
       "Interpretación de frecuencias subhumanas",
-      "Síntesis de datos acústicos en melodías"
+      "Síntesis de datos acústicos en melodías",
+      "Percepción acústica expandida: escuchar con los ojos cerrados",
+      "Resonancia con frecuencias naturales incluso desde el encierro psiquiátrico"
     ],
     "relaciones": [
       {
         "con": "musitoxic",
-        "tipo": "protección / explotación de su invento"
+        "tipo": "protección / explotación de su invento / causante de su internamiento"
       },
       {
         "con": "miguel-mafias",
@@ -341,7 +385,7 @@
       },
       {
         "con": "amethystos",
-        "tipo": "conexión geográfica: ambas vinculadas a las Selvas sin Amor de Venezuela"
+        "tipo": "inspiración acústica: diseñó los oídos ultrasónicos basándose en su cueva / conexión resonante que persiste desde el psiquiátrico"
       },
       {
         "con": "vaquero-atomico",
@@ -357,7 +401,47 @@
       "ingeniera",
       "acustica",
       "tecnologia",
-      "industria"
+      "industria",
+      "psiquiatrico"
+    ]
+  },
+  {
+    "id": "gab",
+    "nombre": "Gab",
+    "rol": "Vampiro encadenado / aliado de liberación",
+    "origen": "Prisionero en el zoológico de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>, junto a bestias híbridas y músicos domesticados. Encadenado en una celda de cristal, conoció a <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> cuando ella también fue encerrada allí tras el traslado de la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-cueva-escucha').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Cueva de la Escucha</a>.",
+    "descripcion": "Un vampiro que fingió obediencia mientras esperaba una señal para la liberación. Cuando <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> comenzó a abrir portales entre realidades, la energía alteró las defensas de la torre. Gab fingió llamar a Musitoxic para avisarla del peligro, pero en realidad era parte del plan: distraerla mientras Amethystos liberaba a los animales y a los productores musicales.",
+    "motivaciones": [
+      "Escapar del zoológico de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>",
+      "Liberar a los demás prisioneros del zoológico",
+      "Ayudar a <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> y <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> en su plan de liberación",
+      "Vengarse de su cautiverio"
+    ],
+    "habilidades": [
+      "Manipulación y engaño",
+      "Resistencia física",
+      "Estrategia de distracción",
+      "Conocimiento de las defensas de la torre de Musitoxic"
+    ],
+    "relaciones": [
+      {
+        "con": "amethystos",
+        "tipo": "pacto de liberación desde el zoológico"
+      },
+      {
+        "con": "sismico",
+        "tipo": "colaboración en el plan de liberación"
+      },
+      {
+        "con": "musitoxic",
+        "tipo": "cautiverio / enemistad / fingida obediencia"
+      }
+    ],
+    "aparicion": "Lore histórico",
+    "etiquetas": [
+      "vampiro",
+      "prisionero",
+      "liberacion"
     ]
   }
 ]

@@ -54,7 +54,7 @@
   {
     "id": "prision-musitoxic",
     "nombre": "Prisión Subterránea de Musitoxic",
-    "descripcion": "Complejo oculto donde Musitoxic retiene entidades y músicos-productores para aprovecharlos en experimentos energéticos. Aquí estuvo encerrado Sísmico antes de que Sirius enviara su señal.",
+    "descripcion": "Complejo oculto donde Musitoxic retiene entidades y músicos-productores para aprovecharlos en experimentos energéticos. Aquí estuvo encerrado Sísmico antes de que Sirius enviara su señal. Diferente del zoológico de Musitoxic, que es un complejo separado donde fueron encerrados Amethystos y Gab.",
     "tipo": "subterraneo",
     "elementos_clave": [
       "Celdas con campos cuánticos",
@@ -103,7 +103,37 @@
       "Cuevas con acústica natural y murciélagos de la fruta",
       "Minas extractivas relacionadas con proyectos de Inventrola"
     ],
-    "tramas_relacionadas": ["tamen-investiga", "origen-amethystos"],
+    "tramas_relacionadas": ["tamen-investiga", "origen-amethystos", "cueva-escucha"],
     "personajes_relacionados": ["amethystos", "tamen", "marza"]
+  },
+  {
+    "id": "cueva-escucha",
+    "nombre": "Cueva de la Escucha",
+    "descripcion": "Cueva moldeada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> con su magia en lo más profundo de la selva venezolana, antes de que Invent'Rolla existiera. Cuando el fuego y las motosierras arrasaron su bosque, Amethystos se refugió aquí y transformó las rocas en resonadores, la humedad en eco, los murciélagos en afinadores del aire. Años más tarde, <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a>, una joven ingeniera que escuchaba con los ojos cerrados, midió esas frecuencias y diseñó los primeros oídos ultrasónicos basándose en ellas. Invent'Rolla se llevó la cueva para estudiarla, sin entender que se estaba llevando a Amethystos consigo. La cueva fue trasladada al zoológico de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>, donde Amethystos fue encerrada.",
+    "tipo": "cueva-magica",
+    "elementos_clave": [
+      "Rocas transformadas en resonadores",
+      "Humedad convertida en eco",
+      "Murciélagos como afinadores del aire",
+      "Frecuencias naturales que inspiraron los oídos ultrasónicos",
+      "Sistema acústico mágico que persiste incluso tras su traslado"
+    ],
+    "tramas_relacionadas": ["cueva-escucha", "origen-amethystos", "pacto-liberacion"],
+    "personajes_relacionados": ["amethystos", "marza", "musitoxic"]
+  },
+  {
+    "id": "zoologico-musitoxic",
+    "nombre": "Zoológico de Musitoxic",
+    "descripcion": "Complejo donde <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> encierra bestias híbridas, músicos domesticados y entidades capturadas para experimentos. Aquí fue encerrada <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> tras el traslado de la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-cueva-escucha').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Cueva de la Escucha</a>. También fue prisión de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('gab'); return false;\">Gab</a>, el vampiro encadenado. El lugar fue escenario del pacto de liberación ejecutado por Amethystos, Gab y <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a>.",
+    "tipo": "prision-industrial",
+    "elementos_clave": [
+      "Celdas de cristal",
+      "Bestias híbridas en cautiverio",
+      "Músicos domesticados",
+      "Torre con defensas energéticas",
+      "Sistema de contención que fue alterado por los portales de Sísmico"
+    ],
+    "tramas_relacionadas": ["pacto-liberacion"],
+    "personajes_relacionados": ["musitoxic", "amethystos", "gab", "sismico"]
   }
 ]

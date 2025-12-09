@@ -1344,6 +1344,75 @@
       datos.canciones = await cargarJSON("data/canciones.json", false);
       datos.timeline = await cargarJSON("data/timeline.json", false);
 
+      // Limpiar TODOS los campos de texto de código mezclado al cargar
+      function limpiarTextoDeCodigo(texto) {
+        if (!texto || typeof texto !== 'string') return texto;
+        
+        // Si contiene HTML o código JavaScript, extraer solo texto
+        if (texto.includes('<') || texto.includes('return false') || texto.includes('onclick=') || texto.includes('getElementById')) {
+          const temp = document.createElement('div');
+          temp.innerHTML = texto;
+          texto = temp.textContent || temp.innerText || '';
+        }
+        
+        // Limpieza agresiva de cualquier código residual
+        texto = texto.replace(/return\s+false[^>]*>/gi, '');
+        texto = texto.replace(/onclick="[^"]*"/gi, '');
+        texto = texto.replace(/<a[^>]*>/gi, '');
+        texto = texto.replace(/<\/a>/gi, '');
+        texto = texto.replace(/<[^>]*>/g, '');
+        texto = texto.replace(/document\.getElementById\([^)]*\)/gi, '');
+        texto = texto.replace(/scrollIntoView\([^)]*\)/gi, '');
+        texto = texto.replace(/verFicha\([^)]*\)/gi, '');
+        texto = texto.replace(/event\.preventDefault\(\)/gi, '');
+        texto = texto.replace(/window\.[^;]*/gi, '');
+        texto = texto.replace(/setTimeout\([^)]*\)/gi, '');
+        texto = texto.replace(/cerrarModalSiAbierto\(\)/gi, '');
+        texto = texto.replace(/mostrarIndicadorSeccion\([^)]*\)/gi, '');
+        texto = texto.replace(/href="[^"]*"/gi, '');
+        texto = texto.replace(/class="[^"]*"/gi, '');
+        texto = texto.replace(/data-[^=]*="[^"]*"/gi, '');
+        texto = texto.replace(/behavior:\s*'[^']*'/gi, '');
+        texto = texto.replace(/block:\s*'[^']*'/gi, '');
+        texto = texto.replace(/\s+/g, ' ').trim();
+        
+        return texto;
+      }
+      
+      // Limpiar sinopsis
+      if (datos.introduccion && datos.introduccion.sinopsis) {
+        const textoLimpio = limpiarTextoDeCodigo(datos.introduccion.sinopsis);
+        if (textoLimpio !== datos.introduccion.sinopsis && textoLimpio.length > 0) {
+          datos.introduccion.sinopsis = textoLimpio;
+          guardarEnArchivoJSON('data/introduccion.json', datos.introduccion);
+        }
+      }
+      
+      // Limpiar logline
+      if (datos.introduccion && datos.introduccion.logline) {
+        const textoLimpio = limpiarTextoDeCodigo(datos.introduccion.logline);
+        if (textoLimpio !== datos.introduccion.logline && textoLimpio.length > 0) {
+          datos.introduccion.logline = textoLimpio;
+        }
+      }
+      
+      // Limpiar resúmenes de tramas
+      if (datos.tramas) {
+        let tramasLimpias = false;
+        datos.tramas.forEach(trama => {
+          if (trama.resumen) {
+            const textoLimpio = limpiarTextoDeCodigo(trama.resumen);
+            if (textoLimpio !== trama.resumen && textoLimpio.length > 0) {
+              trama.resumen = textoLimpio;
+              tramasLimpias = true;
+            }
+          }
+        });
+        if (tramasLimpias) {
+          guardarEnArchivoJSON('data/tramas.json', datos.tramas);
+        }
+      }
+
       renderIntro(datos.introduccion);
       renderPersonajes(datos.personajes);
       renderTramas(datos.tramas);
@@ -2084,7 +2153,68 @@
       // Crear un elemento temporal para extraer solo el texto
       const temp = document.createElement('div');
       temp.innerHTML = html;
-      return temp.textContent || temp.innerText || '';
+      let texto = temp.textContent || temp.innerText || '';
+      // Limpiar cualquier código residual que pueda quedar
+      texto = texto.replace(/return false;.*?>/gi, '');
+      texto = texto.replace(/onclick="[^"]*"/gi, '');
+      texto = texto.replace(/document\.getElementById\([^)]*\)/gi, '');
+      texto = texto.replace(/scrollIntoView\([^)]*\)/gi, '');
+      texto = texto.replace(/verFicha\([^)]*\)/gi, '');
+      texto = texto.replace(/event\.preventDefault\(\)/gi, '');
+      texto = texto.replace(/window\.[^;]*/gi, '');
+      texto = texto.replace(/setTimeout\([^)]*\)/gi, '');
+      texto = texto.replace(/\s+/g, ' ').trim();
+      return texto;
+    }
+
+    // Función para extraer texto plano de un elemento, eliminando todo HTML y código
+    function extraerTextoPlanoDeElemento(elemento) {
+      // SIEMPRE usar método agresivo: clonar y extraer texto
+      // Esto asegura que nunca capturemos HTML renderizado
+      let texto = '';
+      
+      try {
+        // Método 1: Usar textContent directamente (más rápido y confiable)
+        texto = elemento.textContent || elemento.innerText || '';
+        
+        // Si textContent parece tener código mezclado o está vacío pero hay innerHTML
+        if ((!texto && elemento.innerHTML) || texto.includes('return false') || texto.includes('onclick') || texto.includes('getElementById')) {
+          // Método 2: Clonar el elemento y extraer texto
+          const temp = document.createElement('div');
+          const clone = elemento.cloneNode(true);
+          temp.appendChild(clone);
+          texto = temp.textContent || temp.innerText || '';
+        }
+      } catch (e) {
+        // Si hay error, usar innerText como último recurso
+        texto = elemento.innerText || '';
+      }
+      
+      // Limpieza agresiva de cualquier código residual que pueda quedar
+      texto = texto.replace(/return\s+false[^>]*>/gi, '');
+      texto = texto.replace(/onclick="[^"]*"/gi, '');
+      texto = texto.replace(/<a[^>]*>/gi, '');
+      texto = texto.replace(/<\/a>/gi, '');
+      texto = texto.replace(/<[^>]*>/g, ''); // Eliminar cualquier tag HTML restante
+      texto = texto.replace(/document\.getElementById\([^)]*\)/gi, '');
+      texto = texto.replace(/scrollIntoView\([^)]*\)/gi, '');
+      texto = texto.replace(/verFicha\([^)]*\)/gi, '');
+      texto = texto.replace(/event\.preventDefault\(\)/gi, '');
+      texto = texto.replace(/window\.[^;]*/gi, '');
+      texto = texto.replace(/setTimeout\([^)]*\)/gi, '');
+      texto = texto.replace(/cerrarModalSiAbierto\(\)/gi, '');
+      texto = texto.replace(/mostrarIndicadorSeccion\([^)]*\)/gi, '');
+      texto = texto.replace(/getElementById\([^)]*\)/gi, '');
+      texto = texto.replace(/href="[^"]*"/gi, '');
+      texto = texto.replace(/class="[^"]*"/gi, '');
+      texto = texto.replace(/data-[^=]*="[^"]*"/gi, '');
+      texto = texto.replace(/behavior:\s*'[^']*'/gi, '');
+      texto = texto.replace(/block:\s*'[^']*'/gi, '');
+      texto = texto.replace(/lugar-[^'"]*/gi, '');
+      texto = texto.replace(/zoologico-[^'"]*/gi, '');
+      texto = texto.replace(/\s+/g, ' ').trim(); // Normalizar espacios
+      
+      return texto;
     }
 
     // Guardar cambios de un elemento editable (función global)
@@ -2093,13 +2223,45 @@
       const campo = elemento.getAttribute('data-campo');
       const id = elemento.getAttribute('data-id');
       const indice = elemento.getAttribute('data-indice');
-      // Obtener texto plano sin HTML - usar textContent que ya extrae solo texto
-      let nuevoValor = elemento.textContent.trim();
       
-      // Si el contenido tiene HTML (por si acaso), extraer solo texto
-      if (elemento.innerHTML !== elemento.textContent) {
-        nuevoValor = extraerTextoPlano(elemento.innerHTML).trim();
+      // SIEMPRE extraer solo texto plano, sin HTML ni código
+      // Esto es especialmente importante para sinopsis y otros campos de texto
+      // Usar textContent directamente que extrae solo texto, ignorando cualquier HTML renderizado
+      let nuevoValor = '';
+      
+      // Método más seguro: usar textContent que siempre extrae solo texto
+      nuevoValor = elemento.textContent || elemento.innerText || '';
+      
+      // Si textContent está vacío pero hay contenido, intentar método alternativo
+      if (!nuevoValor && elemento.innerHTML) {
+        const temp = document.createElement('div');
+        temp.innerHTML = elemento.innerHTML;
+        nuevoValor = temp.textContent || temp.innerText || '';
       }
+      
+      // Limpieza final agresiva de cualquier código residual
+      nuevoValor = nuevoValor.replace(/return\s+false[^>]*>/gi, '');
+      nuevoValor = nuevoValor.replace(/onclick="[^"]*"/gi, '');
+      nuevoValor = nuevoValor.replace(/<a[^>]*>/gi, '');
+      nuevoValor = nuevoValor.replace(/<\/a>/gi, '');
+      nuevoValor = nuevoValor.replace(/<[^>]*>/g, '');
+      nuevoValor = nuevoValor.replace(/document\.getElementById\([^)]*\)/gi, '');
+      nuevoValor = nuevoValor.replace(/scrollIntoView\([^)]*\)/gi, '');
+      nuevoValor = nuevoValor.replace(/verFicha\([^)]*\)/gi, '');
+      nuevoValor = nuevoValor.replace(/event\.preventDefault\(\)/gi, '');
+      nuevoValor = nuevoValor.replace(/window\.[^;]*/gi, '');
+      nuevoValor = nuevoValor.replace(/setTimeout\([^)]*\)/gi, '');
+      nuevoValor = nuevoValor.replace(/cerrarModalSiAbierto\(\)/gi, '');
+      nuevoValor = nuevoValor.replace(/mostrarIndicadorSeccion\([^)]*\)/gi, '');
+      nuevoValor = nuevoValor.replace(/getElementById\([^)]*\)/gi, '');
+      nuevoValor = nuevoValor.replace(/href="[^"]*"/gi, '');
+      nuevoValor = nuevoValor.replace(/class="[^"]*"/gi, '');
+      nuevoValor = nuevoValor.replace(/data-[^=]*="[^"]*"/gi, '');
+      nuevoValor = nuevoValor.replace(/behavior:\s*'[^']*'/gi, '');
+      nuevoValor = nuevoValor.replace(/block:\s*'[^']*'/gi, '');
+      nuevoValor = nuevoValor.replace(/lugar-[^'"]*/gi, '');
+      nuevoValor = nuevoValor.replace(/zoologico-[^'"]*/gi, '');
+      nuevoValor = nuevoValor.replace(/\s+/g, ' ').trim();
 
       if (!tipo || !campo) return;
 
@@ -2188,7 +2350,38 @@
         return;
       }
 
-      const procesarTexto = (texto) => modoEdicion ? texto : procesarReferenciasEnTexto(texto);
+      // Función para limpiar texto de código mezclado antes de procesar
+      const limpiarTexto = (texto) => {
+        if (!texto) return texto;
+        // Si ya tiene HTML válido (enlaces completos), no limpiar
+        if (texto.includes('<a href') && texto.includes('</a>')) {
+          return texto;
+        }
+        // Si tiene código JavaScript mezclado, limpiarlo
+        if (texto.includes('return false') || texto.includes('onclick=') || texto.includes('getElementById')) {
+          // Extraer solo texto plano
+          const temp = document.createElement('div');
+          temp.innerHTML = texto;
+          let textoLimpio = temp.textContent || temp.innerText || '';
+          // Limpiar código residual
+          textoLimpio = textoLimpio.replace(/return false;.*?>/gi, '');
+          textoLimpio = textoLimpio.replace(/onclick="[^"]*"/gi, '');
+          textoLimpio = textoLimpio.replace(/document\.getElementById\([^)]*\)/gi, '');
+          textoLimpio = textoLimpio.replace(/scrollIntoView\([^)]*\)/gi, '');
+          textoLimpio = textoLimpio.replace(/verFicha\([^)]*\)/gi, '');
+          textoLimpio = textoLimpio.replace(/event\.preventDefault\(\)/gi, '');
+          textoLimpio = textoLimpio.replace(/window\.[^;]*/gi, '');
+          textoLimpio = textoLimpio.replace(/setTimeout\([^)]*\)/gi, '');
+          textoLimpio = textoLimpio.replace(/\s+/g, ' ').trim();
+          return textoLimpio;
+        }
+        return texto;
+      };
+
+      const procesarTexto = (texto) => {
+        const textoLimpio = limpiarTexto(texto);
+        return modoEdicion ? textoLimpio : procesarReferenciasEnTexto(textoLimpio);
+      };
 
       cont.innerHTML = `
         <h3>Logline</h3>
@@ -2441,9 +2634,11 @@
           
           // Reemplazar nombre completo primero
           resultado = resultado.replace(regexCompleto, (match, prefix, offset) => {
-            // Verificar que no esté dentro de un enlace existente
+            // Verificar que no esté dentro de un enlace existente usando conteo de tags
             const antes = resultado.substring(0, offset);
-            if (antes.includes('<a') && !antes.includes('</a>')) {
+            const tagsAbiertos = (antes.match(/<a[^>]*>/g) || []).length;
+            const tagsCerrados = (antes.match(/<\/a>/g) || []).length;
+            if (tagsAbiertos > tagsCerrados) {
               return match; // Está dentro de un enlace
             }
             // Extraer solo el nombre (sin el prefijo de límite)
@@ -2454,14 +2649,16 @@
           // Si el nombre completo no coincide, intentar con el nombre base
           if (nombreBase !== nombreCompleto && nombreBase.length > 0) {
             resultado = resultado.replace(regexBase, (match, prefix, offset) => {
-              // Verificar que no esté dentro de un enlace
+              // Verificar que no esté dentro de un enlace usando conteo de tags
               const antes = resultado.substring(0, offset);
-              if (antes.includes('<a') && !antes.includes('</a>')) {
+              const tagsAbiertos = (antes.match(/<a[^>]*>/g) || []).length;
+              const tagsCerrados = (antes.match(/<\/a>/g) || []).length;
+              if (tagsAbiertos > tagsCerrados) {
                 return match;
               }
               // Verificar que no sea parte del nombre completo ya procesado
-              const contexto = resultado.substring(Math.max(0, offset - 15), Math.min(resultado.length, offset + match.length + 15));
-              if (contexto.includes(`href="#"`) && contexto.includes('localizaciones')) {
+              const contexto = resultado.substring(Math.max(0, offset - 30), Math.min(resultado.length, offset + match.length + 30));
+              if (contexto.includes(`href="#localizaciones"`) || contexto.includes(`href="#"`)) {
                 return match;
               }
               const nombreMatch = match.replace(/^[^\w]+/, '');
@@ -2481,9 +2678,16 @@
           const regex = new RegExp(`(^|[^\\w])${nombreConEspacios}(?![\\w])`, 'gi');
           
           resultado = resultado.replace(regex, (match, prefix, offset) => {
-            // Verificar que no esté dentro de un enlace existente
+            // Verificar que no esté dentro de un enlace existente usando conteo de tags
             const antes = resultado.substring(0, offset);
-            if (antes.includes('<a') && !antes.includes('</a>')) {
+            const tagsAbiertos = (antes.match(/<a[^>]*>/g) || []).length;
+            const tagsCerrados = (antes.match(/<\/a>/g) || []).length;
+            if (tagsAbiertos > tagsCerrados) {
+              return match;
+            }
+            // Verificar que no sea parte de una localización ya procesada
+            const contexto = resultado.substring(Math.max(0, offset - 30), Math.min(resultado.length, offset + match.length + 30));
+            if (contexto.includes(`href="#localizaciones"`)) {
               return match;
             }
             const nombreMatch = match.replace(/^[^\w]+/, '');
@@ -2502,7 +2706,9 @@
           
           resultado = resultado.replace(regex, (match, prefix, offset) => {
             const antes = resultado.substring(0, offset);
-            if (antes.includes('<a') && !antes.includes('</a>')) {
+            const tagsAbiertos = (antes.match(/<a[^>]*>/g) || []).length;
+            const tagsCerrados = (antes.match(/<\/a>/g) || []).length;
+            if (tagsAbiertos > tagsCerrados) {
               return match;
             }
             const tituloMatch = match.replace(/^[^\w]+/, '');
@@ -2521,7 +2727,9 @@
           
           resultado = resultado.replace(regex, (match, prefix, offset) => {
             const antes = resultado.substring(0, offset);
-            if (antes.includes('<a') && !antes.includes('</a>')) {
+            const tagsAbiertos = (antes.match(/<a[^>]*>/g) || []).length;
+            const tagsCerrados = (antes.match(/<\/a>/g) || []).length;
+            if (tagsAbiertos > tagsCerrados) {
               return match;
             }
             const tituloMatch = match.replace(/^[^\w]+/, '');

@@ -89,5 +89,47 @@
     "localizaciones": [
       "espana-vaciada"
     ]
+  },
+  {
+    "id": "cueva-escucha",
+    "titulo": "Amethystos y la Cueva de la Escucha",
+    "resumen": "Antes de que Invent'Rolla existiera, en lo más profundo de la selva venezolana, Amethystos vivía como una bruja buena que intentaba ser mala. Mataba a los cazadores furtivos que buscaban la piel de los leopardos, pero cada muerte le dolía tanto como la tala de un árbol. Cuando el fuego y las motosierras arrasaron su bosque, se refugió en una cueva que moldeó con su magia: la Cueva de la Escucha. Allí convirtió las rocas en resonadores, la humedad en eco, los murciélagos en afinadores del aire. Años más tarde, Marza, una joven ingeniera que escuchaba con los ojos cerrados, midió esas frecuencias y diseñó los primeros oídos ultrasónicos. Invent'Rolla se llevó la cueva para estudiarla, sin entender que se estaba llevando a Amethystos consigo, encerrándola en el zoológico de Musitoxic.",
+    "personajes_implicados": [
+      "amethystos",
+      "marza",
+      "musitoxic"
+    ],
+    "localizaciones": [
+      "cueva-escucha",
+      "selvas-sin-amor",
+      "zoologico-musitoxic"
+    ]
+  },
+  {
+    "id": "pacto-liberacion",
+    "titulo": "El pacto de la liberación.",
+    "resumen": "Desde su celda en el zoológico, Amethystos conoció al Vampiro encadenado Gab. Ambos fingieron obediencia mientras esperaban una señal. Esa señal llegó con Sísmico, el felino cuántico, cuando empezó a abrir portales entre realidades. La energía del portal alteró las defensas de la torre. Gab fingió llamar a la guardia para avisar del peligro, pero en realidad era parte del plan: distraerla mientras Amethystos liberaba a los animales y a los productores musicales. Sísmico lo sabía. Entre él y Amethystos había un acuerdo: ella abriría la puerta del zoológico, y él abriría la del mundo.",
+    "personajes_implicados": [
+      "amethystos",
+      "gab",
+      "sismico",
+      "musitoxic"
+    ],
+    "localizaciones": [
+      "zoologico-musitoxic"
+    ]
+  },
+  {
+    "id": "eco-marza",
+    "titulo": "El eco de Marza",
+    "resumen": "Tras la caída del proyecto, Marza fue declarada inestable e ingresada en un psiquiátrico. Sin embargo, su mente sigue resonando con las frecuencias de aquella Cueva de la Escucha. Desde su encierro, aún puede escuchar a los murciélagos, a las piedras, y a la voz de Amethystos, que en algún lugar del subsuelo sigue cantando. \"No hay prisión para el sonido. Todo eco vuelve a su origen.\" — Tamen",
+    "personajes_implicados": [
+      "marza",
+      "amethystos",
+      "tamen"
+    ],
+    "localizaciones": [
+      "cueva-escucha"
+    ]
   }
 ]
