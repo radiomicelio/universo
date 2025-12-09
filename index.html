@@ -4,40 +4,125 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Biblia de Radio Micelio</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>" />
+  
+  <!-- Librerías para visualizaciones -->
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
+  <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
   
   <!-- === ESTILOS (CSS) === -->
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: system-ui, sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
       margin: 0;
-      background: #fafafa;
-      color: #222;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      line-height: 1.6;
     }
 
     header {
-      background: #111;
+      background: #0a0a0a;
       color: white;
       padding: 1.5rem;
       text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      border-bottom: 1px solid #333;
+    }
+
+    header h1 {
+      margin: 0 0 1rem 0;
+      font-size: 1.5rem;
     }
 
     nav {
       margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
     nav a {
-      margin: 0 0.7rem;
+      padding: 0.4rem 0.8rem;
       color: #79c0ff;
       text-decoration: none;
       font-weight: 500;
+      border-radius: 4px;
+      transition: background 0.2s;
     }
 
     nav a:hover {
-      text-decoration: underline;
+      background: rgba(121, 192, 255, 0.2);
+    }
+
+    nav a.active {
+      background: rgba(121, 192, 255, 0.3);
+      color: #fff;
+    }
+
+    .header-controls {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary {
+      background: #79c0ff;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5aa8e8;
+    }
+
+    .btn-secondary {
+      background: #666;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #555;
+    }
+
+    .btn-danger {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c0392b;
+    }
+
+    .btn-success {
+      background: #27ae60;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #229954;
     }
 
     main {
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
     }
@@ -47,28 +132,637 @@
     }
 
     h2 {
-      border-bottom: 2px solid #ddd;
+      border-bottom: 2px solid #444;
       padding-bottom: 0.5rem;
+      margin-top: 0;
+      color: #fff;
     }
 
     .content-block {
       margin-top: 1rem;
-      padding-left: 0.5rem;
+    }
+
+    /* Grid de personajes */
+    .personajes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .personaje-card {
+      background: #2a2a2a;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: 1px solid #333;
+      position: relative;
+    }
+    
+    .personaje-card.personaje-principal {
+      border: 2px solid #79c0ff;
+      background: linear-gradient(135deg, #2a2a2a 0%, rgba(121, 192, 255, 0.05) 100%);
+    }
+
+    .personaje-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border-color: #444;
+    }
+    
+    .personaje-card.personaje-principal:hover {
+      border-color: #79c0ff;
+      box-shadow: 0 4px 16px rgba(121, 192, 255, 0.3);
+    }
+
+    .personaje-card h3 {
+      margin: 0 0 0.5rem 0;
+      color: #fff;
+    }
+
+    .personaje-card .rol {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .personaje-card .descripcion {
+      color: #ccc;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .personaje-card .etiquetas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .etiqueta {
+      background: #3a3a3a;
+      padding: 0.25rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: #ccc;
+      border: 1px solid #444;
+    }
+
+    .personaje-card .acciones {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #444;
+    }
+
+    .personaje-card .acciones button {
+      flex: 1;
+      padding: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: #2a2a2a;
+      border-radius: 12px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      margin: auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      border: 1px solid #444;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #444;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      border: none;
+      padding: 0;
+      color: #fff;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #aaa;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-btn:hover {
+      color: #fff;
+    }
+
+    .ficha-section {
+      margin-bottom: 2rem;
+    }
+
+    .ficha-section.incomplete {
+      border-left: 4px solid #e74c3c;
+      padding-left: 1rem;
+      background: rgba(231, 76, 60, 0.1);
+      border-radius: 4px;
+    }
+
+    .ficha-section.empty {
+      border-left: 4px solid #c0392b;
+      padding-left: 1rem;
+      background: rgba(192, 57, 43, 0.15);
+      border-radius: 4px;
+      opacity: 0.7;
+    }
+
+    .ficha-section h3 {
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #444;
+    }
+
+    .ficha-section.empty h3 {
+      color: #e74c3c;
+    }
+
+    .ficha-section.incomplete h3 {
+      color: #ff6b6b;
+    }
+
+    .ficha-section p {
+      margin: 0.5rem 0;
+      color: #ccc;
+    }
+
+    .ficha-section.empty p,
+    .ficha-section.incomplete p {
+      color: #ff9999;
+      font-style: italic;
+    }
+
+    .completitud-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: #2a2a2a;
+      border-radius: 8px;
+      border: 1px solid #444;
+    }
+
+    .completitud-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .completitud-porcentaje {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #27ae60;
+    }
+
+    .completitud-porcentaje.bajo {
+      color: #e74c3c;
+    }
+
+    .completitud-porcentaje.medio {
+      color: #f39c12;
+    }
+
+    .completitud-bar {
+      width: 200px;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #444;
+    }
+
+    .completitud-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #27ae60, #2ecc71);
+      transition: width 0.3s ease;
+    }
+
+    .completitud-fill.bajo {
+      background: linear-gradient(90deg, #e74c3c, #c0392b);
+    }
+
+    .completitud-fill.medio {
+      background: linear-gradient(90deg, #f39c12, #e67e22);
+    }
+
+    .ficha-section ul {
+      margin: 0.5rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .ficha-section li {
+      margin: 0.5rem 0;
+      color: #ccc;
+    }
+
+    .relacion-item {
+      background: #333;
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      border: 1px solid #444;
+    }
+
+    .relacion-item strong {
+      color: #fff;
+    }
+
+    /* Estilos para enlaces de referencia */
+    .referencia-link {
+      color: #79c0ff;
+      text-decoration: none;
+      border-bottom: 1px dotted #79c0ff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .referencia-link:hover {
+      color: #5aa8e8;
+      border-bottom-color: #5aa8e8;
+      background: rgba(121, 192, 255, 0.1);
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+
+    .referencia-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .referencia-badge {
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      background: #333;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: #79c0ff;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .referencia-badge:hover {
+      background: #444;
+      border-color: #79c0ff;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* Formularios */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #444;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #79c0ff;
+      box-shadow: 0 0 0 2px rgba(121, 192, 255, 0.2);
+    }
+
+    .form-group input[readonly] {
+      background: #252525;
+      color: #888;
+      cursor: not-allowed;
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .array-input {
+      margin-bottom: 0.5rem;
+    }
+
+    .array-input input {
+      margin-bottom: 0.5rem;
+    }
+
+    .add-item-btn {
+      background: #27ae60;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    .remove-item-btn {
+      background: #e74c3c;
+      color: white;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #444;
+    }
+
+    /* Modo edición */
+    .edit-mode .personaje-card {
+      border: 2px solid #79c0ff;
     }
 
     article {
       margin-bottom: 1.2rem;
       padding: 1rem;
-      background: white;
+      background: #2a2a2a;
       border-radius: 8px;
-      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+      box-shadow: 0 0 4px rgba(0,0,0,0.3);
+      border: 1px solid #333;
+    }
+
+    article h3 {
+      color: #fff;
+    }
+
+    article p {
+      color: #ccc;
     }
 
     footer {
       text-align: center;
       padding: 2rem;
-      color: #555;
+      color: #888;
       font-size: 0.9rem;
+    }
+
+    .save-notification {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #27ae60;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 2000;
+    }
+
+    .save-notification.show {
+      display: block;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Visualizaciones */
+    .visualization-container {
+      background: #2a2a2a;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      border: 1px solid #333;
+      position: relative;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .visualization-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .visualization-header h3 {
+      margin: 0;
+      color: #fff;
+    }
+
+    .visualization-controls {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .visualization-controls button {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+    }
+
+    #network-container {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background: #1a1a1a;
+    }
+
+    #timeline-container {
+      width: 100%;
+      min-height: 400px;
+      max-height: 600px;
+      height: 500px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background: #1a1a1a;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      resize: vertical;
+    }
+
+    .vis-network {
+      background: #1a1a1a !important;
+    }
+
+    .vis-timeline {
+      background: #1a1a1a !important;
+      border-color: #444 !important;
+      overflow: visible !important;
+    }
+
+    .vis-timeline .vis-panel {
+      overflow: visible !important;
+    }
+
+    .vis-timeline .vis-itemset {
+      overflow: visible !important;
+    }
+
+    .vis-item {
+      background-color: #79c0ff !important;
+      border-color: #5aa8e8 !important;
+      color: #fff !important;
+    }
+
+    .vis-item.vis-selected {
+      background-color: #27ae60 !important;
+      border-color: #229954 !important;
+    }
+
+    .vis-label {
+      color: #e0e0e0 !important;
+    }
+
+    .vis-time-axis .vis-text {
+      color: #aaa !important;
+    }
+
+    .vis-current-time {
+      background-color: #e74c3c !important;
+    }
+
+    /* Botón flotante para crear entidad */
+    .crear-flotante {
+      position: absolute;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 0.4rem 0.8rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      z-index: 10000;
+      display: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #fff;
+      transition: all 0.2s;
+    }
+
+    .crear-flotante:hover {
+      background: #333;
+      border-color: #79c0ff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(121, 192, 255, 0.3);
+    }
+
+    .crear-flotante.show {
+      display: block;
+    }
+
+    .crear-flotante::before {
+      content: '+';
+      display: inline-block;
+      margin-right: 0.3rem;
+      font-weight: bold;
+      color: #79c0ff;
+    }
+
+    /* Modal de creación */
+    .tipo-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .tipo-option {
+      padding: 1rem;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background: #2a2a2a;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .tipo-option:hover {
+      border-color: #79c0ff;
+      background: #333;
+    }
+
+    .tipo-option.selected {
+      border-color: #79c0ff;
+      background: rgba(121, 192, 255, 0.1);
+    }
+
+    .tipo-option h4 {
+      margin: 0 0 0.5rem 0;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .tipo-option p {
+      margin: 0;
+      color: #aaa;
+      font-size: 0.85rem;
     }
   </style>
 </head>
@@ -79,11 +773,18 @@
     <nav>
       <a href="#intro">Introducción</a>
       <a href="#personajes">Personajes</a>
+      <a href="#relaciones">Relaciones</a>
       <a href="#tramas">Tramas</a>
       <a href="#localizaciones">Localizaciones</a>
       <a href="#canciones">Canciones</a>
       <a href="#timeline">Timeline</a>
     </nav>
+    <div class="header-controls">
+      <button class="btn-primary" id="toggle-edit-mode">Modo Edición</button>
+      <button class="btn-secondary" id="save-all-btn" style="display: none;">Guardar en Archivo</button>
+      <button class="btn-secondary" id="reload-btn" style="display: none;">Recargar desde Archivos</button>
+      <span id="save-status" style="color: #79c0ff; font-size: 0.85rem; margin-left: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;"></span>
+    </div>
   </header>
 
   <main>
@@ -98,7 +799,25 @@
     <!-- PERSONAJES -->
     <section id="personajes">
       <h2>Personajes</h2>
-      <div id="personajes-list" class="content-block"></div>
+      <div id="personajes-list" class="content-block personajes-grid"></div>
+    </section>
+
+    <!-- RELACIONES (Grafo) -->
+    <section id="relaciones">
+      <h2>Red de Relaciones</h2>
+      <div class="visualization-container">
+        <div class="visualization-header">
+          <h3>Grafo Ontológico de Personajes</h3>
+          <div class="visualization-controls">
+            <button class="btn-secondary" onclick="resetNetworkLayout()">Reorganizar</button>
+            <button class="btn-secondary" onclick="fitNetwork()">Ajustar Vista</button>
+          </div>
+        </div>
+        <div id="network-container"></div>
+        <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">
+          Haz clic y arrastra los nodos para reorganizarlos. Haz clic en un nodo para ver detalles.
+        </p>
+      </div>
     </section>
 
     <!-- TRAMAS -->
@@ -122,44 +841,652 @@
     <!-- TIMELINE -->
     <section id="timeline">
       <h2>Timeline</h2>
-      <div id="timeline-content" class="content-block"></div>
+      <div class="visualization-container">
+        <div class="visualization-header">
+          <h3>Timeline Visual Interactivo</h3>
+          <div class="visualization-controls">
+            <button class="btn-secondary" onclick="fitTimeline()">Ajustar Vista</button>
+          </div>
+        </div>
+        <div id="timeline-container"></div>
+      </div>
+      <div id="timeline-content" class="content-block" style="margin-top: 2rem; position: relative; z-index: 2;">
+        <h3 style="margin-top: 0;">Eventos del Timeline</h3>
+      </div>
     </section>
   </main>
+
+  <!-- Botón flotante para crear entidad -->
+  <div id="crear-flotante" class="crear-flotante">Crear+</div>
+
+  <!-- Modal para ficha de personaje -->
+  <div id="personaje-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Ficha de Personaje</h2>
+        <button class="close-btn" id="close-modal">&times;</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Modal para crear nueva entidad -->
+  <div id="crear-entidad-modal" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2>Crear Nueva Entidad</h2>
+        <button class="close-btn" onclick="cerrarModalCrear()">&times;</button>
+      </div>
+      <div id="crear-entidad-body">
+        <p style="color: #aaa; margin-bottom: 1rem;">Texto seleccionado: <strong id="texto-seleccionado"></strong></p>
+        
+        <div class="form-group">
+          <label>Selecciona el tipo de entidad:</label>
+          <div class="tipo-selector" id="tipo-selector">
+            <div class="tipo-option" data-tipo="personaje" onclick="seleccionarTipo('personaje')">
+              <h4>👤 Personaje</h4>
+              <p>Personaje del universo</p>
+            </div>
+            <div class="tipo-option" data-tipo="localizacion" onclick="seleccionarTipo('localizacion')">
+              <h4>📍 Localización</h4>
+              <p>Lugar del universo</p>
+            </div>
+            <div class="tipo-option" data-tipo="cancion" onclick="seleccionarTipo('cancion')">
+              <h4>🎵 Canción</h4>
+              <p>Canción del universo</p>
+            </div>
+            <div class="tipo-option" data-tipo="trama" onclick="seleccionarTipo('trama')">
+              <h4>📖 Trama</h4>
+              <p>Trama narrativa</p>
+            </div>
+            <div class="tipo-option" data-tipo="evento" onclick="seleccionarTipo('evento')">
+              <h4>⏱️ Evento</h4>
+              <p>Evento del timeline</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="formulario-crear"></div>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <p>Radio Micelio — Documento interno • Generado desde JSON</p>
   </footer>
 
+  <div class="save-notification" id="save-notification">
+    ✓ Cambios guardados
+  </div>
+
   <!-- === JS: Cargar JSON y Renderizar === -->
   <script>
-    async function cargarJSON(ruta) {
+    // Estado global
+    let datos = {
+      personajes: null,
+      tramas: null,
+      localizaciones: null,
+      canciones: null,
+      timeline: null,
+      introduccion: null
+    };
+    let modoEdicion = false;
+    let personajeEditando = null;
+    let fileHandle = null; // Para File System Access API
+    let cambiosPendientes = false;
+    let network = null; // Para el grafo de relaciones
+    let timeline = null; // Para el timeline visual
+    let textoSeleccionado = '';
+    let tipoSeleccionado = null;
+
+    // Cargar JSON desde archivo o localStorage
+    async function cargarJSON(ruta, preferProcessed = false) {
       try {
+        // Si se prefiere procesado, intentar cargar versión procesada primero
+        if (preferProcessed) {
+          const processedRuta = ruta.replace('data/', 'data/processed/').replace('.json', '_processed.json');
+          try {
+            const res = await fetch(processedRuta);
+            if (res.ok) {
+              const data = await res.json();
+              console.log(`✓ Cargado datos preprocesados: ${processedRuta}`);
+              return data;
+            }
+          } catch (e) {
+            // Si no existe procesado, continuar con original
+            console.log(`⚠ Datos preprocesados no disponibles, usando original: ${ruta}`);
+          }
+        }
+        
+        // Primero intentar cargar desde localStorage
+        const storageKey = `rm_${ruta.replace(/\//g, '_')}`;
+        const stored = localStorage.getItem(storageKey);
+        const storedTimestamp = localStorage.getItem(`${storageKey}_timestamp`);
+        
+        if (stored) {
+          const data = JSON.parse(stored);
+          console.log(`Cargado desde localStorage: ${ruta}`);
+          return data;
+        }
+        
+        // Si no hay en localStorage, cargar desde archivo
         const res = await fetch(ruta);
         if (!res.ok) throw new Error(res.statusText);
-        return await res.json();
+        const data = await res.json();
+        
+        // Guardar en localStorage para próxima vez
+        localStorage.setItem(storageKey, JSON.stringify(data));
+        localStorage.setItem(`${storageKey}_timestamp`, Date.now().toString());
+        
+        return data;
       } catch (err) {
         console.error("Error cargando " + ruta, err);
         return null;
       }
     }
 
-    async function init() {
-      // OJO: aquí usamos introduccion.json
-      const intro = await cargarJSON("data/introduccion.json");
-      const personajes = await cargarJSON("data/personajes.json");
-      const tramas = await cargarJSON("data/tramas.json");
-      const localizaciones = await cargarJSON("data/localizaciones.json");
-      const canciones = await cargarJSON("data/canciones.json");
-      const timeline = await cargarJSON("data/timeline.json");
-
-      renderIntro(intro);
-      renderPersonajes(personajes);
-      renderTramas(tramas);
-      renderLocalizaciones(localizaciones);
-      renderCanciones(canciones);
-      renderTimeline(timeline);
+    // Guardar JSON en localStorage
+    function guardarEnLocalStorage(ruta, datos) {
+      const storageKey = `rm_${ruta.replace(/\//g, '_')}`;
+      localStorage.setItem(storageKey, JSON.stringify(datos));
+      localStorage.setItem(`${storageKey}_timestamp`, Date.now().toString());
+      cambiosPendientes = true;
+      actualizarEstadoGuardado();
     }
 
+    // Inicializar
+    async function init() {
+      // Intentar cargar datos preprocesados primero (más rápido)
+      datos.introduccion = await cargarJSON("data/introduccion.json", true);
+      datos.personajes = await cargarJSON("data/personajes.json", true);
+      datos.tramas = await cargarJSON("data/tramas.json", true);
+      datos.localizaciones = await cargarJSON("data/localizaciones.json", true);
+      datos.canciones = await cargarJSON("data/canciones.json", true);
+      datos.timeline = await cargarJSON("data/timeline.json", true);
+
+      renderIntro(datos.introduccion);
+      renderPersonajes(datos.personajes);
+      renderTramas(datos.tramas);
+      renderLocalizaciones(datos.localizaciones);
+      renderCanciones(datos.canciones);
+      renderTimeline(datos.timeline);
+
+      setupEventListeners();
+      actualizarEstadoGuardado();
+      
+      // Inicializar visualizaciones (intentar usar datos preprocesados)
+      await inicializarVisualizaciones();
+    }
+    
+    // Inicializar visualizaciones con datos preprocesados si están disponibles
+    async function inicializarVisualizaciones() {
+      // Intentar cargar datos del grafo preprocesados
+      try {
+        const networkRes = await fetch("data/processed/network_data.json");
+        if (networkRes.ok) {
+          const networkData = await networkRes.json();
+          console.log("✓ Usando datos del grafo preprocesados");
+          renderNetworkPreprocessed(networkData);
+        } else {
+          // Fallback: procesar en JavaScript
+          if (datos.personajes) {
+            renderNetwork(datos.personajes);
+          }
+        }
+      } catch (e) {
+        // Fallback: procesar en JavaScript
+        if (datos.personajes) {
+          renderNetwork(datos.personajes);
+        }
+      }
+      
+      // Intentar cargar datos del timeline preprocesados
+      try {
+        const timelineRes = await fetch("data/processed/timeline_visual_data.json");
+        if (timelineRes.ok) {
+          const timelineData = await timelineRes.json();
+          console.log("✓ Usando datos del timeline preprocesados");
+          renderTimelineVisualPreprocessed(timelineData);
+        } else {
+          // Fallback: procesar en JavaScript
+          if (datos.timeline) {
+            renderTimelineVisual(datos.timeline);
+          }
+        }
+      } catch (e) {
+        // Fallback: procesar en JavaScript
+        if (datos.timeline) {
+          renderTimelineVisual(datos.timeline);
+        }
+      }
+    }
+
+    // Event listeners
+    function setupEventListeners() {
+      document.getElementById('toggle-edit-mode').addEventListener('click', toggleModoEdicion);
+      document.getElementById('save-all-btn').addEventListener('click', guardarEnArchivo);
+      document.getElementById('reload-btn').addEventListener('click', recargarDesdeArchivos);
+      document.getElementById('close-modal').addEventListener('click', cerrarModal);
+      
+      // Cerrar modal al hacer click fuera
+      document.getElementById('personaje-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'personaje-modal') {
+          cerrarModal();
+        }
+      });
+
+      // Cerrar modal de creación al hacer click fuera
+      document.getElementById('crear-entidad-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'crear-entidad-modal') {
+          cerrarModalCrear();
+        }
+      });
+
+      // Click en botón flotante
+      document.getElementById('crear-flotante').addEventListener('click', abrirModalCrear);
+
+      // Guardar automáticamente antes de cerrar
+      window.addEventListener('beforeunload', (e) => {
+        if (cambiosPendientes) {
+          // Los cambios ya están en localStorage, así que está bien
+        }
+      });
+
+      // Detectar selección de texto para crear entidades
+      document.addEventListener('mouseup', manejarSeleccionTexto);
+      document.addEventListener('keyup', manejarSeleccionTexto);
+    }
+
+    // Manejar selección de texto
+    function manejarSeleccionTexto() {
+      // Solo mostrar botón en modo edición
+      if (!modoEdicion) {
+        document.getElementById('crear-flotante').classList.remove('show');
+        return;
+      }
+
+      const seleccion = window.getSelection();
+      const texto = seleccion.toString().trim();
+      const botonFlotante = document.getElementById('crear-flotante');
+      
+      // No mostrar si el click fue en un modal o botón
+      const clickTarget = document.activeElement;
+      if (clickTarget && (clickTarget.tagName === 'BUTTON' || clickTarget.closest('.modal'))) {
+        botonFlotante.classList.remove('show');
+        return;
+      }
+      
+      if (texto.length > 0 && texto.length < 100 && seleccion.rangeCount > 0) {
+        textoSeleccionado = texto;
+        const rango = seleccion.getRangeAt(0);
+        const rect = rango.getBoundingClientRect();
+        
+        // Posicionar el botón encima del texto seleccionado
+        botonFlotante.style.top = (rect.top + window.scrollY - 45) + 'px';
+        botonFlotante.style.left = (rect.left + window.scrollX + (rect.width / 2) - 45) + 'px';
+        botonFlotante.classList.add('show');
+      } else {
+        botonFlotante.classList.remove('show');
+      }
+    }
+
+    // Abrir modal de creación
+    function abrirModalCrear() {
+      document.getElementById('crear-entidad-modal').classList.add('active');
+      document.getElementById('texto-seleccionado').textContent = textoSeleccionado;
+      document.getElementById('crear-flotante').classList.remove('show');
+      tipoSeleccionado = null;
+      document.getElementById('formulario-crear').innerHTML = '';
+      // Resetear selección de tipos
+      document.querySelectorAll('.tipo-option').forEach(el => el.classList.remove('selected'));
+    }
+
+    // Cerrar modal de creación
+    function cerrarModalCrear() {
+      document.getElementById('crear-entidad-modal').classList.remove('active');
+      textoSeleccionado = '';
+      tipoSeleccionado = null;
+      window.getSelection().removeAllRanges();
+    }
+
+    // Seleccionar tipo de entidad
+    function seleccionarTipo(tipo) {
+      tipoSeleccionado = tipo;
+      document.querySelectorAll('.tipo-option').forEach(el => el.classList.remove('selected'));
+      document.querySelector(`[data-tipo="${tipo}"]`).classList.add('selected');
+      
+      mostrarFormularioCrear(tipo);
+    }
+
+    // Mostrar formulario según el tipo
+    function mostrarFormularioCrear(tipo) {
+      const contenedor = document.getElementById('formulario-crear');
+      let formulario = '';
+
+      switch(tipo) {
+        case 'personaje':
+          formulario = `
+            <form id="form-crear-entidad" onsubmit="guardarNuevaEntidad(event)">
+              <input type="hidden" name="tipo" value="personaje">
+              <div class="form-group">
+                <label>ID (slug, sin espacios)</label>
+                <input type="text" name="id" value="${generarSlug(textoSeleccionado)}" required pattern="[a-z0-9-]+" title="Solo letras minúsculas, números y guiones">
+              </div>
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombre" value="${textoSeleccionado}" required>
+              </div>
+              <div class="form-group">
+                <label>Rol</label>
+                <input type="text" name="rol" placeholder="Ej: Protagonista, Antagonista...">
+              </div>
+              <div class="form-group">
+                <label>Origen</label>
+                <textarea name="origen" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Descripción</label>
+                <textarea name="descripcion" rows="4"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Aparición</label>
+                <input type="text" name="aparicion" placeholder="Ej: Cómic, Canciones...">
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-success">Crear Personaje</button>
+                <button type="button" class="btn-secondary" onclick="cerrarModalCrear()">Cancelar</button>
+              </div>
+            </form>
+          `;
+          break;
+        
+        case 'localizacion':
+          formulario = `
+            <form id="form-crear-entidad" onsubmit="guardarNuevaEntidad(event)">
+              <input type="hidden" name="tipo" value="localizacion">
+              <div class="form-group">
+                <label>ID (slug)</label>
+                <input type="text" name="id" value="${generarSlug(textoSeleccionado)}" required pattern="[a-z0-9-]+">
+              </div>
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombre" value="${textoSeleccionado}" required>
+              </div>
+              <div class="form-group">
+                <label>Descripción</label>
+                <textarea name="descripcion" rows="4"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Tipo</label>
+                <select name="tipo">
+                  <option value="natural">Natural</option>
+                  <option value="urbano">Urbano</option>
+                  <option value="industrial">Industrial</option>
+                  <option value="selva">Selva</option>
+                  <option value="cosmico">Cósmico</option>
+                  <option value="subterraneo">Subterráneo</option>
+                  <option value="natural-alterado">Natural Alterado</option>
+                </select>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-success">Crear Localización</button>
+                <button type="button" class="btn-secondary" onclick="cerrarModalCrear()">Cancelar</button>
+              </div>
+            </form>
+          `;
+          break;
+        
+        case 'cancion':
+          formulario = `
+            <form id="form-crear-entidad" onsubmit="guardarNuevaEntidad(event)">
+              <input type="hidden" name="tipo" value="cancion">
+              <div class="form-group">
+                <label>ID (slug)</label>
+                <input type="text" name="id" value="${generarSlug(textoSeleccionado)}" required pattern="[a-z0-9-]+">
+              </div>
+              <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" value="${textoSeleccionado}" required>
+              </div>
+              <div class="form-group">
+                <label>Descripción</label>
+                <textarea name="descripcion" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Significado</label>
+                <textarea name="significado" rows="3"></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-success">Crear Canción</button>
+                <button type="button" class="btn-secondary" onclick="cerrarModalCrear()">Cancelar</button>
+              </div>
+            </form>
+          `;
+          break;
+        
+        case 'trama':
+          formulario = `
+            <form id="form-crear-entidad" onsubmit="guardarNuevaEntidad(event)">
+              <input type="hidden" name="tipo" value="trama">
+              <div class="form-group">
+                <label>ID (slug)</label>
+                <input type="text" name="id" value="${generarSlug(textoSeleccionado)}" required pattern="[a-z0-9-]+">
+              </div>
+              <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" value="${textoSeleccionado}" required>
+              </div>
+              <div class="form-group">
+                <label>Resumen</label>
+                <textarea name="resumen" rows="4"></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-success">Crear Trama</button>
+                <button type="button" class="btn-secondary" onclick="cerrarModalCrear()">Cancelar</button>
+              </div>
+            </form>
+          `;
+          break;
+        
+        case 'evento':
+          formulario = `
+            <form id="form-crear-entidad" onsubmit="guardarNuevaEntidad(event)">
+              <input type="hidden" name="tipo" value="evento">
+              <div class="form-group">
+                <label>ID (slug)</label>
+                <input type="text" name="id" value="${generarSlug(textoSeleccionado)}" required pattern="[a-z0-9-]+">
+              </div>
+              <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" value="${textoSeleccionado}" required>
+              </div>
+              <div class="form-group">
+                <label>Descripción</label>
+                <textarea name="descripcion" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Etapa</label>
+                <select name="etapa">
+                  <option value="origen">Origen</option>
+                  <option value="despertar">Despertar</option>
+                  <option value="inventrola">Inventrola</option>
+                  <option value="sismico">Sísmico</option>
+                  <option value="tamen">Tamen</option>
+                  <option value="futuro">Futuro</option>
+                </select>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-success">Crear Evento</button>
+                <button type="button" class="btn-secondary" onclick="cerrarModalCrear()">Cancelar</button>
+              </div>
+            </form>
+          `;
+          break;
+      }
+
+      contenedor.innerHTML = formulario;
+    }
+
+    // Generar slug desde texto
+    function generarSlug(texto) {
+      return texto
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    // Guardar nueva entidad
+    function guardarNuevaEntidad(event) {
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form);
+      const tipo = formData.get('tipo');
+
+      let nuevaEntidad = {};
+      formData.forEach((value, key) => {
+        if (key !== 'tipo' && value.trim()) {
+          nuevaEntidad[key] = value.trim();
+        }
+      });
+
+      // Añadir campos por defecto según el tipo
+      switch(tipo) {
+        case 'personaje':
+          nuevaEntidad.motivaciones = [];
+          nuevaEntidad.habilidades = [];
+          nuevaEntidad.relaciones = [];
+          nuevaEntidad.etiquetas = [];
+          if (!datos.personajes) datos.personajes = [];
+          datos.personajes.push(nuevaEntidad);
+          guardarEnLocalStorage("data/personajes.json", datos.personajes);
+          renderPersonajes(datos.personajes);
+          break;
+        
+        case 'localizacion':
+          nuevaEntidad.elementos_clave = [];
+          nuevaEntidad.tramas_relacionadas = [];
+          nuevaEntidad.personajes_relacionados = [];
+          if (!datos.localizaciones) datos.localizaciones = [];
+          datos.localizaciones.push(nuevaEntidad);
+          guardarEnLocalStorage("data/localizaciones.json", datos.localizaciones);
+          renderLocalizaciones(datos.localizaciones);
+          break;
+        
+        case 'cancion':
+          nuevaEntidad.letra = [];
+          nuevaEntidad.personajes_relacionados = [];
+          nuevaEntidad.tramas_relacionadas = [];
+          if (!datos.canciones) datos.canciones = [];
+          datos.canciones.push(nuevaEntidad);
+          guardarEnLocalStorage("data/canciones.json", datos.canciones);
+          renderCanciones(datos.canciones);
+          break;
+        
+        case 'trama':
+          nuevaEntidad.personajes_implicados = [];
+          nuevaEntidad.localizaciones = [];
+          if (!datos.tramas) datos.tramas = [];
+          datos.tramas.push(nuevaEntidad);
+          guardarEnLocalStorage("data/tramas.json", datos.tramas);
+          renderTramas(datos.tramas);
+          break;
+        
+        case 'evento':
+          nuevaEntidad.personajes_implicados = [];
+          if (!datos.timeline) datos.timeline = [];
+          datos.timeline.push(nuevaEntidad);
+          guardarEnLocalStorage("data/timeline.json", datos.timeline);
+          renderTimeline(datos.timeline);
+          if (timeline) {
+            renderTimelineVisual(datos.timeline);
+          }
+          break;
+      }
+
+      cerrarModalCrear();
+      mostrarNotificacion(`✓ ${tipo} creado: ${nuevaEntidad.nombre || nuevaEntidad.titulo}`);
+    }
+
+    // Recargar desde archivos (limpiar localStorage)
+    async function recargarDesdeArchivos() {
+      if (confirm('¿Recargar desde archivos? Se perderán los cambios no guardados en archivo.')) {
+        // Limpiar localStorage
+        localStorage.removeItem('rm_data_personajes.json');
+        localStorage.removeItem('rm_data_personajes.json_timestamp');
+        localStorage.removeItem('rm_data_tramas.json');
+        localStorage.removeItem('rm_data_tramas.json_timestamp');
+        localStorage.removeItem('rm_data_localizaciones.json');
+        localStorage.removeItem('rm_data_localizaciones.json_timestamp');
+        localStorage.removeItem('rm_data_canciones.json');
+        localStorage.removeItem('rm_data_canciones.json_timestamp');
+        localStorage.removeItem('rm_data_timeline.json');
+        localStorage.removeItem('rm_data_timeline.json_timestamp');
+        localStorage.removeItem('rm_data_introduccion.json');
+        localStorage.removeItem('rm_data_introduccion.json_timestamp');
+        
+        // Recargar datos
+        datos.personajes = await cargarJSON("data/personajes.json");
+        datos.tramas = await cargarJSON("data/tramas.json");
+        datos.localizaciones = await cargarJSON("data/localizaciones.json");
+        datos.canciones = await cargarJSON("data/canciones.json");
+        datos.timeline = await cargarJSON("data/timeline.json");
+        datos.introduccion = await cargarJSON("data/introduccion.json");
+        
+        // Re-renderizar
+        renderIntro(datos.introduccion);
+        renderPersonajes(datos.personajes);
+        renderTramas(datos.tramas);
+        renderLocalizaciones(datos.localizaciones);
+        renderCanciones(datos.canciones);
+        renderTimeline(datos.timeline);
+        
+        cambiosPendientes = false;
+        actualizarEstadoGuardado();
+        mostrarNotificacion('Recargado desde archivos');
+      }
+    }
+
+    // Actualizar estado de guardado
+    function actualizarEstadoGuardado() {
+      const statusEl = document.getElementById('save-status');
+      if (cambiosPendientes) {
+        statusEl.innerHTML = '<span style="color: #ffa500;">●</span> <span>Cambios sin guardar</span>';
+      } else {
+        statusEl.innerHTML = '<span style="color: #27ae60;">✓</span> <span>Guardado</span>';
+      }
+    }
+
+    function toggleModoEdicion() {
+      modoEdicion = !modoEdicion;
+      document.body.classList.toggle('edit-mode', modoEdicion);
+      const btn = document.getElementById('toggle-edit-mode');
+      const saveBtn = document.getElementById('save-all-btn');
+      const reloadBtn = document.getElementById('reload-btn');
+      
+      if (modoEdicion) {
+        btn.textContent = 'Salir de Edición';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-danger');
+        saveBtn.style.display = 'inline-block';
+        reloadBtn.style.display = 'inline-block';
+      } else {
+        btn.textContent = 'Modo Edición';
+        btn.classList.remove('btn-danger');
+        btn.classList.add('btn-primary');
+        saveBtn.style.display = 'none';
+        reloadBtn.style.display = 'none';
+        cerrarModal();
+        cerrarModalCrear();
+        // Ocultar botón flotante al salir del modo edición
+        document.getElementById('crear-flotante').classList.remove('show');
+      }
+      
+      renderPersonajes(datos.personajes);
+    }
+
+    // Renderizar introducción
     function renderIntro(meta) {
       const cont = document.getElementById("intro-content");
       if (!meta) {
@@ -169,49 +1496,823 @@
 
       cont.innerHTML = `
         <h3>Logline</h3>
-        <p>${meta.logline || ""}</p>
+        <p>${procesarReferenciasEnTexto(meta.logline || "")}</p>
 
         <h3>Sinopsis</h3>
-        <p>${meta.sinopsis || ""}</p>
+        <p>${procesarReferenciasEnTexto(meta.sinopsis || "")}</p>
 
         <h3>Fundamentación</h3>
-        <p>${meta.fundamentacion || ""}</p>
+        <p>${procesarReferenciasEnTexto(meta.fundamentacion || "")}</p>
 
         <h3>Storyline</h3>
         <ul>
           ${(meta.storyline || [])
-            .map(p => `<li><strong>${p.titulo}:</strong> ${p.resumen}</li>`)
+            .map(p => `<li><strong>${p.titulo}:</strong> ${procesarReferenciasEnTexto(p.resumen)}</li>`)
             .join("")}
         </ul>
       `;
     }
 
+    // Determinar si un personaje es principal (definido antes de usar)
+    function esPersonajePrincipal(personaje) {
+      const principales = ['vaquero-atomico', 'sismico', 'amethystos', 'tamen'];
+      return principales.includes(personaje.id);
+    }
+    
+    // Renderizar personajes
     function renderPersonajes(personajes) {
       const cont = document.getElementById("personajes-list");
       if (!personajes) return;
 
-      cont.innerHTML = personajes
-        .map(p => `
-          <article id="personaje-${p.id}">
-            <h3>${p.nombre}</h3>
-            <p><strong>Rol:</strong> ${p.rol || ""}</p>
-            <p>${p.descripcion || p.resumen || ""}</p>
-          </article>
-        `)
-        .join("");
+      // Separar principales y secundarios
+      const principales = personajes.filter(p => esPersonajePrincipal(p));
+      const secundarios = personajes.filter(p => !esPersonajePrincipal(p));
+      
+      // Calcular completitud para cada personaje
+      const personajesConCompletitud = personajes.map(p => ({
+        ...p,
+        completitud: calcularCompletitud(p)
+      }));
+      
+      // Ordenar: principales primero, luego por completitud descendente
+      personajesConCompletitud.sort((a, b) => {
+        const aPrincipal = esPersonajePrincipal(a);
+        const bPrincipal = esPersonajePrincipal(b);
+        if (aPrincipal && !bPrincipal) return -1;
+        if (!aPrincipal && bPrincipal) return 1;
+        return b.completitud.porcentaje - a.completitud.porcentaje;
+      });
+
+      // Separar en grupos para mostrar títulos
+      const personajesPrincipales = personajesConCompletitud.filter(p => esPersonajePrincipal(p));
+      const personajesSecundarios = personajesConCompletitud.filter(p => !esPersonajePrincipal(p));
+      
+      let html = '';
+      
+      // Personajes principales
+      if (personajesPrincipales.length > 0) {
+        html += `<div style="grid-column: 1 / -1; margin-bottom: 1rem;">
+          <h3 style="color: #79c0ff; font-size: 1.1rem; margin-bottom: 0.5rem;">⭐ Personajes Principales</h3>
+        </div>`;
+        
+        html += personajesPrincipales.map(p => {
+          const { porcentaje } = p.completitud;
+          const claseCompletitudCard = porcentaje < 50 ? 'bajo' : porcentaje < 80 ? 'medio' : '';
+          
+          return `
+            <div class="personaje-card personaje-principal" data-id="${p.id}">
+              <div style="position: absolute; top: 0.5rem; right: 0.5rem; color: #79c0ff; font-size: 1.2rem;">⭐</div>
+              <h3>${p.nombre}</h3>
+              <div class="rol">${p.rol || ""}</div>
+              <div class="descripcion">${procesarReferenciasEnTexto(p.descripcion || "")}</div>
+              <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #444;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span style="color: #aaa; font-size: 0.85rem;">Completitud:</span>
+                  <span style="color: ${porcentaje >= 80 ? '#27ae60' : porcentaje >= 50 ? '#f39c12' : '#e74c3c'}; font-weight: 600; font-size: 0.9rem;">
+                    ${porcentaje}%
+                  </span>
+                </div>
+                <div class="completitud-bar" style="width: 100%; height: 6px;">
+                  <div class="completitud-fill ${claseCompletitudCard}" style="width: ${porcentaje}%"></div>
+                </div>
+              </div>
+              ${p.etiquetas && p.etiquetas.length > 0 ? `
+                <div class="etiquetas">
+                  ${p.etiquetas.map(e => `<span class="etiqueta">${e}</span>`).join("")}
+                </div>
+              ` : ""}
+              <div class="acciones">
+                <button class="btn-primary" onclick="verFicha('${p.id}')">Ver Ficha</button>
+                ${modoEdicion ? `<button class="btn-secondary" onclick="editarPersonaje('${p.id}')">Editar</button>` : ""}
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+      
+      // Personajes secundarios
+      if (personajesSecundarios.length > 0) {
+        if (personajesPrincipales.length > 0) {
+          html += `<div style="grid-column: 1 / -1; margin-top: 2rem; margin-bottom: 1rem;">
+            <h3 style="color: #888; font-size: 1.1rem; margin-bottom: 0.5rem;">Personajes Secundarios</h3>
+          </div>`;
+        }
+        
+        html += personajesSecundarios.map(p => {
+          const { porcentaje } = p.completitud;
+          const claseCompletitudCard = porcentaje < 50 ? 'bajo' : porcentaje < 80 ? 'medio' : '';
+          
+          return `
+            <div class="personaje-card" data-id="${p.id}">
+              <h3>${p.nombre}</h3>
+              <div class="rol">${p.rol || ""}</div>
+              <div class="descripcion">${procesarReferenciasEnTexto(p.descripcion || "")}</div>
+              <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #444;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span style="color: #aaa; font-size: 0.85rem;">Completitud:</span>
+                  <span style="color: ${porcentaje >= 80 ? '#27ae60' : porcentaje >= 50 ? '#f39c12' : '#e74c3c'}; font-weight: 600; font-size: 0.9rem;">
+                    ${porcentaje}%
+                  </span>
+                </div>
+                <div class="completitud-bar" style="width: 100%; height: 6px;">
+                  <div class="completitud-fill ${claseCompletitudCard}" style="width: ${porcentaje}%"></div>
+                </div>
+              </div>
+              ${p.etiquetas && p.etiquetas.length > 0 ? `
+                <div class="etiquetas">
+                  ${p.etiquetas.map(e => `<span class="etiqueta">${e}</span>`).join("")}
+                </div>
+              ` : ""}
+              <div class="acciones">
+                <button class="btn-primary" onclick="verFicha('${p.id}')">Ver Ficha</button>
+                ${modoEdicion ? `<button class="btn-secondary" onclick="editarPersonaje('${p.id}')">Editar</button>` : ""}
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+      
+      cont.innerHTML = html;
     }
 
+    // Funciones helper para crear enlaces de referencia
+    function crearEnlacePersonaje(id, texto) {
+      const personaje = datos.personajes?.find(p => p.id === id);
+      if (!personaje) return texto || id;
+      const nombre = texto || personaje.nombre;
+      return `<a href="#" class="referencia-link" onclick="event.preventDefault(); verFicha('${id}'); return false;">${nombre}</a>`;
+    }
+
+    function crearEnlaceLocalizacion(id, texto) {
+      const localizacion = datos.localizaciones?.find(l => l.id === id);
+      if (!localizacion) return texto || id;
+      const nombre = texto || localizacion.nombre;
+      return `<a href="#localizaciones" class="referencia-link" onclick="event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-${id}').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;">${nombre}</a>`;
+    }
+
+    function crearEnlaceCancion(id, texto) {
+      const cancion = datos.canciones?.find(c => c.id === id);
+      if (!cancion) return texto || id;
+      const nombre = texto || cancion.titulo;
+      return `<a href="#canciones" class="referencia-link" onclick="event.preventDefault(); document.getElementById('canciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('song-${id}').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;">${nombre}</a>`;
+    }
+
+    function crearEnlaceTrama(id, texto) {
+      const trama = datos.tramas?.find(t => t.id === id);
+      if (!trama) return texto || id;
+      const nombre = texto || trama.titulo;
+      return `<a href="#tramas" class="referencia-link" onclick="event.preventDefault(); document.getElementById('tramas').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('trama-${id}').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;">${nombre}</a>`;
+    }
+
+    function procesarReferenciasEnTexto(texto) {
+      if (!texto) return texto;
+      // Si el texto ya contiene HTML (enlaces), no procesar (ya está preprocesado)
+      if (texto.includes('<a') || texto.includes('<span')) {
+        // Si ya tiene enlaces, no procesar para evitar duplicados
+        return texto;
+      }
+      
+      // Si los datos fueron cargados desde archivos procesados, no procesar
+      // (se detecta porque el texto ya tiene enlaces o porque se cargaron desde processed/)
+      // En este caso, simplemente retornar el texto tal cual
+      
+      let resultado = texto;
+      
+      // Primero procesar localizaciones (nombres más largos y específicos primero)
+      if (datos.localizaciones) {
+        // Ordenar por longitud descendente para procesar nombres compuestos primero
+        const localizacionesOrdenadas = [...datos.localizaciones].sort((a, b) => {
+          // Extraer nombre base (sin paréntesis) para ordenar
+          const nombreA = a.nombre.split('(')[0].trim();
+          const nombreB = b.nombre.split('(')[0].trim();
+          return nombreB.length - nombreA.length;
+        });
+        
+        localizacionesOrdenadas.forEach(l => {
+          // Procesar nombre completo y variaciones
+          const nombreCompleto = l.nombre;
+          const nombreBase = nombreCompleto.split('(')[0].trim(); // Sin paréntesis
+          
+          // Crear regex para el nombre completo (maneja espacios en nombres compuestos)
+          const nombreEscapado = nombreCompleto.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          // Regex que funciona con nombres compuestos: busca el nombre completo con límites de palabra
+          // Reemplazar espacios por \s+ para que coincida con cualquier cantidad de espacios
+          const nombreConEspacios = nombreEscapado.replace(/\s+/g, '\\s+');
+          const regexCompleto = new RegExp(`(^|[^\\w])${nombreConEspacios}(?![\\w])`, 'gi');
+          
+          // Crear regex para el nombre base (sin paréntesis)
+          const nombreBaseEscapado = nombreBase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const nombreBaseConEspacios = nombreBaseEscapado.replace(/\s+/g, '\\s+');
+          const regexBase = new RegExp(`(^|[^\\w])${nombreBaseConEspacios}(?![\\w])`, 'gi');
+          
+          // Reemplazar nombre completo primero
+          resultado = resultado.replace(regexCompleto, (match, prefix, offset) => {
+            // Verificar que no esté dentro de un enlace existente
+            const antes = resultado.substring(0, offset);
+            if (antes.includes('<a') && !antes.includes('</a>')) {
+              return match; // Está dentro de un enlace
+            }
+            // Extraer solo el nombre (sin el prefijo de límite)
+            const nombreMatch = match.replace(/^[^\w]+/, '');
+            return (prefix || '') + crearEnlaceLocalizacion(l.id, nombreMatch);
+          });
+          
+          // Si el nombre completo no coincide, intentar con el nombre base
+          if (nombreBase !== nombreCompleto && nombreBase.length > 0) {
+            resultado = resultado.replace(regexBase, (match, prefix, offset) => {
+              // Verificar que no esté dentro de un enlace
+              const antes = resultado.substring(0, offset);
+              if (antes.includes('<a') && !antes.includes('</a>')) {
+                return match;
+              }
+              // Verificar que no sea parte del nombre completo ya procesado
+              const contexto = resultado.substring(Math.max(0, offset - 15), Math.min(resultado.length, offset + match.length + 15));
+              if (contexto.includes(`href="#"`) && contexto.includes('localizaciones')) {
+                return match;
+              }
+              const nombreMatch = match.replace(/^[^\w]+/, '');
+              return (prefix || '') + crearEnlaceLocalizacion(l.id, nombreMatch);
+            });
+          }
+        });
+      }
+      
+      // Luego procesar personajes
+      if (datos.personajes) {
+        const personajesOrdenados = [...datos.personajes].sort((a, b) => b.nombre.length - a.nombre.length);
+        personajesOrdenados.forEach(p => {
+          const nombreEscapado = p.nombre.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          // Manejar nombres compuestos con espacios
+          const nombreConEspacios = nombreEscapado.replace(/\s+/g, '\\s+');
+          const regex = new RegExp(`(^|[^\\w])${nombreConEspacios}(?![\\w])`, 'gi');
+          
+          resultado = resultado.replace(regex, (match, prefix, offset) => {
+            // Verificar que no esté dentro de un enlace existente
+            const antes = resultado.substring(0, offset);
+            if (antes.includes('<a') && !antes.includes('</a>')) {
+              return match;
+            }
+            const nombreMatch = match.replace(/^[^\w]+/, '');
+            return (prefix || '') + crearEnlacePersonaje(p.id, nombreMatch);
+          });
+        });
+      }
+      
+      // Procesar referencias a canciones
+      if (datos.canciones) {
+        const cancionesOrdenadas = [...datos.canciones].sort((a, b) => b.titulo.length - a.titulo.length);
+        cancionesOrdenadas.forEach(c => {
+          const tituloEscapado = c.titulo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const tituloConEspacios = tituloEscapado.replace(/\s+/g, '\\s+');
+          const regex = new RegExp(`(^|[^\\w])${tituloConEspacios}(?![\\w])`, 'gi');
+          
+          resultado = resultado.replace(regex, (match, prefix, offset) => {
+            const antes = resultado.substring(0, offset);
+            if (antes.includes('<a') && !antes.includes('</a>')) {
+              return match;
+            }
+            const tituloMatch = match.replace(/^[^\w]+/, '');
+            return (prefix || '') + crearEnlaceCancion(c.id, tituloMatch);
+          });
+        });
+      }
+      
+      // Procesar referencias a tramas
+      if (datos.tramas) {
+        const tramasOrdenadas = [...datos.tramas].sort((a, b) => b.titulo.length - a.titulo.length);
+        tramasOrdenadas.forEach(t => {
+          const tituloEscapado = t.titulo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const tituloConEspacios = tituloEscapado.replace(/\s+/g, '\\s+');
+          const regex = new RegExp(`(^|[^\\w])${tituloConEspacios}(?![\\w])`, 'gi');
+          
+          resultado = resultado.replace(regex, (match, prefix, offset) => {
+            const antes = resultado.substring(0, offset);
+            if (antes.includes('<a') && !antes.includes('</a>')) {
+              return match;
+            }
+            const tituloMatch = match.replace(/^[^\w]+/, '');
+            return (prefix || '') + crearEnlaceTrama(t.id, tituloMatch);
+          });
+        });
+      }
+      
+      return resultado;
+    }
+
+    // Calcular porcentaje de completitud del personaje (más estricto)
+    function calcularCompletitud(personaje) {
+      const esPrincipal = esPersonajePrincipal(personaje);
+      
+      // Criterios más estrictos según tipo de personaje
+      const minCaracteresTexto = esPrincipal ? 150 : 100; // Principales requieren más detalle
+      const minMotivaciones = esPrincipal ? 3 : 2; // Principales requieren más motivaciones
+      const minHabilidades = esPrincipal ? 3 : 2; // Principales requieren más habilidades
+      const minRelaciones = esPrincipal ? 3 : 2; // Principales requieren más relaciones
+      
+      const origen = personaje.origen ? personaje.origen.trim() : '';
+      const descripcion = personaje.descripcion ? personaje.descripcion.trim() : '';
+      const motivaciones = personaje.motivaciones || [];
+      const habilidades = personaje.habilidades || [];
+      const relaciones = personaje.relaciones || [];
+      
+      const campos = {
+        nombre: personaje.nombre && personaje.nombre.trim() !== '',
+        rol: personaje.rol && personaje.rol.trim() !== '',
+        origen: origen.length >= minCaracteresTexto,
+        descripcion: descripcion.length >= minCaracteresTexto,
+        motivaciones: motivaciones.length >= minMotivaciones,
+        habilidades: habilidades.length >= minHabilidades,
+        relaciones: relaciones.length >= minRelaciones,
+        aparicion: personaje.aparicion && personaje.aparicion.trim() !== '',
+        etiquetas: personaje.etiquetas && personaje.etiquetas.length > 0
+      };
+      
+      // Campos obligatorios (siempre deben estar)
+      const camposObligatorios = ['nombre', 'rol', 'origen', 'descripcion', 'aparicion'];
+      const camposObligatoriosCompletos = camposObligatorios.filter(c => campos[c]).length;
+      const porcentajeObligatorios = (camposObligatoriosCompletos / camposObligatorios.length) * 100;
+      
+      // Campos adicionales (motivaciones, habilidades, relaciones, etiquetas)
+      const camposAdicionales = ['motivaciones', 'habilidades', 'relaciones', 'etiquetas'];
+      const camposAdicionalesCompletos = camposAdicionales.filter(c => campos[c]).length;
+      const porcentajeAdicionales = (camposAdicionalesCompletos / camposAdicionales.length) * 100;
+      
+      // Ponderación: 70% campos obligatorios, 30% campos adicionales
+      const porcentaje = Math.round((porcentajeObligatorios * 0.7) + (porcentajeAdicionales * 0.3));
+      
+      return { 
+        porcentaje, 
+        campos,
+        esPrincipal,
+        minCaracteresTexto,
+        minMotivaciones,
+        minHabilidades,
+        minRelaciones
+      };
+    }
+
+    // Ver ficha completa
+    function verFicha(id) {
+      const personaje = datos.personajes.find(p => p.id === id);
+      if (!personaje) return;
+
+      const modal = document.getElementById('personaje-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      modalTitle.textContent = personaje.nombre;
+      
+      // Calcular completitud
+      const { porcentaje, campos, esPrincipal, minCaracteresTexto, minMotivaciones, minHabilidades, minRelaciones } = calcularCompletitud(personaje);
+      const claseCompletitud = porcentaje < 50 ? 'bajo' : porcentaje < 80 ? 'medio' : '';
+      
+      // Función helper para determinar clase de sección
+      const getSectionClass = (campo) => {
+        if (!campos[campo]) return 'empty';
+        if (campo === 'origen' || campo === 'descripcion') {
+          const valor = personaje[campo] || '';
+          if (valor.trim().length < minCaracteresTexto) return 'incomplete';
+        }
+        if (campo === 'motivaciones') {
+          const valor = personaje.motivaciones || [];
+          if (valor.length < minMotivaciones) return 'incomplete';
+        }
+        if (campo === 'habilidades') {
+          const valor = personaje.habilidades || [];
+          if (valor.length < minHabilidades) return 'incomplete';
+        }
+        if (campo === 'relaciones') {
+          const valor = personaje.relaciones || [];
+          if (valor.length < minRelaciones) return 'incomplete';
+        }
+        return '';
+      };
+      
+      modalBody.innerHTML = `
+        <div class="completitud-header">
+          <div class="completitud-info">
+            <span class="completitud-porcentaje ${claseCompletitud}">${porcentaje}%</span>
+            <div class="completitud-bar">
+              <div class="completitud-fill ${claseCompletitud}" style="width: ${porcentaje}%"></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem;">
+            <span style="color: #aaa; font-size: 0.9rem;">Completitud del guion/diseño</span>
+            <span style="color: ${esPrincipal ? '#79c0ff' : '#888'}; font-size: 0.85rem; font-weight: 600;">
+              ${esPrincipal ? '⭐ Personaje Principal' : 'Personaje Secundario'}
+            </span>
+          </div>
+        </div>
+
+        <div class="ficha-section ${getSectionClass('rol') || getSectionClass('aparicion') ? 'incomplete' : ''}">
+          <h3>Información Básica</h3>
+          <p class="${!campos.rol ? 'empty' : ''}"><strong>Rol:</strong> ${personaje.rol || "<span style='color: #e74c3c; font-style: italic;'>Sin definir</span>"}</p>
+          <p class="${!campos.aparicion ? 'empty' : ''}"><strong>Aparición:</strong> ${personaje.aparicion || "<span style='color: #e74c3c; font-style: italic;'>Sin definir</span>"}</p>
+        </div>
+
+        <div class="ficha-section ${getSectionClass('origen')}">
+          <h3>Origen</h3>
+          <p>${personaje.origen ? procesarReferenciasEnTexto(personaje.origen) : "<span style='color: #e74c3c; font-style: italic;'>Sin definir</span>"}</p>
+          ${personaje.origen && personaje.origen.trim().length > 0 && personaje.origen.trim().length < minCaracteresTexto ? `
+            <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic;">
+              ⚠️ Requiere al menos ${minCaracteresTexto} caracteres (actualmente: ${personaje.origen.trim().length})
+            </p>
+          ` : ''}
+        </div>
+
+        <div class="ficha-section ${getSectionClass('descripcion')}">
+          <h3>Descripción</h3>
+          <p>${personaje.descripcion ? procesarReferenciasEnTexto(personaje.descripcion) : "<span style='color: #e74c3c; font-style: italic;'>Sin definir</span>"}</p>
+          ${personaje.descripcion && personaje.descripcion.trim().length > 0 && personaje.descripcion.trim().length < minCaracteresTexto ? `
+            <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic;">
+              ⚠️ Requiere al menos ${minCaracteresTexto} caracteres (actualmente: ${personaje.descripcion.trim().length})
+            </p>
+          ` : ''}
+        </div>
+
+        <div class="ficha-section ${getSectionClass('motivaciones')}">
+          <h3>Motivaciones</h3>
+          ${personaje.motivaciones && personaje.motivaciones.length > 0 ? `
+            <ul>
+              ${personaje.motivaciones.map(m => `<li>${procesarReferenciasEnTexto(m)}</li>`).join("")}
+            </ul>
+            ${personaje.motivaciones.length < minMotivaciones ? `
+              <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic;">
+                ⚠️ Requiere al menos ${minMotivaciones} motivaciones (actualmente: ${personaje.motivaciones.length})
+              </p>
+            ` : ''}
+          ` : "<p style='color: #e74c3c; font-style: italic;'>Sin motivaciones definidas</p>"}
+        </div>
+
+        <div class="ficha-section ${getSectionClass('habilidades')}">
+          <h3>Habilidades</h3>
+          ${personaje.habilidades && personaje.habilidades.length > 0 ? `
+            <ul>
+              ${personaje.habilidades.map(h => `<li>${procesarReferenciasEnTexto(h)}</li>`).join("")}
+            </ul>
+            ${personaje.habilidades.length < minHabilidades ? `
+              <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic;">
+                ⚠️ Requiere al menos ${minHabilidades} habilidades (actualmente: ${personaje.habilidades.length})
+              </p>
+            ` : ''}
+          ` : "<p style='color: #e74c3c; font-style: italic;'>Sin habilidades definidas</p>"}
+        </div>
+
+        <div class="ficha-section ${getSectionClass('relaciones')}">
+          <h3>Relaciones</h3>
+          ${personaje.relaciones && personaje.relaciones.length > 0 ? `
+            ${personaje.relaciones.map(r => `
+              <div class="relacion-item">
+                <strong>${crearEnlacePersonaje(r.con, r.con)}:</strong> ${r.tipo}
+              </div>
+            `).join("")}
+            ${personaje.relaciones.length < minRelaciones ? `
+              <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic;">
+                ⚠️ Requiere al menos ${minRelaciones} relaciones (actualmente: ${personaje.relaciones.length})
+              </p>
+            ` : ''}
+          ` : "<p style='color: #e74c3c; font-style: italic;'>Sin relaciones definidas</p>"}
+        </div>
+
+        <div class="ficha-section ${!campos.etiquetas ? 'empty' : ''}">
+          <h3>Etiquetas</h3>
+          ${personaje.etiquetas && personaje.etiquetas.length > 0 ? `
+            <div class="etiquetas">
+              ${personaje.etiquetas.map(e => `<span class="etiqueta">${e}</span>`).join("")}
+            </div>
+          ` : "<p style='color: #e74c3c; font-style: italic;'>Sin etiquetas</p>"}
+        </div>
+      `;
+
+      modal.classList.add('active');
+    }
+
+    // Editar personaje
+    function editarPersonaje(id) {
+      const personaje = datos.personajes.find(p => p.id === id);
+      if (!personaje) return;
+
+      personajeEditando = personaje;
+
+      const modal = document.getElementById('personaje-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      modalTitle.textContent = `Editar: ${personaje.nombre}`;
+      
+      modalBody.innerHTML = `
+        <form id="edit-form">
+          <div class="form-group">
+            <label>ID</label>
+            <input type="text" name="id" value="${personaje.id}" readonly>
+          </div>
+
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" value="${personaje.nombre || ""}" required>
+          </div>
+
+          <div class="form-group">
+            <label>Rol</label>
+            <input type="text" name="rol" value="${personaje.rol || ""}">
+          </div>
+
+          <div class="form-group">
+            <label>Origen</label>
+            <textarea name="origen">${personaje.origen || ""}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Descripción</label>
+            <textarea name="descripcion">${personaje.descripcion || ""}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Motivaciones</label>
+            <div id="motivaciones-list">
+              ${(personaje.motivaciones || []).map((m, i) => `
+                <div class="array-input">
+                  <input type="text" name="motivacion-${i}" value="${m}">
+                  <button type="button" class="remove-item-btn" onclick="removeArrayItem('motivaciones', ${i})">×</button>
+                </div>
+              `).join("")}
+            </div>
+            <button type="button" class="add-item-btn" onclick="addArrayItem('motivaciones')">+ Añadir Motivación</button>
+          </div>
+
+          <div class="form-group">
+            <label>Habilidades</label>
+            <div id="habilidades-list">
+              ${(personaje.habilidades || []).map((h, i) => `
+                <div class="array-input">
+                  <input type="text" name="habilidad-${i}" value="${h}">
+                  <button type="button" class="remove-item-btn" onclick="removeArrayItem('habilidades', ${i})">×</button>
+                </div>
+              `).join("")}
+            </div>
+            <button type="button" class="add-item-btn" onclick="addArrayItem('habilidades')">+ Añadir Habilidad</button>
+          </div>
+
+          <div class="form-group">
+            <label>Relaciones</label>
+            <div id="relaciones-list">
+              ${(personaje.relaciones || []).map((r, i) => `
+                <div class="array-input" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; align-items: center;">
+                  <input type="text" name="relacion-con-${i}" value="${r.con}" placeholder="Personaje">
+                  <input type="text" name="relacion-tipo-${i}" value="${r.tipo}" placeholder="Tipo de relación">
+                  <button type="button" class="remove-item-btn" onclick="removeArrayItem('relaciones', ${i})">×</button>
+                </div>
+              `).join("")}
+            </div>
+            <button type="button" class="add-item-btn" onclick="addArrayItem('relaciones')">+ Añadir Relación</button>
+          </div>
+
+          <div class="form-group">
+            <label>Aparición</label>
+            <input type="text" name="aparicion" value="${personaje.aparicion || ""}">
+          </div>
+
+          <div class="form-group">
+            <label>Etiquetas</label>
+            <div id="etiquetas-list">
+              ${(personaje.etiquetas || []).map((e, i) => `
+                <div class="array-input">
+                  <input type="text" name="etiqueta-${i}" value="${e}">
+                  <button type="button" class="remove-item-btn" onclick="removeArrayItem('etiquetas', ${i})">×</button>
+                </div>
+              `).join("")}
+            </div>
+            <button type="button" class="add-item-btn" onclick="addArrayItem('etiquetas')">+ Añadir Etiqueta</button>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-success">Guardar Cambios</button>
+            <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+          </div>
+        </form>
+      `;
+
+      modal.classList.add('active');
+
+      // Submit del formulario
+      document.getElementById('edit-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        guardarPersonaje();
+      });
+    }
+
+    // Añadir item a array
+    function addArrayItem(tipo) {
+      const listId = tipo === 'motivaciones' ? 'motivaciones-list' :
+                     tipo === 'habilidades' ? 'habilidades-list' :
+                     tipo === 'relaciones' ? 'relaciones-list' :
+                     'etiquetas-list';
+      
+      const list = document.getElementById(listId);
+      const index = list.children.length;
+      
+      if (tipo === 'relaciones') {
+        list.innerHTML += `
+          <div class="array-input" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; align-items: center;">
+            <input type="text" name="relacion-con-${index}" placeholder="Personaje">
+            <input type="text" name="relacion-tipo-${index}" placeholder="Tipo de relación">
+            <button type="button" class="remove-item-btn" onclick="removeArrayItem('relaciones', ${index})">×</button>
+          </div>
+        `;
+      } else {
+        list.innerHTML += `
+          <div class="array-input">
+            <input type="text" name="${tipo.slice(0, -1)}-${index}">
+            <button type="button" class="remove-item-btn" onclick="removeArrayItem('${tipo}', ${index})">×</button>
+          </div>
+        `;
+      }
+    }
+
+    // Remover item de array
+    function removeArrayItem(tipo, index) {
+      const listId = tipo === 'motivaciones' ? 'motivaciones-list' :
+                     tipo === 'habilidades' ? 'habilidades-list' :
+                     tipo === 'relaciones' ? 'relaciones-list' :
+                     'etiquetas-list';
+      
+      const list = document.getElementById(listId);
+      if (list.children[index]) {
+        list.children[index].remove();
+        // Reindexar
+        Array.from(list.children).forEach((child, i) => {
+          const inputs = child.querySelectorAll('input');
+          inputs.forEach(input => {
+            const name = input.name;
+            if (name.includes('-')) {
+              const parts = name.split('-');
+              input.name = `${parts[0]}-${i}`;
+            }
+          });
+        });
+      }
+    }
+
+    // Guardar personaje editado
+    function guardarPersonaje() {
+      const form = document.getElementById('edit-form');
+      const formData = new FormData(form);
+      
+      const personaje = {
+        id: formData.get('id'),
+        nombre: formData.get('nombre'),
+        rol: formData.get('rol'),
+        origen: formData.get('origen'),
+        descripcion: formData.get('descripcion'),
+        aparicion: formData.get('aparicion'),
+        motivaciones: [],
+        habilidades: [],
+        relaciones: [],
+        etiquetas: []
+      };
+
+      // Recoger arrays
+      formData.forEach((value, key) => {
+        if (key.startsWith('motivacion-')) {
+          if (value.trim()) personaje.motivaciones.push(value.trim());
+        } else if (key.startsWith('habilidad-')) {
+          if (value.trim()) personaje.habilidades.push(value.trim());
+        } else if (key.startsWith('etiqueta-')) {
+          if (value.trim()) personaje.etiquetas.push(value.trim());
+        }
+      });
+
+      // Recoger relaciones (pares con-con y tipo)
+      const relacionesCon = {};
+      const relacionesTipo = {};
+      formData.forEach((value, key) => {
+        if (key.startsWith('relacion-con-')) {
+          const index = key.split('-')[2];
+          relacionesCon[index] = value.trim();
+        } else if (key.startsWith('relacion-tipo-')) {
+          const index = key.split('-')[2];
+          relacionesTipo[index] = value.trim();
+        }
+      });
+
+      Object.keys(relacionesCon).forEach(index => {
+        if (relacionesCon[index] && relacionesTipo[index]) {
+          personaje.relaciones.push({
+            con: relacionesCon[index],
+            tipo: relacionesTipo[index]
+          });
+        }
+      });
+
+      // Actualizar en datos
+      const index = datos.personajes.findIndex(p => p.id === personaje.id);
+      if (index !== -1) {
+        datos.personajes[index] = personaje;
+      }
+
+      // Guardar automáticamente en localStorage
+      guardarEnLocalStorage("data/personajes.json", datos.personajes);
+
+      cerrarModal();
+      renderPersonajes(datos.personajes);
+      mostrarNotificacion('Cambios guardados automáticamente');
+    }
+
+    // Guardar en archivo usando File System Access API o descarga
+    async function guardarEnArchivo() {
+      try {
+        // Intentar usar File System Access API (Chrome/Edge)
+        if ('showSaveFilePicker' in window) {
+          if (!fileHandle) {
+            // Primera vez: pedir permiso para guardar
+            fileHandle = await window.showSaveFilePicker({
+              suggestedName: 'personajes.json',
+              types: [{
+                description: 'JSON files',
+                accept: { 'application/json': ['.json'] }
+              }]
+            });
+          }
+          
+          // Escribir al archivo
+          const writable = await fileHandle.createWritable();
+          await writable.write(JSON.stringify(datos.personajes, null, 2));
+          await writable.close();
+          
+          cambiosPendientes = false;
+          actualizarEstadoGuardado();
+          mostrarNotificacion('✓ Guardado en archivo');
+          return;
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Error con File System API:', err);
+        }
+      }
+
+      // Fallback: descargar archivo
+      const jsonStr = JSON.stringify(datos.personajes, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'personajes.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      cambiosPendientes = false;
+      actualizarEstadoGuardado();
+      mostrarNotificacion('Archivo descargado (reemplaza data/personajes.json)');
+    }
+
+    // Cerrar modal
+    function cerrarModal() {
+      document.getElementById('personaje-modal').classList.remove('active');
+      personajeEditando = null;
+    }
+
+    // Mostrar notificación
+    function mostrarNotificacion(mensaje) {
+      const notif = document.getElementById('save-notification');
+      notif.textContent = `✓ ${mensaje}`;
+      notif.classList.add('show');
+      setTimeout(() => {
+        notif.classList.remove('show');
+      }, 3000);
+    }
+
+    // Renderizar otras secciones (sin cambios)
     function renderTramas(tramas) {
       const cont = document.getElementById("tramas-list");
       if (!tramas) return;
 
       cont.innerHTML = tramas
-        .map(t => `
-          <article id="trama-${t.id}">
+        .map(t => {
+          let contenido = `<article id="trama-${t.id}">
             <h3>${t.titulo}</h3>
-            <p>${t.resumen || ""}</p>
-          </article>
-        `)
+            <p>${procesarReferenciasEnTexto(t.resumen || "")}</p>`;
+          
+          if (t.personajes_implicados && t.personajes_implicados.length > 0) {
+            contenido += `<div style="margin-top: 0.75rem;">
+              <strong style="color: #aaa; font-size: 0.9rem;">Personajes:</strong>
+              <div class="referencia-list">
+                ${t.personajes_implicados.map(id => crearEnlacePersonaje(id)).join("")}
+              </div>
+            </div>`;
+          }
+          
+          if (t.localizaciones && t.localizaciones.length > 0) {
+            contenido += `<div style="margin-top: 0.75rem;">
+              <strong style="color: #aaa; font-size: 0.9rem;">Localizaciones:</strong>
+              <div class="referencia-list">
+                ${t.localizaciones.map(id => crearEnlaceLocalizacion(id)).join("")}
+              </div>
+            </div>`;
+          }
+          
+          contenido += `</article>`;
+          return contenido;
+        })
         .join("");
     }
 
@@ -220,12 +2321,32 @@
       if (!localizaciones) return;
 
       cont.innerHTML = localizaciones
-        .map(l => `
-          <article id="lugar-${l.id}">
+        .map(l => {
+          let contenido = `<article id="lugar-${l.id}">
             <h3>${l.nombre}</h3>
-            <p>${l.descripcion || ""}</p>
-          </article>
-        `)
+            <p>${procesarReferenciasEnTexto(l.descripcion || "")}</p>`;
+          
+          if (l.personajes_relacionados && l.personajes_relacionados.length > 0) {
+            contenido += `<div style="margin-top: 0.75rem;">
+              <strong style="color: #aaa; font-size: 0.9rem;">Personajes:</strong>
+              <div class="referencia-list">
+                ${l.personajes_relacionados.map(id => crearEnlacePersonaje(id)).join("")}
+              </div>
+            </div>`;
+          }
+          
+          if (l.tramas_relacionadas && l.tramas_relacionadas.length > 0) {
+            contenido += `<div style="margin-top: 0.75rem;">
+              <strong style="color: #aaa; font-size: 0.9rem;">Tramas:</strong>
+              <div class="referencia-list">
+                ${l.tramas_relacionadas.map(id => crearEnlaceTrama(id)).join("")}
+              </div>
+            </div>`;
+          }
+          
+          contenido += `</article>`;
+          return contenido;
+        })
         .join("");
     }
 
@@ -234,12 +2355,36 @@
       if (!canciones) return;
 
       cont.innerHTML = canciones
-        .map(c => `
-          <article id="song-${c.id}">
+        .map(c => {
+          let contenido = `<article id="song-${c.id}">
             <h3>${c.titulo}</h3>
-            <p>${c.descripcion || ""}</p>
-          </article>
-        `)
+            <p>${procesarReferenciasEnTexto(c.descripcion || "")}</p>`;
+          
+          if (c.significado) {
+            contenido += `<p style="margin-top: 0.75rem; color: #aaa; font-style: italic;">${procesarReferenciasEnTexto(c.significado)}</p>`;
+          }
+          
+          if (c.personajes_relacionados && c.personajes_relacionados.length > 0) {
+            contenido += `<div style="margin-top: 0.75rem;">
+              <strong style="color: #aaa; font-size: 0.9rem;">Personajes:</strong>
+              <div class="referencia-list">
+                ${c.personajes_relacionados.map(id => crearEnlacePersonaje(id)).join("")}
+              </div>
+            </div>`;
+          }
+          
+          if (c.tramas_relacionadas && c.tramas_relacionadas.length > 0) {
+            contenido += `<div style="margin-top: 0.75rem;">
+              <strong style="color: #aaa; font-size: 0.9rem;">Tramas:</strong>
+              <div class="referencia-list">
+                ${c.tramas_relacionadas.map(id => crearEnlaceTrama(id)).join("")}
+              </div>
+            </div>`;
+          }
+          
+          contenido += `</article>`;
+          return contenido;
+        })
         .join("");
     }
 
@@ -250,12 +2395,691 @@
       cont.innerHTML = `
         <ol>
           ${timeline
-            .map(e => `<li><strong>${e.titulo}:</strong> ${e.descripcion}</li>`)
+            .map(e => {
+              let contenido = `<li><strong>${e.titulo}:</strong> ${procesarReferenciasEnTexto(e.descripcion)}`;
+              
+              if (e.personajes_implicados && e.personajes_implicados.length > 0) {
+                contenido += `<div style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                  <strong style="color: #aaa; font-size: 0.85rem;">Personajes:</strong>
+                  <span style="margin-left: 0.5rem;">
+                    ${e.personajes_implicados.map(id => crearEnlacePersonaje(id)).join(", ")}
+                  </span>
+                </div>`;
+              }
+              
+              if (e.localizacion) {
+                contenido += `<div style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                  <strong style="color: #aaa; font-size: 0.85rem;">Localización:</strong>
+                  <span style="margin-left: 0.5rem;">${crearEnlaceLocalizacion(e.localizacion)}</span>
+                </div>`;
+              }
+              
+              contenido += `</li>`;
+              return contenido;
+            })
             .join("")}
         </ol>
       `;
     }
 
+    // Visualización de red de relaciones usando datos preprocesados
+    function renderNetworkPreprocessed(networkData) {
+      const container = document.getElementById('network-container');
+      const data = {
+        nodes: new vis.DataSet(networkData.nodes),
+        edges: new vis.DataSet(networkData.edges)
+      };
+      
+      const options = {
+        nodes: {
+          borderWidth: 2,
+          shadow: true,
+          font: {
+            size: 14,
+            face: 'system-ui'
+          }
+        },
+        edges: {
+          width: 2,
+          shadow: true,
+          font: {
+            size: 10,
+            face: 'system-ui',
+            align: 'middle'
+          },
+          labelHighlightBold: false
+        },
+        physics: {
+          enabled: true,
+          stabilization: { iterations: 200 },
+          barnesHut: {
+            gravitationalConstant: -2000,
+            centralGravity: 0.1,
+            springLength: 200,
+            springConstant: 0.04,
+            damping: 0.09
+          }
+        },
+        interaction: {
+          hover: true,
+          tooltipDelay: 200,
+          zoomView: true,
+          dragView: true
+        }
+      };
+      
+      network = new vis.Network(container, data, options);
+      
+      // Event listeners
+      network.on('click', function(params) {
+        if (params.nodes.length > 0) {
+          const nodeId = params.nodes[0];
+          verFicha(nodeId);
+        }
+      });
+      
+      network.on('stabilizationEnd', function() {
+        network.fit();
+      });
+    }
+    
+    // Visualización de red de relaciones (procesamiento en JavaScript - fallback)
+    function renderNetwork(personajes) {
+      if (!personajes || personajes.length === 0) return;
+      
+      const nodes = [];
+      const edges = [];
+      const nodeMap = {};
+      
+      // Crear nodos
+      personajes.forEach((p, index) => {
+        const nodeId = p.id;
+        nodeMap[nodeId] = p;
+        
+        // Determinar color según rol/etiquetas
+        let color = '#79c0ff'; // Azul por defecto
+        if (p.etiquetas) {
+          if (p.etiquetas.includes('protagonista')) color = '#27ae60'; // Verde
+          else if (p.etiquetas.includes('antagonista')) color = '#e74c3c'; // Rojo
+          else if (p.etiquetas.includes('cosmico')) color = '#9b59b6'; // Morado
+        }
+        
+        nodes.push({
+          id: nodeId,
+          label: p.nombre,
+          title: `${p.nombre}\n${p.rol || ''}`,
+          color: {
+            background: color,
+            border: '#fff',
+            highlight: {
+              background: color,
+              border: '#fff'
+            }
+          },
+          font: { color: '#fff', size: 14 },
+          shape: 'dot',
+          size: 20
+        });
+        
+        // Crear aristas desde relaciones
+        if (p.relaciones && Array.isArray(p.relaciones)) {
+          p.relaciones.forEach(rel => {
+            if (rel.con && nodeMap[rel.con]) {
+              edges.push({
+                from: nodeId,
+                to: rel.con,
+                label: rel.tipo || '',
+                title: rel.tipo || '',
+                color: { color: '#666', highlight: '#79c0ff' },
+                arrows: 'to',
+                font: { color: '#aaa', size: 10, align: 'middle' },
+                smooth: { type: 'curvedCW', roundness: 0.2 }
+              });
+            }
+          });
+        }
+      });
+      
+      const data = { nodes, edges };
+      const container = document.getElementById('network-container');
+      
+      const options = {
+        nodes: {
+          borderWidth: 2,
+          shadow: true,
+          font: {
+            size: 14,
+            face: 'system-ui'
+          }
+        },
+        edges: {
+          width: 2,
+          shadow: true,
+          font: {
+            size: 10,
+            face: 'system-ui',
+            align: 'middle'
+          },
+          labelHighlightBold: false
+        },
+        physics: {
+          enabled: true,
+          stabilization: { iterations: 200 },
+          barnesHut: {
+            gravitationalConstant: -2000,
+            centralGravity: 0.1,
+            springLength: 200,
+            springConstant: 0.04,
+            damping: 0.09
+          }
+        },
+        interaction: {
+          hover: true,
+          tooltipDelay: 200,
+          zoomView: true,
+          dragView: true
+        }
+      };
+      
+      network = new vis.Network(container, data, options);
+      
+      // Event listeners
+      network.on('click', function(params) {
+        if (params.nodes.length > 0) {
+          const nodeId = params.nodes[0];
+          const personaje = nodeMap[nodeId];
+          if (personaje) {
+            verFicha(nodeId);
+          }
+        }
+      });
+      
+      network.on('stabilizationEnd', function() {
+        network.fit();
+      });
+    }
+
+    // Visualización de timeline usando datos preprocesados
+    function renderTimelineVisualPreprocessed(timelineVisualData) {
+      const container = document.getElementById('timeline-container');
+      const itemsData = new vis.DataSet(timelineVisualData.items.map(item => ({
+        ...item,
+        start: new Date(item.start),
+        end: item.end ? new Date(item.end) : null
+      })));
+      const groupsData = new vis.DataSet(timelineVisualData.groups);
+      
+      const fechaBase = new Date(timelineVisualData.fecha_base);
+      const fechaMin = new Date(fechaBase.getTime()); // 0%
+      const fechaMax = new Date(fechaBase.getTime() + (100 * 24 * 60 * 60 * 1000)); // 100%
+      
+      const options = {
+        stack: true,
+        showCurrentTime: false,
+        zoomMin: 1000 * 60 * 60 * 24 * 5, // 5 días mínimo (5% del timeline)
+        zoomMax: 1000 * 60 * 60 * 24 * 100, // 100 días máximo (100% del timeline completo)
+        minHeight: 400,
+        maxHeight: 600,
+        orientation: 'top',
+        editable: false,
+        selectable: true,
+        multiselect: false,
+        groupOrder: 'order',
+        moveable: true,
+        zoomable: true,
+        horizontalScroll: true,
+        verticalScroll: false,
+        tooltip: {
+          followMouse: true,
+          overflowMethod: 'cap'
+        },
+        format: {
+          minorLabels: function(date, scale, step) {
+            if (!(date instanceof Date)) {
+              date = new Date(date);
+            }
+            if (isNaN(date.getTime())) {
+              return '';
+            }
+            const diasDesdeBase = (date.getTime() - fechaBase.getTime()) / (24 * 60 * 60 * 1000);
+            const porcentaje = Math.max(0, Math.min(100, diasDesdeBase));
+            return porcentaje.toFixed(1) + '%';
+          },
+          majorLabels: function(date, scale, step) {
+            if (!(date instanceof Date)) {
+              date = new Date(date);
+            }
+            if (isNaN(date.getTime())) {
+              return '';
+            }
+            const diasDesdeBase = (date.getTime() - fechaBase.getTime()) / (24 * 60 * 60 * 1000);
+            const porcentaje = Math.max(0, Math.min(100, diasDesdeBase));
+            return porcentaje.toFixed(0) + '%';
+          }
+        }
+      };
+      
+      timeline = new vis.Timeline(container, itemsData, options);
+      timeline.setGroups(groupsData);
+      
+      // Ajustar vista inicialmente
+      setTimeout(() => {
+        timeline.setWindow(fechaMin, fechaMax, { animation: false });
+      }, 100);
+      
+      // Controlar que el timeline no se salga del rango 0-100%
+      timeline.on('rangechange', function(properties) {
+        const start = properties.start;
+        const end = properties.end;
+        
+        let startFinal = start;
+        let endFinal = end;
+        let needsUpdate = false;
+        
+        if (start < fechaMin) {
+          startFinal = fechaMin;
+          needsUpdate = true;
+        }
+        
+        if (end > fechaMax) {
+          endFinal = fechaMax;
+          needsUpdate = true;
+        }
+        
+        if (needsUpdate) {
+          const duracion = endFinal.getTime() - startFinal.getTime();
+          
+          if (start < fechaMin) {
+            startFinal = fechaMin;
+            endFinal = new Date(fechaMin.getTime() + duracion);
+            if (endFinal > fechaMax) {
+              endFinal = fechaMax;
+              startFinal = new Date(fechaMax.getTime() - duracion);
+              if (startFinal < fechaMin) {
+                startFinal = fechaMin;
+              }
+            }
+          }
+          
+          if (end > fechaMax) {
+            endFinal = fechaMax;
+            startFinal = new Date(fechaMax.getTime() - duracion);
+            if (startFinal < fechaMin) {
+              startFinal = fechaMin;
+            }
+          }
+          
+          timeline.setWindow(startFinal, endFinal, { animation: false });
+        }
+      });
+      
+      // Event listener para clicks
+      timeline.on('select', function(properties) {
+        if (properties.items.length > 0) {
+          document.getElementById('timeline').scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+    
+    // Visualización de timeline con porcentajes (procesamiento en JavaScript - fallback)
+    function renderTimelineVisual(timelineData) {
+      if (!timelineData || timelineData.length === 0) return;
+      
+      const items = [];
+      const groups = [];
+      
+      // Definir etapas y sus propiedades
+      const etapasConfig = {
+        'origen': {
+          nombre: 'Origen Cósmico',
+          color: '#9b59b6',
+          porcentajeInicio: 0,
+          porcentajeFin: 15,
+          orden: 0
+        },
+        'despertar': {
+          nombre: 'Despertar',
+          color: '#3498db',
+          porcentajeInicio: 15,
+          porcentajeFin: 35,
+          orden: 1
+        },
+        'inventrola': {
+          nombre: 'Inventrola',
+          color: '#e74c3c',
+          porcentajeInicio: 35,
+          porcentajeFin: 55,
+          orden: 2
+        },
+        'sismico': {
+          nombre: 'Sísmico',
+          color: '#f39c12',
+          porcentajeInicio: 55,
+          porcentajeFin: 70,
+          orden: 3
+        },
+        'tamen': {
+          nombre: 'Tamen y Amethystos',
+          color: '#27ae60',
+          porcentajeInicio: 70,
+          porcentajeFin: 90,
+          orden: 4
+        },
+        'futuro': {
+          nombre: 'Convergencia Futura',
+          color: '#1abc9c',
+          porcentajeInicio: 90,
+          porcentajeFin: 100,
+          orden: 5
+        }
+      };
+      
+      // Crear grupos por etapa
+      Object.keys(etapasConfig).forEach(etapaKey => {
+        const config = etapasConfig[etapaKey];
+        groups.push({
+          id: etapaKey,
+          content: config.nombre,
+          className: `timeline-group-${etapaKey}`
+        });
+      });
+      
+      // Mapear eventos a porcentajes según etapa y orden narrativo
+      const eventosPorEtapa = {};
+      timelineData.forEach(evento => {
+        const etapa = evento.etapa || 'futuro';
+        if (!eventosPorEtapa[etapa]) {
+          eventosPorEtapa[etapa] = [];
+        }
+        eventosPorEtapa[etapa].push(evento);
+      });
+      
+      // Crear items con porcentajes
+      Object.keys(etapasConfig).forEach(etapaKey => {
+        const config = etapasConfig[etapaKey];
+        const eventos = eventosPorEtapa[etapaKey] || [];
+        
+        if (eventos.length === 0) return;
+        
+        // Calcular rango de porcentajes para esta etapa
+        const rangoEtapa = config.porcentajeFin - config.porcentajeInicio;
+        const porcentajePorEvento = rangoEtapa / eventos.length;
+        
+        eventos.forEach((evento, index) => {
+          // Calcular porcentaje para este evento
+          const porcentajeInicio = config.porcentajeInicio + (index * porcentajePorEvento);
+          const porcentajeFin = porcentajeInicio + porcentajePorEvento;
+          
+          // Convertir porcentaje a fecha (usar escala 0-100 como base de tiempo)
+          // Usar una fecha base y convertir porcentajes a milisegundos
+          const fechaBase = new Date(2020, 0, 1);
+          const fechaInicio = new Date(fechaBase.getTime() + (porcentajeInicio * 24 * 60 * 60 * 1000));
+          const fechaFin = new Date(fechaBase.getTime() + (porcentajeFin * 24 * 60 * 60 * 1000));
+          
+          // Determinar si es evento puntual o período
+          const esPunto = etapaKey === 'origen' || evento.titulo.includes('Explosión') || 
+                         evento.titulo.includes('Caída') || evento.titulo.includes('Aparición');
+          
+          items.push({
+            id: evento.id,
+            content: evento.titulo.length > 30 ? evento.titulo.substring(0, 27) + '...' : evento.titulo,
+            start: fechaInicio,
+            end: esPunto ? null : fechaFin,
+            group: etapaKey,
+            title: `${evento.titulo}\n\n${evento.descripcion}\n\nProgreso: ${porcentajeInicio.toFixed(1)}% - ${porcentajeFin.toFixed(1)}%`,
+            className: `timeline-event-${etapaKey}`,
+            type: esPunto ? 'point' : 'range',
+            style: `background-color: ${config.color}; border-color: ${config.color}; color: #fff;`
+          });
+        });
+      });
+      
+      const container = document.getElementById('timeline-container');
+      const itemsData = new vis.DataSet(items);
+      const groupsData = new vis.DataSet(groups);
+      
+      const options = {
+        stack: true,
+        showCurrentTime: false,
+        zoomMin: 1000 * 60 * 60 * 24 * 5, // 5 días mínimo (5% del timeline)
+        zoomMax: 1000 * 60 * 60 * 24 * 100, // 100 días máximo (100% del timeline completo)
+        minHeight: 400, // Altura mínima (eje vertical)
+        maxHeight: 600, // Altura máxima (eje vertical)
+        orientation: 'top',
+        editable: false,
+        selectable: true,
+        multiselect: false,
+        groupOrder: 'order',
+        moveable: true,
+        zoomable: true,
+        horizontalScroll: true,
+        verticalScroll: false, // Desactivar scroll vertical para mantener altura fija
+        tooltip: {
+          followMouse: true,
+          overflowMethod: 'cap'
+        },
+        format: {
+          minorLabels: function(date, scale, step) {
+            // Asegurar que date es un objeto Date
+            if (!(date instanceof Date)) {
+              date = new Date(date);
+            }
+            if (isNaN(date.getTime())) {
+              return '';
+            }
+            // Convertir fecha a porcentaje
+            const fechaBase = new Date(2020, 0, 1);
+            const diasDesdeBase = (date.getTime() - fechaBase.getTime()) / (24 * 60 * 60 * 1000);
+            const porcentaje = Math.max(0, Math.min(100, diasDesdeBase));
+            return porcentaje.toFixed(1) + '%';
+          },
+          majorLabels: function(date, scale, step) {
+            // Asegurar que date es un objeto Date
+            if (!(date instanceof Date)) {
+              date = new Date(date);
+            }
+            if (isNaN(date.getTime())) {
+              return '';
+            }
+            // Convertir fecha a porcentaje
+            const fechaBase = new Date(2020, 0, 1);
+            const diasDesdeBase = (date.getTime() - fechaBase.getTime()) / (24 * 60 * 60 * 1000);
+            const porcentaje = Math.max(0, Math.min(100, diasDesdeBase));
+            return porcentaje.toFixed(0) + '%';
+          }
+        }
+      };
+      
+      timeline = new vis.Timeline(container, itemsData, options);
+      timeline.setGroups(groupsData);
+      
+      // Definir límites del timeline (0% - 100%)
+      const fechaBase = new Date(2020, 0, 1);
+      const fechaMin = new Date(fechaBase.getTime()); // 0%
+      const fechaMax = new Date(fechaBase.getTime() + (100 * 24 * 60 * 60 * 1000)); // 100%
+      
+      // Ajustar vista inicialmente - mostrar todo el rango (0-100%)
+      setTimeout(() => {
+        timeline.setWindow(fechaMin, fechaMax, { animation: false });
+      }, 100);
+      
+      // Controlar que el timeline no se salga del rango 0-100%
+      timeline.on('rangechange', function(properties) {
+        const start = properties.start;
+        const end = properties.end;
+        
+        let startFinal = start;
+        let endFinal = end;
+        let needsUpdate = false;
+        
+        // Limitar inicio a fechaMin (0%)
+        if (start < fechaMin) {
+          startFinal = fechaMin;
+          needsUpdate = true;
+        }
+        
+        // Limitar fin a fechaMax (100%)
+        if (end > fechaMax) {
+          endFinal = fechaMax;
+          needsUpdate = true;
+        }
+        
+        // Si se salió de los límites, corregir
+        if (needsUpdate) {
+          // Calcular duración actual
+          const duracion = endFinal.getTime() - startFinal.getTime();
+          
+          // Si el inicio está antes de 0%, ajustar ambos límites
+          if (start < fechaMin) {
+            startFinal = fechaMin;
+            endFinal = new Date(fechaMin.getTime() + duracion);
+            // Si el fin se pasa de 100%, ajustar desde el final
+            if (endFinal > fechaMax) {
+              endFinal = fechaMax;
+              startFinal = new Date(fechaMax.getTime() - duracion);
+              // Asegurar que el inicio no sea menor que 0%
+              if (startFinal < fechaMin) {
+                startFinal = fechaMin;
+              }
+            }
+          }
+          
+          // Si el fin está después de 100%, ajustar ambos límites
+          if (end > fechaMax) {
+            endFinal = fechaMax;
+            startFinal = new Date(fechaMax.getTime() - duracion);
+            // Asegurar que el inicio no sea menor que 0%
+            if (startFinal < fechaMin) {
+              startFinal = fechaMin;
+            }
+          }
+          
+          timeline.setWindow(startFinal, endFinal, { animation: false });
+        }
+      });
+      
+      // Event listener para clicks
+      timeline.on('select', function(properties) {
+        if (properties.items.length > 0) {
+          const eventoId = properties.items[0];
+          const evento = timelineData.find(e => e.id === eventoId);
+          if (evento) {
+            // Scroll a la sección de timeline
+            document.getElementById('timeline').scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    }
+
+    // Funciones de control de visualizaciones
+    function resetNetworkLayout() {
+      if (network) {
+        network.setOptions({ physics: true });
+        setTimeout(() => {
+          network.setOptions({ physics: false });
+          network.fit();
+        }, 1000);
+      }
+    }
+
+    function fitNetwork() {
+      if (network) {
+        network.fit({ animation: true });
+      }
+    }
+
+    function fitTimeline() {
+      if (timeline) {
+        // Obtener todas las fechas de los items
+        const items = timeline.itemsData.get();
+        if (items.length === 0) return;
+        
+        const fechas = items.map(item => {
+          const fecha = new Date(item.start);
+          return fecha.getTime();
+        }).filter(f => !isNaN(f));
+        
+        if (fechas.length === 0) return;
+        
+        const fechaMin = new Date(Math.min(...fechas));
+        const fechaMax = new Date(Math.max(...fechas));
+        
+        // Añadir margen del 10%
+        const margen = (fechaMax.getTime() - fechaMin.getTime()) * 0.1;
+        const fechaInicio = new Date(fechaMin.getTime() - margen);
+        const fechaFin = new Date(fechaMax.getTime() + margen);
+        
+        // Asegurar que esté dentro de los límites de zoom (5% - 100%)
+        const fechaBase = new Date(2020, 0, 1);
+        const duracion = fechaFin.getTime() - fechaInicio.getTime();
+        const minDuracion = 1000 * 60 * 60 * 24 * 5; // 5 días (5% mínimo)
+        const maxDuracion = 1000 * 60 * 60 * 24 * 100; // 100 días (100% máximo)
+        
+        let fechaInicioFinal = fechaInicio;
+        let fechaFinFinal = fechaFin;
+        
+        if (duracion < minDuracion) {
+          // Expandir desde el centro
+          const centro = fechaInicio.getTime() + (duracion / 2);
+          fechaInicioFinal = new Date(centro - minDuracion / 2);
+          fechaFinFinal = new Date(centro + minDuracion / 2);
+        } else if (duracion > maxDuracion) {
+          // Reducir desde el centro
+          const centro = fechaInicio.getTime() + (duracion / 2);
+          fechaInicioFinal = new Date(centro - maxDuracion / 2);
+          fechaFinFinal = new Date(centro + maxDuracion / 2);
+        }
+        
+        // Asegurar que no salga del rango 0-100%
+        const fechaBaseInicio = fechaBase.getTime();
+        const fechaBaseFin = fechaBase.getTime() + (100 * 24 * 60 * 60 * 1000);
+        
+        // Si el inicio está antes de 0%, ajustar
+        if (fechaInicioFinal.getTime() < fechaBaseInicio) {
+          const duracionActual = fechaFinFinal.getTime() - fechaInicioFinal.getTime();
+          fechaInicioFinal = new Date(fechaBaseInicio);
+          fechaFinFinal = new Date(fechaBaseInicio + duracionActual);
+          // Si el fin se pasa de 100%, ajustar desde el final
+          if (fechaFinFinal.getTime() > fechaBaseFin) {
+            fechaFinFinal = new Date(fechaBaseFin);
+            fechaInicioFinal = new Date(fechaBaseFin - duracionActual);
+            // Asegurar que el inicio no sea menor que 0%
+            if (fechaInicioFinal.getTime() < fechaBaseInicio) {
+              fechaInicioFinal = new Date(fechaBaseInicio);
+            }
+          }
+        }
+        
+        // Si el fin está después de 100%, ajustar
+        if (fechaFinFinal.getTime() > fechaBaseFin) {
+          const duracionActual = fechaFinFinal.getTime() - fechaInicioFinal.getTime();
+          fechaFinFinal = new Date(fechaBaseFin);
+          fechaInicioFinal = new Date(fechaBaseFin - duracionActual);
+          // Asegurar que el inicio no sea menor que 0%
+          if (fechaInicioFinal.getTime() < fechaBaseInicio) {
+            fechaInicioFinal = new Date(fechaBaseInicio);
+          }
+        }
+        
+        timeline.setWindow(fechaInicioFinal, fechaFinFinal, { animation: true });
+      }
+    }
+
+    // Hacer funciones globales para onclick
+    window.verFicha = verFicha;
+    window.editarPersonaje = editarPersonaje;
+    window.addArrayItem = addArrayItem;
+    window.removeArrayItem = removeArrayItem;
+    window.cerrarModal = cerrarModal;
+    window.resetNetworkLayout = resetNetworkLayout;
+    window.fitNetwork = fitNetwork;
+    window.fitTimeline = fitTimeline;
+    window.abrirModalCrear = abrirModalCrear;
+    window.cerrarModalCrear = cerrarModalCrear;
+    window.seleccionarTipo = seleccionarTipo;
+    window.guardarNuevaEntidad = guardarNuevaEntidad;
+
+    // Inicializar
     init();
   </script>
 </body>

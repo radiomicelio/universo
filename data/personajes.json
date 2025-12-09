@@ -175,24 +175,28 @@
   {
     "id": "amethystos",
     "nombre": "Amethystos",
-    "rol": "Bruja del Orinoco / aliada ambigua",
-    "origen": "Bruja nacida en las Selvas sin Amor, un territorio devastado por incendios y tala masiva.",
-    "descripcion": "Poderosa pero contradictoria. Intenta hacer el mal pero siempre termina haciendo el bien. Su magia está ligada a la vida vegetal y al Micelio (sin ser una servidora de él).",
+    "rol": "Bruja del Orinoco / avatar de Marú",
+    "origen": "Nacida en las Selvas sin Amor, un territorio del Orinoco profundamente dañado por incendios, talas y extracción. Es la forma mítica que adopta Marú dentro del universo de Radio Micelio, conectada al Micelio Negro pero en conflicto con él.",
+    "descripcion": "Amethystos es una bruja poderosa que quiere ser mala, pero todo lo que hace termina siendo un acto de protección o de transformación positiva. Su magia está ligada al agua, a las raíces y al micelio. Se mueve entre túneles subterráneos y laberintos de hifas, y sus conjuros abren caminos entre vida y muerte.",
     "motivaciones": [
-      "Proteger las Selvas sin Amor",
-      "Comprender el Micelio Negro",
-      "Acompañar a Tamen en su misión"
+      "Proteger las Selvas sin Amor de la destrucción absoluta",
+      "Comprender y canalizar el poder del Micelio Negro sin someterse a él",
+      "Guiar y confundir a la vez a quienes atraviesan sus territorios (como Sísmico)",
+      "Mantener un vínculo secreto con Tamen a través de la ecología y la magia"
     ],
     "habilidades": [
-      "Magia vegetal",
-      "Control de hongos simbióticos",
-      "Hechizos impredecibles"
+      "Magia vegetal y micelial",
+      "Conjuros de laberintos subterráneos",
+      "Capacidad de invocar visiones de vida y muerte",
+      "Escuchar y hablar con las raíces y las aguas profundas"
     ],
     "relaciones": [
-      { "con": "tamen", "tipo": "alianza espiritual" },
-      { "con": "vaquero-atomico", "tipo": "afinidad energética" }
+      { "con": "tamen", "tipo": "alianza espiritual/ecológica" },
+      { "con": "sismico", "tipo": "prueba iniciática a través de sus túneles" },
+      { "con": "vaquero-atomico", "tipo": "afinidad energética a distancia" },
+      { "con": "micelio-negro", "tipo": "tensión / dependencia mutua" }
     ],
-    "aparicion": "Cómic / lore",
-    "etiquetas": ["bruja", "selva"]
+    "aparicion": "Relatos, cómic y canción \"Serpenteando\"",
+    "etiquetas": ["bruja", "selva", "micelio", "maru"]
   }
 ]

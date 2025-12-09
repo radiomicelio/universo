@@ -1,0 +1,432 @@
+{
+  "nodes": [
+    {
+      "id": "vaquero-atomico",
+      "label": "Vaquero Atómico",
+      "title": "Vaquero Atómico\nAntihéroe / Entidad cuántica",
+      "color": {
+        "background": "#27ae60",
+        "border": "#fff",
+        "highlight": {
+          "background": "#27ae60",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "sismico",
+      "label": "Sísmico",
+      "title": "Sísmico\nFelino cuántico / prófugo dimensional",
+      "color": {
+        "background": "#27ae60",
+        "border": "#fff",
+        "highlight": {
+          "background": "#27ae60",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "tamen",
+      "label": "Tamen",
+      "title": "Tamen\nPeriodista / narradora / enlace con los ecosistemas",
+      "color": {
+        "background": "#79c0ff",
+        "border": "#fff",
+        "highlight": {
+          "background": "#79c0ff",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "musitoxic",
+      "label": "Musitoxic",
+      "title": "Musitoxic\nMagnate musical / antagonista",
+      "color": {
+        "background": "#e74c3c",
+        "border": "#fff",
+        "highlight": {
+          "background": "#e74c3c",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "miguel-mafias",
+      "label": "Miguel Mafias (El Muso)",
+      "title": "Miguel Mafias (El Muso)\nAntagonista secundario / empresario",
+      "color": {
+        "background": "#e74c3c",
+        "border": "#fff",
+        "highlight": {
+          "background": "#e74c3c",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "jhonny",
+      "label": "Jhonny",
+      "title": "Jhonny\nTrabajador de Inventrola / antagonista menor",
+      "color": {
+        "background": "#79c0ff",
+        "border": "#fff",
+        "highlight": {
+          "background": "#79c0ff",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "sirius",
+      "label": "Sirius",
+      "title": "Sirius\nObservador cósmico",
+      "color": {
+        "background": "#9b59b6",
+        "border": "#fff",
+        "highlight": {
+          "background": "#9b59b6",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "amethystos",
+      "label": "Amethystos",
+      "title": "Amethystos\nBruja del Orinoco / avatar de Marú",
+      "color": {
+        "background": "#79c0ff",
+        "border": "#fff",
+        "highlight": {
+          "background": "#79c0ff",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    }
+  ],
+  "edges": [
+    {
+      "from": "sismico",
+      "to": "vaquero-atomico",
+      "label": "destino común",
+      "title": "destino común",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "tamen",
+      "to": "vaquero-atomico",
+      "label": "curiosidad científica",
+      "title": "curiosidad científica",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "musitoxic",
+      "to": "vaquero-atomico",
+      "label": "seducción / manipulación",
+      "title": "seducción / manipulación",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "miguel-mafias",
+      "to": "musitoxic",
+      "label": "colaboración familiar corrupta",
+      "title": "colaboración familiar corrupta",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "miguel-mafias",
+      "to": "vaquero-atomico",
+      "label": "explotación",
+      "title": "explotación",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "jhonny",
+      "to": "vaquero-atomico",
+      "label": "manipulación",
+      "title": "manipulación",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "jhonny",
+      "to": "miguel-mafias",
+      "label": "obediencia",
+      "title": "obediencia",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "sirius",
+      "to": "sismico",
+      "label": "guía",
+      "title": "guía",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "sirius",
+      "to": "vaquero-atomico",
+      "label": "observación",
+      "title": "observación",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "amethystos",
+      "to": "tamen",
+      "label": "alianza espiritual/ecológica",
+      "title": "alianza espiritual/ecológica",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "amethystos",
+      "to": "sismico",
+      "label": "prueba iniciática a través de sus túneles",
+      "title": "prueba iniciática a través de sus túneles",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "amethystos",
+      "to": "vaquero-atomico",
+      "label": "afinidad energética a distancia",
+      "title": "afinidad energética a distancia",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    }
+  ],
+  "node_map": {
+    "vaquero-atomico": {
+      "nombre": "Vaquero Atómico",
+      "rol": "Antihéroe / Entidad cuántica"
+    },
+    "sismico": {
+      "nombre": "Sísmico",
+      "rol": "Felino cuántico / prófugo dimensional"
+    },
+    "tamen": {
+      "nombre": "Tamen",
+      "rol": "Periodista / narradora / enlace con los ecosistemas"
+    },
+    "musitoxic": {
+      "nombre": "Musitoxic",
+      "rol": "Magnate musical / antagonista"
+    },
+    "miguel-mafias": {
+      "nombre": "Miguel Mafias (El Muso)",
+      "rol": "Antagonista secundario / empresario"
+    },
+    "jhonny": {
+      "nombre": "Jhonny",
+      "rol": "Trabajador de Inventrola / antagonista menor"
+    },
+    "sirius": {
+      "nombre": "Sirius",
+      "rol": "Observador cósmico"
+    },
+    "amethystos": {
+      "nombre": "Amethystos",
+      "rol": "Bruja del Orinoco / avatar de Marú"
+    }
+  }
+}

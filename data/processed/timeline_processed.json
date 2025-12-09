@@ -1,0 +1,174 @@
+[
+  {
+    "id": "cuasar-origen",
+    "titulo": "Explosión del cuásar que crea la Nebulosa Consciente",
+    "descripcion": "Una explosión de cuásar genera una nebulosa energética capaz de adquirir conciencia. Esta nebulosa iniciará un viaje milenario por el universo.",
+    "personajes_implicados": [
+      "vaquero-atomico",
+      "sirius"
+    ],
+    "localizacion": "galaxia-origen",
+    "etapa": "origen"
+  },
+  {
+    "id": "viaje-nebulosa",
+    "titulo": "Viaje milenario de la Nebulosa hacia el Sistema Solar",
+    "descripcion": "La nebulosa consume energía y evoluciona, moviéndose entre regiones cósmicas hasta acercarse al Sol. Durante este periodo desarrolla patrones primarios de conciencia.",
+    "personajes_implicados": [
+      "vaquero-atomico"
+    ],
+    "localizacion": "espacio-profundo",
+    "etapa": "origen"
+  },
+  {
+    "id": "caida-diamante",
+    "titulo": "Caída del diamante cuántico en el Polo Norte",
+    "descripcion": "La nebulosa solidifica su estructura en forma de un diamante cuántico que cae sobre el hielo del <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-polo-norte').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Polo Norte</a>, donde queda atrapado durante siglos.",
+    "personajes_implicados": [
+      "vaquero-atomico"
+    ],
+    "localizacion": "polo-norte",
+    "etapa": "despertar"
+  },
+  {
+    "id": "deshielo",
+    "titulo": "Deshielo del diamante y despertar inicial",
+    "descripcion": "El calentamiento global fractura la capa de hielo, liberando al diamante cuántico y permitiendo que su interior comience a reactivarse.",
+    "personajes_implicados": [
+      "vaquero-atomico"
+    ],
+    "localizacion": "polo-norte",
+    "etapa": "despertar"
+  },
+  {
+    "id": "primer-viaje",
+    "titulo": "Viaje hacia Nueva York con ayuda de los Inuit",
+    "descripcion": "Tras recuperar una forma inicial, el <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> es ayudado por los Inuit a navegar hacia la civilización, intrigados por su naturaleza.",
+    "personajes_implicados": [
+      "vaquero-atomico"
+    ],
+    "localizacion": "oceano-artico",
+    "etapa": "despertar"
+  },
+  {
+    "id": "nueva-york-luces",
+    "titulo": "Primera distorsión energética en Nueva York",
+    "descripcion": "Las luces de <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-nueva-york').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Nueva York</a> empiezan a parpadear y fallar ante la presencia del <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a>. Esto llama la atención de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('jhonny'); return false;\">Jhonny</a>.",
+    "personajes_implicados": [
+      "vaquero-atomico",
+      "jhonny"
+    ],
+    "localizacion": "nueva-york",
+    "etapa": "inventrola"
+  },
+  {
+    "id": "captacion-jhonny",
+    "titulo": "Jhonny capta al Vaquero Atómico",
+    "descripcion": "<a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('jhonny'); return false;\">Jhonny</a> convence al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> de ir a la fábrica <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>, prometiéndole seguridad, ayuda y un propósito humano.",
+    "personajes_implicados": [
+      "vaquero-atomico",
+      "jhonny"
+    ],
+    "localizacion": "nueva-york",
+    "etapa": "inventrola"
+  },
+  {
+    "id": "entrada-inventrola",
+    "titulo": "Entrada del Vaquero en Inventrola",
+    "descripcion": "El <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> entra en la fábrica y su energía revoluciona los sistemas, aumentando el rendimiento y atrayendo la atención de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> y Miguel Mafias.",
+    "personajes_implicados": [
+      "vaquero-atomico",
+      "musitoxic",
+      "miguel-mafias"
+    ],
+    "localizacion": "inventrola",
+    "etapa": "inventrola"
+  },
+  {
+    "id": "desastre-inventrola",
+    "titulo": "Desastre nuclear provocado por Musitoxic",
+    "descripcion": "Durante un intento torpe de seducir al Vaquero, <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> provoca un colapso energético que desencadena un accidente nuclear y una onda expansiva de consecuencias ambientales.",
+    "personajes_implicados": [
+      "musitoxic",
+      "vaquero-atomico",
+      "miguel-mafias",
+      "jhonny"
+    ],
+    "localizacion": "inventrola",
+    "etapa": "inventrola"
+  },
+  {
+    "id": "senal-sirius",
+    "titulo": "Sirius envía una señal a Sísmico",
+    "descripcion": "El observador cósmico <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sirius'); return false;\">Sirius</a> percibe el desequilibrio energético generado por <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a> y despierta a <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> enviándole un destello dimensional.",
+    "personajes_implicados": [
+      "sismico",
+      "sirius"
+    ],
+    "localizacion": "prision-musitoxic",
+    "etapa": "sismico"
+  },
+  {
+    "id": "escape-sismico",
+    "titulo": "Sísmico se divide en varias versiones y escapa",
+    "descripcion": "<a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> entra en un plano cuántico fractal, se desdobla y debe elegir entre la vida y la muerte antes de romper un cristal dimensional y escapar.",
+    "personajes_implicados": [
+      "sismico"
+    ],
+    "localizacion": "prision-musitoxic",
+    "etapa": "sismico"
+  },
+  {
+    "id": "entrada-espana",
+    "titulo": "Aparición de Sísmico en la España vaciada",
+    "descripcion": "<a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> llega a un desierto verde alterado ecológicamente, donde comienza una nueva etapa de su existencia.",
+    "personajes_implicados": [
+      "sismico"
+    ],
+    "localizacion": "espana-vaciada",
+    "etapa": "sismico"
+  },
+  {
+    "id": "investigacion-tamen",
+    "titulo": "Tamen registra las primeras anomalías",
+    "descripcion": "<a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('tamen'); return false;\">Tamen</a> detecta patrones ecológicos inusuales: alteraciones en micelios, cambios climáticos locales y señales energéticas que no cuadran con lo conocido.",
+    "personajes_implicados": [
+      "tamen"
+    ],
+    "localizacion": "peninsula-iberica",
+    "etapa": "tamen"
+  },
+  {
+    "id": "despertar-amethystos",
+    "titulo": "Despertar de Amethystos en las Selvas sin Amor",
+    "descripcion": "Tras años viendo arder su territorio, la futura <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> realiza un ritual desesperado con raíces, agua y micelio. En lugar de destruirlo todo, el conjuro la fusiona parcialmente con la red micelial, otorgándole poder y condenándola a sentir el dolor de la selva para siempre.",
+    "personajes_implicados": [
+      "amethystos"
+    ],
+    "localizacion": "selvas-sin-amor",
+    "etapa": "tamen"
+  },
+  {
+    "id": "tamen-amethystos",
+    "titulo": "Tamen entra en contacto con Amethystos",
+    "descripcion": "Durante su investigación de ecosistemas, <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('tamen'); return false;\">Tamen</a> cruza información que la lleva a las <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-selvas-sin-amor').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Selvas sin Amor</a>, donde forma una alianza con <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a>.",
+    "personajes_implicados": [
+      "tamen",
+      "amethystos"
+    ],
+    "localizacion": "selvas-sin-amor",
+    "etapa": "tamen"
+  },
+  {
+    "id": "convergencia",
+    "titulo": "Convergencia futura en la España Vaciada",
+    "descripcion": "Las trayectorias de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a>, <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> y <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('tamen'); return false;\">Tamen</a> apuntan hacia un encuentro inevitable en la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-espana-vaciada').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">España vaciada</a>, donde se cruzan fuerzas energéticas, ecológicas y humanas.",
+    "personajes_implicados": [
+      "vaquero-atomico",
+      "sismico",
+      "tamen"
+    ],
+    "localizacion": "espana-vaciada",
+    "etapa": "futuro"
+  }
+]

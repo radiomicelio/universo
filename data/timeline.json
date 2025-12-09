@@ -104,6 +104,14 @@
     "etapa": "tamen"
   },
   {
+    "id": "despertar-amethystos",
+    "titulo": "Despertar de Amethystos en las Selvas sin Amor",
+    "descripcion": "Tras años viendo arder su territorio, la futura Amethystos realiza un ritual desesperado con raíces, agua y micelio. En lugar de destruirlo todo, el conjuro la fusiona parcialmente con la red micelial, otorgándole poder y condenándola a sentir el dolor de la selva para siempre.",
+    "personajes_implicados": ["amethystos"],
+    "localizacion": "selvas-sin-amor",
+    "etapa": "tamen"
+  },
+  {
     "id": "tamen-amethystos",
     "titulo": "Tamen entra en contacto con Amethystos",
     "descripcion": "Durante su investigación de ecosistemas, Tamen cruza información que la lleva a las Selvas sin Amor, donde forma una alianza con Amethystos.",

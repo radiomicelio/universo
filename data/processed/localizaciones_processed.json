@@ -1,0 +1,151 @@
+[
+  {
+    "id": "polo-norte",
+    "nombre": "Polo Norte",
+    "descripcion": "Región helada donde el diamante cuántico que contenía al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> permaneció congelado durante siglos. Su deshielo accidental, provocado por el calentamiento global, marcó el inicio del despertar de la entidad.",
+    "tipo": "natural",
+    "elementos_clave": [
+      "Yacimiento de diamante cuántico",
+      "Glaciares fracturados",
+      "Espejos de luz auroral"
+    ],
+    "tramas_relacionadas": [
+      "origen-nebulosa"
+    ],
+    "personajes_relacionados": [
+      "vaquero-atomico"
+    ]
+  },
+  {
+    "id": "galaxia-origen",
+    "nombre": "Galaxia de Origen del Vaquero",
+    "descripcion": "Zona remota del universo donde una explosión de cuásar provocó la creación de la Nebulosa Consciente. Es un lugar más conceptual que geográfico, clave para la cosmología del universo.",
+    "tipo": "cosmico",
+    "elementos_clave": [
+      "Restos de cuásares",
+      "Nebulosas inteligentes",
+      "Energías pre-miceliales"
+    ],
+    "tramas_relacionadas": [
+      "origen-nebulosa"
+    ],
+    "personajes_relacionados": [
+      "vaquero-atomico",
+      "sirius"
+    ]
+  },
+  {
+    "id": "nueva-york",
+    "nombre": "Nueva York",
+    "descripcion": "Primera gran ciudad humana donde el <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> observa el comportamiento humano y desarrolla su identidad basada en héroes del cine del oeste. Un lugar de caos, luces y energía que él distorsiona sin querer.",
+    "tipo": "urbano",
+    "elementos_clave": [
+      "Calles saturadas de neón",
+      "Pantallas que reaccionan a la energía del Vaquero",
+      "Subestaciones eléctricas alteradas"
+    ],
+    "tramas_relacionadas": [
+      "llegada-a-nueva-york"
+    ],
+    "personajes_relacionados": [
+      "vaquero-atomico",
+      "jhonny"
+    ]
+  },
+  {
+    "id": "inventrola",
+    "nombre": "Inventrola",
+    "descripcion": "Fábrica de energía experimental financiada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> y dirigida por Miguel Mafias. Mezcla maquinaria industrial con tecnologías inspiradas en diseños inconclusos de Tesla. Lugar del desastre nuclear provocado tras un intento fallido de seducción.",
+    "tipo": "industrial",
+    "elementos_clave": [
+      "Bobinas de Tesla modificadas",
+      "Salas de contención energética",
+      "Escenario del desastre nuclear"
+    ],
+    "tramas_relacionadas": [
+      "desastre-inventrola",
+      "llegada-a-nueva-york"
+    ],
+    "personajes_relacionados": [
+      "musitoxic",
+      "miguel-mafias",
+      "jhonny",
+      "vaquero-atomico"
+    ]
+  },
+  {
+    "id": "prision-musitoxic",
+    "nombre": "Prisión Subterránea de Musitoxic",
+    "descripcion": "Complejo oculto donde <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> retiene entidades y músicos-productores para aprovecharlos en experimentos energéticos. Aquí estuvo encerrado <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> antes de que <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sirius'); return false;\">Sirius</a> enviara su señal.",
+    "tipo": "subterraneo",
+    "elementos_clave": [
+      "Celdas con campos cuánticos",
+      "Torres invertidas de contención",
+      "Sistemas de vigilancia orgánica"
+    ],
+    "tramas_relacionadas": [
+      "escape-sismico"
+    ],
+    "personajes_relacionados": [
+      "sismico",
+      "musitoxic",
+      "sirius"
+    ]
+  },
+  {
+    "id": "espana-vaciada",
+    "nombre": "España Vaciada (Desierto Verde)",
+    "descripcion": "Región semiárida de la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-peninsula-iberica').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">península ibérica</a> transformada por cambios climáticos y energéticos. Este paisaje mezcla desierto, vegetación micelial, arquitectura rural abandonada y zonas alteradas por explosiones electromagnéticas.",
+    "tipo": "natural-alterado",
+    "elementos_clave": [
+      "Lomas de micelio fosforescente",
+      "Pueblos abandonados",
+      "Torres de energía fractal"
+    ],
+    "tramas_relacionadas": [
+      "convergencia-espana",
+      "escape-sismico"
+    ],
+    "personajes_relacionados": [
+      "sismico",
+      "vaquero-atomico",
+      "tamen"
+    ]
+  },
+  {
+    "id": "peninsula-iberica",
+    "nombre": "Península Ibérica",
+    "descripcion": "Territorio que <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('tamen'); return false;\">Tamen</a> estudia obsesivamente. Es un punto neurálgico para detectar cambios ecológicos provocados por el Micelio Negro. Contiene múltiples microclimas y ecosistemas en tensión.",
+    "tipo": "natural",
+    "elementos_clave": [
+      "Biomas en tensión",
+      "Registros ecológicos de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('tamen'); return false;\">Tamen</a>",
+      "Puntos calientes miceliales"
+    ],
+    "tramas_relacionadas": [
+      "tamen-investiga"
+    ],
+    "personajes_relacionados": [
+      "tamen"
+    ]
+  },
+  {
+    "id": "selvas-sin-amor",
+    "nombre": "Selvas sin Amor (Orinoco)",
+    "descripcion": "Lugar de origen de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a>, en la cuenca del Orinoco. Es una selva marcada por talas masivas, incendios y proyectos extractivos. Aun así, bajo la superficie persiste una red de micelio luminoso y corrientes de agua que guardan memoria de todo lo que ha ocurrido.",
+    "tipo": "selva",
+    "elementos_clave": [
+      "Ríos oscuros con reflejos violetas",
+      "Árboles quemados mezclados con nuevos brotes",
+      "Túneles miceliales donde <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> realiza conjuros",
+      "Ecos de voces humanas y animales atrapados en las raíces"
+    ],
+    "tramas_relacionadas": [
+      "tamen-investiga"
+    ],
+    "personajes_relacionados": [
+      "amethystos",
+      "tamen"
+    ]
+  }
+]

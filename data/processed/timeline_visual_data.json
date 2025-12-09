@@ -1,0 +1,257 @@
+{
+  "items": [
+    {
+      "id": "cuasar-origen",
+      "content": "Explosión del cuásar que crea ...",
+      "start": "2020-01-01T00:00:00",
+      "end": null,
+      "group": "origen",
+      "title": "Explosión del cuásar que crea la Nebulosa Consciente\n\nUna explosión de cuásar genera una nebulosa energética capaz de adquirir conciencia. Esta nebulosa iniciará un viaje milenario por el universo.\n\nProgreso: 0.0% - 7.5%",
+      "className": "timeline-event-origen",
+      "type": "point",
+      "style": "background-color: #9b59b6; border-color: #9b59b6; color: #fff;"
+    },
+    {
+      "id": "viaje-nebulosa",
+      "content": "Viaje milenario de la Nebulosa...",
+      "start": "2020-01-08T12:00:00",
+      "end": null,
+      "group": "origen",
+      "title": "Viaje milenario de la Nebulosa hacia el Sistema Solar\n\nLa nebulosa consume energía y evoluciona, moviéndose entre regiones cósmicas hasta acercarse al Sol. Durante este periodo desarrolla patrones primarios de conciencia.\n\nProgreso: 7.5% - 15.0%",
+      "className": "timeline-event-origen",
+      "type": "point",
+      "style": "background-color: #9b59b6; border-color: #9b59b6; color: #fff;"
+    },
+    {
+      "id": "caida-diamante",
+      "content": "Caída del diamante cuántico en...",
+      "start": "2020-01-16T00:00:00",
+      "end": null,
+      "group": "despertar",
+      "title": "Caída del diamante cuántico en el Polo Norte\n\nLa nebulosa solidifica su estructura en forma de un diamante cuántico que cae sobre el hielo del Polo Norte, donde queda atrapado durante siglos.\n\nProgreso: 15.0% - 21.7%",
+      "className": "timeline-event-despertar",
+      "type": "point",
+      "style": "background-color: #3498db; border-color: #3498db; color: #fff;"
+    },
+    {
+      "id": "deshielo",
+      "content": "Deshielo del diamante y desper...",
+      "start": "2020-01-22T16:00:00",
+      "end": "2020-01-29T08:00:00",
+      "group": "despertar",
+      "title": "Deshielo del diamante y despertar inicial\n\nEl calentamiento global fractura la capa de hielo, liberando al diamante cuántico y permitiendo que su interior comience a reactivarse.\n\nProgreso: 21.7% - 28.3%",
+      "className": "timeline-event-despertar",
+      "type": "range",
+      "style": "background-color: #3498db; border-color: #3498db; color: #fff;"
+    },
+    {
+      "id": "primer-viaje",
+      "content": "Viaje hacia Nueva York con ayu...",
+      "start": "2020-01-29T08:00:00",
+      "end": "2020-02-05T00:00:00",
+      "group": "despertar",
+      "title": "Viaje hacia Nueva York con ayuda de los Inuit\n\nTras recuperar una forma inicial, el Vaquero Atómico es ayudado por los Inuit a navegar hacia la civilización, intrigados por su naturaleza.\n\nProgreso: 28.3% - 35.0%",
+      "className": "timeline-event-despertar",
+      "type": "range",
+      "style": "background-color: #3498db; border-color: #3498db; color: #fff;"
+    },
+    {
+      "id": "nueva-york-luces",
+      "content": "Primera distorsión energética ...",
+      "start": "2020-02-05T00:00:00",
+      "end": "2020-02-10T00:00:00",
+      "group": "inventrola",
+      "title": "Primera distorsión energética en Nueva York\n\nLas luces de Nueva York empiezan a parpadear y fallar ante la presencia del Vaquero Atómico. Esto llama la atención de Jhonny.\n\nProgreso: 35.0% - 40.0%",
+      "className": "timeline-event-inventrola",
+      "type": "range",
+      "style": "background-color: #e74c3c; border-color: #e74c3c; color: #fff;"
+    },
+    {
+      "id": "captacion-jhonny",
+      "content": "Jhonny capta al Vaquero Atómic...",
+      "start": "2020-02-10T00:00:00",
+      "end": "2020-02-15T00:00:00",
+      "group": "inventrola",
+      "title": "Jhonny capta al Vaquero Atómico\n\nJhonny convence al Vaquero Atómico de ir a la fábrica Inventrola, prometiéndole seguridad, ayuda y un propósito humano.\n\nProgreso: 40.0% - 45.0%",
+      "className": "timeline-event-inventrola",
+      "type": "range",
+      "style": "background-color: #e74c3c; border-color: #e74c3c; color: #fff;"
+    },
+    {
+      "id": "entrada-inventrola",
+      "content": "Entrada del Vaquero en Inventr...",
+      "start": "2020-02-15T00:00:00",
+      "end": "2020-02-20T00:00:00",
+      "group": "inventrola",
+      "title": "Entrada del Vaquero en Inventrola\n\nEl Vaquero Atómico entra en la fábrica y su energía revoluciona los sistemas, aumentando el rendimiento y atrayendo la atención de Musitoxic y Miguel Mafias.\n\nProgreso: 45.0% - 50.0%",
+      "className": "timeline-event-inventrola",
+      "type": "range",
+      "style": "background-color: #e74c3c; border-color: #e74c3c; color: #fff;"
+    },
+    {
+      "id": "desastre-inventrola",
+      "content": "Desastre nuclear provocado por...",
+      "start": "2020-02-20T00:00:00",
+      "end": "2020-02-25T00:00:00",
+      "group": "inventrola",
+      "title": "Desastre nuclear provocado por Musitoxic\n\nDurante un intento torpe de seducir al Vaquero, Musitoxic provoca un colapso energético que desencadena un accidente nuclear y una onda expansiva de consecuencias ambientales.\n\nProgreso: 50.0% - 55.0%",
+      "className": "timeline-event-inventrola",
+      "type": "range",
+      "style": "background-color: #e74c3c; border-color: #e74c3c; color: #fff;"
+    },
+    {
+      "id": "senal-sirius",
+      "content": "Sirius envía una señal a Sísmi...",
+      "start": "2020-02-25T00:00:00",
+      "end": "2020-03-01T00:00:00",
+      "group": "sismico",
+      "title": "Sirius envía una señal a Sísmico\n\nEl observador cósmico Sirius percibe el desequilibrio energético generado por Inventrola y despierta a Sísmico enviándole un destello dimensional.\n\nProgreso: 55.0% - 60.0%",
+      "className": "timeline-event-sismico",
+      "type": "range",
+      "style": "background-color: #f39c12; border-color: #f39c12; color: #fff;"
+    },
+    {
+      "id": "escape-sismico",
+      "content": "Sísmico se divide en varias ve...",
+      "start": "2020-03-01T00:00:00",
+      "end": "2020-03-06T00:00:00",
+      "group": "sismico",
+      "title": "Sísmico se divide en varias versiones y escapa\n\nSísmico entra en un plano cuántico fractal, se desdobla y debe elegir entre la vida y la muerte antes de romper un cristal dimensional y escapar.\n\nProgreso: 60.0% - 65.0%",
+      "className": "timeline-event-sismico",
+      "type": "range",
+      "style": "background-color: #f39c12; border-color: #f39c12; color: #fff;"
+    },
+    {
+      "id": "entrada-espana",
+      "content": "Aparición de Sísmico en la Esp...",
+      "start": "2020-03-06T00:00:00",
+      "end": null,
+      "group": "sismico",
+      "title": "Aparición de Sísmico en la España vaciada\n\nSísmico llega a un desierto verde alterado ecológicamente, donde comienza una nueva etapa de su existencia.\n\nProgreso: 65.0% - 70.0%",
+      "className": "timeline-event-sismico",
+      "type": "point",
+      "style": "background-color: #f39c12; border-color: #f39c12; color: #fff;"
+    },
+    {
+      "id": "investigacion-tamen",
+      "content": "Tamen registra las primeras an...",
+      "start": "2020-03-11T00:00:00",
+      "end": "2020-03-17T16:00:00",
+      "group": "tamen",
+      "title": "Tamen registra las primeras anomalías\n\nTamen detecta patrones ecológicos inusuales: alteraciones en micelios, cambios climáticos locales y señales energéticas que no cuadran con lo conocido.\n\nProgreso: 70.0% - 76.7%",
+      "className": "timeline-event-tamen",
+      "type": "range",
+      "style": "background-color: #27ae60; border-color: #27ae60; color: #fff;"
+    },
+    {
+      "id": "despertar-amethystos",
+      "content": "Despertar de Amethystos en las...",
+      "start": "2020-03-17T16:00:00",
+      "end": "2020-03-24T08:00:00",
+      "group": "tamen",
+      "title": "Despertar de Amethystos en las Selvas sin Amor\n\nTras años viendo arder su territorio, la futura Amethystos realiza un ritual desesperado con raíces, agua y micelio. En lugar de destruirlo todo, el conjuro la fusiona parcialmente con la red micelial, otorgándole poder y condenándola a sentir el dolor de la selva para siempre.\n\nProgreso: 76.7% - 83.3%",
+      "className": "timeline-event-tamen",
+      "type": "range",
+      "style": "background-color: #27ae60; border-color: #27ae60; color: #fff;"
+    },
+    {
+      "id": "tamen-amethystos",
+      "content": "Tamen entra en contacto con Am...",
+      "start": "2020-03-24T08:00:00",
+      "end": "2020-03-31T00:00:00",
+      "group": "tamen",
+      "title": "Tamen entra en contacto con Amethystos\n\nDurante su investigación de ecosistemas, Tamen cruza información que la lleva a las Selvas sin Amor, donde forma una alianza con Amethystos.\n\nProgreso: 83.3% - 90.0%",
+      "className": "timeline-event-tamen",
+      "type": "range",
+      "style": "background-color: #27ae60; border-color: #27ae60; color: #fff;"
+    },
+    {
+      "id": "convergencia",
+      "content": "Convergencia futura en la Espa...",
+      "start": "2020-03-31T00:00:00",
+      "end": "2020-04-10T00:00:00",
+      "group": "futuro",
+      "title": "Convergencia futura en la España Vaciada\n\nLas trayectorias de Vaquero Atómico, Sísmico y Tamen apuntan hacia un encuentro inevitable en la España vaciada, donde se cruzan fuerzas energéticas, ecológicas y humanas.\n\nProgreso: 90.0% - 100.0%",
+      "className": "timeline-event-futuro",
+      "type": "range",
+      "style": "background-color: #1abc9c; border-color: #1abc9c; color: #fff;"
+    }
+  ],
+  "groups": [
+    {
+      "id": "origen",
+      "content": "Origen Cósmico",
+      "className": "timeline-group-origen"
+    },
+    {
+      "id": "despertar",
+      "content": "Despertar",
+      "className": "timeline-group-despertar"
+    },
+    {
+      "id": "inventrola",
+      "content": "Inventrola",
+      "className": "timeline-group-inventrola"
+    },
+    {
+      "id": "sismico",
+      "content": "Sísmico",
+      "className": "timeline-group-sismico"
+    },
+    {
+      "id": "tamen",
+      "content": "Tamen y Amethystos",
+      "className": "timeline-group-tamen"
+    },
+    {
+      "id": "futuro",
+      "content": "Convergencia Futura",
+      "className": "timeline-group-futuro"
+    }
+  ],
+  "etapas_config": {
+    "origen": {
+      "nombre": "Origen Cósmico",
+      "color": "#9b59b6",
+      "porcentajeInicio": 0,
+      "porcentajeFin": 15,
+      "orden": 0
+    },
+    "despertar": {
+      "nombre": "Despertar",
+      "color": "#3498db",
+      "porcentajeInicio": 15,
+      "porcentajeFin": 35,
+      "orden": 1
+    },
+    "inventrola": {
+      "nombre": "Inventrola",
+      "color": "#e74c3c",
+      "porcentajeInicio": 35,
+      "porcentajeFin": 55,
+      "orden": 2
+    },
+    "sismico": {
+      "nombre": "Sísmico",
+      "color": "#f39c12",
+      "porcentajeInicio": 55,
+      "porcentajeFin": 70,
+      "orden": 3
+    },
+    "tamen": {
+      "nombre": "Tamen y Amethystos",
+      "color": "#27ae60",
+      "porcentajeInicio": 70,
+      "porcentajeFin": 90,
+      "orden": 4
+    },
+    "futuro": {
+      "nombre": "Convergencia Futura",
+      "color": "#1abc9c",
+      "porcentajeInicio": 90,
+      "porcentajeFin": 100,
+      "orden": 5
+    }
+  },
+  "fecha_base": "2020-01-01T00:00:00"
+}

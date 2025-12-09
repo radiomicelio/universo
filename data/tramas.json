@@ -30,9 +30,16 @@
   {
     "id": "tamen-investiga",
     "titulo": "La investigación de Tamen",
-    "resumen": "Tamen, periodista humana obsesionada con documentar los ecosistemas de la península ibérica, empieza a registrar anomalías ecológicas causadas por el desastre de Inventrola y la presencia cuántica del Vaquero y Sísmico. Su investigación la convierte en la primera humana capaz de comprender el alcance del Micelio Negro.",
+    "resumen": "Tamen, periodista humana obsesionada con documentar los ecosistemas de la península ibérica y otros territorios, empieza a registrar anomalías ecológicas causadas por el desastre de Inventrola y por la actividad del Micelio Negro. Su investigación la conecta con Amethystos en las Selvas sin Amor.",
     "personajes_implicados": ["tamen", "amethystos"],
     "localizaciones": ["peninsula-iberica", "selvas-sin-amor"]
+  },
+  {
+    "id": "origen-amethystos",
+    "titulo": "La bruja de las Selvas sin Amor",
+    "resumen": "En las Selvas sin Amor del Orinoco, una joven testigo de incendios, talas y desplazamientos humanos se convierte en Amethystos. Al vincularse con el Micelio Negro, intenta canalizar su dolor en hechizos de destrucción, pero sus conjuros terminan salvando ecosistemas y abriendo caminos de huida para otras criaturas.",
+    "personajes_implicados": ["amethystos"],
+    "localizaciones": ["selvas-sin-amor"]
   },
   {
     "id": "convergencia-espana",
