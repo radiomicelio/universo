@@ -3,13 +3,13 @@
     "id": "vaquero-atomico",
     "nombre": "Vaquero Atómico",
     "rol": "Antihéroe / Entidad cuántica",
-    "origen": "Nace como una nebulosa consciente generada tras la explosión de un cuásar. La nebulosa viaja millones de años hasta el Sistema Solar, donde se solidifica y cae en forma de diamante al Polo Norte. Allí despierta gracias al calentamiento global y evoluciona imitando formas humanas.",
+    "origen": "Nace como una nebulosa consciente generada tras la explosión de un cuásar. La nebulosa viaja millones de años hasta el Sistema Solar, donde se solidifica y cae en forma de diamante al <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-polo-norte').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Polo Norte</a>. Allí despierta gracias al calentamiento global y evoluciona imitando formas humanas.",
     "descripcion": "Es una entidad ingenua, extremadamente poderosa y obsesionada con las narrativas del heroísmo humano que ve en películas del oeste. Adopta una forma antropomorfa con piel tornasol escamada y crea su propio poncho atómico. Su presencia altera la energía a su alrededor, encendiendo luces y generando descargas no controladas.",
     "motivaciones": [
       "Entender el bien y el mal desde una perspectiva humana",
       "Proteger la vida, aunque a veces lo haga de forma torpe o excesiva",
-      "Buscar un propósito fuera del control de Musitoxic y Miguel Mafias",
-      "Explorar territorios desconocidos como la España vaciada"
+      "Buscar un propósito fuera del control de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> y Miguel Mafias",
+      "Explorar territorios desconocidos como la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-espana-vaciada').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">España vaciada</a>"
     ],
     "habilidades": [
       "Manipulación de energía a gran escala",
@@ -18,28 +18,49 @@
       "Transformación parcial de su estructura cristalina"
     ],
     "relaciones": [
-      { "con": "musitoxic", "tipo": "fascinación / manipulación" },
-      { "con": "miguel-mafias", "tipo": "explotación" },
-      { "con": "jhonny", "tipo": "engaño" },
-      { "con": "sismico", "tipo": "encuentro futuro en la España vaciada" },
-      { "con": "tamen", "tipo": "objeto de estudio / curiosidad energética" },
-      { "con": "amethystos", "tipo": "sincronía ecológica" }
+      {
+        "con": "musitoxic",
+        "tipo": "fascinación / manipulación"
+      },
+      {
+        "con": "miguel-mafias",
+        "tipo": "explotación"
+      },
+      {
+        "con": "jhonny",
+        "tipo": "engaño"
+      },
+      {
+        "con": "sismico",
+        "tipo": "encuentro futuro en la España vaciada"
+      },
+      {
+        "con": "tamen",
+        "tipo": "objeto de estudio / curiosidad energética"
+      },
+      {
+        "con": "amethystos",
+        "tipo": "sincronía ecológica"
+      }
     ],
     "aparicion": "Cómic y canciones",
-    "etiquetas": ["entidad", "energia", "protagonista"]
+    "etiquetas": [
+      "entidad",
+      "energia",
+      "protagonista"
+    ]
   },
-
   {
     "id": "sismico",
     "nombre": "Sísmico",
     "rol": "Felino cuántico / prófugo dimensional",
-    "origen": "Prisionero en una cárcel subterránea controlada por Musitoxic. Despierta por una señal enviada por Sirius. Durante su teletransporte, se descompone y entra en un plano cuántico donde enfrenta decisiones simbólicas antes de escapar al desierto español.",
+    "origen": "Prisionero en una cárcel subterránea controlada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>. Despierta por una señal enviada por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sirius'); return false;\">Sirius</a>. Durante su teletransporte, se descompone y entra en un plano cuántico donde enfrenta decisiones simbólicas antes de escapar al desierto español.",
     "descripcion": "Es un ser que cambia de forma según el entorno. En España adopta la forma de un lince. Puede proyectar ilusiones, abrir portales y dividirse cuánticamente para atravesar caminos simultáneos. Su cuerpo genera ojos fractales cuando se prepara para cruzar dimensiones.",
     "motivaciones": [
       "Escapar de la influencia del Micelio Negro",
       "Encontrar un territorio donde pueda existir libremente",
       "Resolver su dualidad entre vida y muerte",
-      "Acompañar al Vaquero Atómico en un futuro encuentro"
+      "Acompañar al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> en un futuro encuentro"
     ],
     "habilidades": [
       "Apertura de portales cuánticos",
@@ -48,24 +69,36 @@
       "Transformación felina según ecosistema"
     ],
     "relaciones": [
-      { "con": "vaquero-atomico", "tipo": "destino común" },
-      { "con": "musitoxic", "tipo": "víctima / experimento" },
-      { "con": "sirius", "tipo": "guía" }
+      {
+        "con": "vaquero-atomico",
+        "tipo": "destino común"
+      },
+      {
+        "con": "musitoxic",
+        "tipo": "víctima / experimento"
+      },
+      {
+        "con": "sirius",
+        "tipo": "guía"
+      }
     ],
     "aparicion": "Cómic",
-    "etiquetas": ["cuantico", "felino", "protagonista"]
+    "etiquetas": [
+      "cuantico",
+      "felino",
+      "protagonista"
+    ]
   },
-
   {
     "id": "tamen",
     "nombre": "Tamen",
     "rol": "Periodista / narradora / enlace con los ecosistemas",
-    "origen": "Humana. Su sensibilidad hacia los ecosistemas surge de una vida dedicada a estudiar la península ibérica, sus climas, su fauna y su flora. Su obsesión por documentar la vida la convierte en una observadora excepcional del Micelio Negro.",
+    "origen": "Humana. Su sensibilidad hacia los ecosistemas surge de una vida dedicada a estudiar la <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-peninsula-iberica').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">península ibérica</a>, sus climas, su fauna y su flora. Su obsesión por documentar la vida la convierte en una observadora excepcional del Micelio Negro.",
     "descripcion": "Es un personaje completamente humano, pero con una intuición extraordinaria para percibir cambios ecológicos y energéticos. Es la narradora omnisciente del universo y quien consigue ver las conexiones invisibles entre los personajes y el Micelio Negro.",
     "motivaciones": [
       "Documentar la vida y denunciar los daños ambientales",
       "Entender cómo se entrelazan los ecosistemas con fuerzas cuánticas",
-      "Desentrañar el origen del Vaquero Atómico",
+      "Desentrañar el origen del <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a>",
       "Detener al Micelio Negro a través del conocimiento"
     ],
     "habilidades": [
@@ -74,23 +107,35 @@
       "Narración transdimensional"
     ],
     "relaciones": [
-      { "con": "vaquero-atomico", "tipo": "curiosidad científica" },
-      { "con": "amethystos", "tipo": "colaboración espiritual/ecológica" },
-      { "con": "sirius", "tipo": "información indirecta" }
+      {
+        "con": "vaquero-atomico",
+        "tipo": "curiosidad científica"
+      },
+      {
+        "con": "amethystos",
+        "tipo": "colaboración espiritual/ecológica"
+      },
+      {
+        "con": "sirius",
+        "tipo": "información indirecta"
+      }
     ],
     "aparicion": "Relatos y documentación",
-    "etiquetas": ["humana", "narradora", "ecologia"]
+    "etiquetas": [
+      "humana",
+      "narradora",
+      "ecologia"
+    ]
   },
-
   {
     "id": "musitoxic",
     "nombre": "Musitoxic",
     "rol": "Magnate musical / antagonista",
-    "origen": "Controla un imperio de música comercial generada por IA. Su poder proviene de años de monopolio en la industria musical. Es hermana de Miguel Mafias y financiadora de Inventrola.",
-    "descripcion": "Manipuladora, teatral y carismática. Se enamora del Vaquero Atómico por su apariencia tornasolada. En un intento torpe de seducción provoca un desastre nuclear en Inventrola.",
+    "origen": "Controla un imperio de música comercial generada por IA. Su poder proviene de años de monopolio en la industria musical. Es hermana de Miguel Mafias y financiadora de <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>.",
+    "descripcion": "Manipuladora, teatral y carismática. Se enamora del <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> por su apariencia tornasolada. En un intento torpe de seducción provoca un desastre nuclear en <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>.",
     "motivaciones": [
       "Mantener el control absoluto sobre la música",
-      "Usar el poder del Vaquero Atómico en su beneficio",
+      "Usar el poder del <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> en su beneficio",
       "Recuperar la hegemonía que está perdiendo",
       "Manipular ecosistemas para obtener energía"
     ],
@@ -100,24 +145,40 @@
       "Acceso a tecnologías experimentales"
     ],
     "relaciones": [
-      { "con": "vaquero-atomico", "tipo": "seducción / manipulación" },
-      { "con": "miguel-mafias", "tipo": "alianza corrupta" },
-      { "con": "jhonny", "tipo": "control laboral" }
+      {
+        "con": "vaquero-atomico",
+        "tipo": "seducción / manipulación"
+      },
+      {
+        "con": "miguel-mafias",
+        "tipo": "alianza corrupta"
+      },
+      {
+        "con": "jhonny",
+        "tipo": "control laboral"
+      },
+      {
+        "con": "marza",
+        "tipo": "protección / explotación de su invento"
+      }
     ],
     "aparicion": "Cómic y lore",
-    "etiquetas": ["antagonista", "musica", "industria"]
+    "etiquetas": [
+      "antagonista",
+      "musica",
+      "industria"
+    ]
   },
-
   {
     "id": "miguel-mafias",
     "nombre": "Miguel Mafias (El Muso)",
     "rol": "Antagonista secundario / empresario",
-    "origen": "Hermano de Musitoxic, dueño de Inventrola. Usa talentos robados y experimentos energéticos basados en diseños de Tesla.",
+    "origen": "Hermano de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>, dueño de <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>. Usa talentos robados y experimentos energéticos basados en diseños de Tesla.",
     "descripcion": "Más frío y calculador que su hermana. No busca fama, solo poder energético y dinero público.",
     "motivaciones": [
       "Control energético mundial",
-      "Explotar al Vaquero Atómico como generador",
-      "Crear una red de fábricas como Inventrola"
+      "Explotar al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> como generador",
+      "Crear una red de fábricas como <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>"
     ],
     "habilidades": [
       "Ingeniería energética corrupta",
@@ -125,64 +186,99 @@
       "Lavado de imagen corporativa"
     ],
     "relaciones": [
-      { "con": "musitoxic", "tipo": "colaboración familiar corrupta" },
-      { "con": "vaquero-atomico", "tipo": "explotación" },
-      { "con": "jhonny", "tipo": "supervisión" }
+      {
+        "con": "musitoxic",
+        "tipo": "colaboración familiar corrupta"
+      },
+      {
+        "con": "vaquero-atomico",
+        "tipo": "explotación"
+      },
+      {
+        "con": "jhonny",
+        "tipo": "supervisión"
+      },
+      {
+        "con": "marza",
+        "tipo": "empleador / supervisor en Inventrola"
+      }
     ],
     "aparicion": "Cómic / canciones",
-    "etiquetas": ["industria", "antagonista"]
+    "etiquetas": [
+      "industria",
+      "antagonista"
+    ]
   },
-
   {
     "id": "jhonny",
     "nombre": "Jhonny",
     "rol": "Trabajador de Inventrola / antagonista menor",
-    "origen": "Empleado raso de Inventrola que ve al Vaquero Atómico como una oportunidad de ascenso.",
-    "descripcion": "Ambicioso, nervioso y servil. Engaña al Vaquero Atómico con promesas falsas.",
+    "origen": "Empleado raso de <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a> que ve al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> como una oportunidad de ascenso.",
+    "descripcion": "Ambicioso, nervioso y servil. Engaña al <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('vaquero-atomico'); return false;\">Vaquero Atómico</a> con promesas falsas.",
     "motivaciones": [
-      "Ascender dentro de Inventrola",
+      "Ascender dentro de <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>",
       "Ganar poder gracias al Vaquero",
       "Impresionar a Miguel Mafias"
     ],
-    "habilidades": ["Manipulación básica", "Conocimiento técnico de Inventrola"],
+    "habilidades": [
+      "Manipulación básica",
+      "Conocimiento técnico de <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>"
+    ],
     "relaciones": [
-      { "con": "vaquero-atomico", "tipo": "manipulación" },
-      { "con": "miguel-mafias", "tipo": "obediencia" }
+      {
+        "con": "vaquero-atomico",
+        "tipo": "manipulación"
+      },
+      {
+        "con": "miguel-mafias",
+        "tipo": "obediencia"
+      }
     ],
     "aparicion": "Cómic",
-    "etiquetas": ["industria"]
+    "etiquetas": [
+      "industria"
+    ]
   },
-
   {
     "id": "sirius",
     "nombre": "Sirius",
     "rol": "Observador cósmico",
-    "origen": "Entidad del universo superior que observa desde una perspectiva energética. Envía señales a Sísmico para desencadenar la historia.",
+    "origen": "Entidad del universo superior que observa desde una perspectiva energética. Envía señales a <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a> para desencadenar la historia.",
     "descripcion": "Silencioso, distante y enigmático. Su presencia es vista como un destello en el cielo.",
     "motivaciones": [
       "Guiar a entidades energéticas hacia su destino",
       "Mantener equilibrio entre planos"
     ],
-    "habilidades": ["Visión transdimensional", "Comunicación energética"],
+    "habilidades": [
+      "Visión transdimensional",
+      "Comunicación energética"
+    ],
     "relaciones": [
-      { "con": "sismico", "tipo": "guía" },
-      { "con": "vaquero-atomico", "tipo": "observación" }
+      {
+        "con": "sismico",
+        "tipo": "guía"
+      },
+      {
+        "con": "vaquero-atomico",
+        "tipo": "observación"
+      }
     ],
     "aparicion": "Cómic / lore",
-    "etiquetas": ["cosmico"]
+    "etiquetas": [
+      "cosmico"
+    ]
   },
-
   {
     "id": "amethystos",
     "nombre": "Amethystos",
     "rol": "Bruja del Orinoco / avatar de Marú",
-    "origen": "Nacida en las Selvas sin Amor, un territorio del Orinoco profundamente dañado por incendios, talas y extracción. Es la forma mítica que adopta Marú dentro del universo de Radio Micelio, conectada al Micelio Negro pero en conflicto con él.",
+    "origen": "Nacida en las <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-selvas-sin-amor').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Selvas sin Amor</a>, un territorio del Orinoco profundamente dañado por incendios, talas y extracción. Es la forma mítica que adopta Marú dentro del universo de Radio Micelio, conectada al Micelio Negro pero en conflicto con él.",
     "descripcion": "Amethystos es una bruja poderosa que quiere ser mala, pero todo lo que hace termina siendo un acto de protección o de transformación positiva. Su magia está ligada al agua, a las raíces y al micelio. Se mueve entre túneles subterráneos y laberintos de hifas, y sus conjuros abren caminos entre vida y muerte.",
     "motivaciones": [
-      "Proteger las Selvas sin Amor de la destrucción absoluta",
+      "Proteger las <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-selvas-sin-amor').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Selvas sin Amor</a> de la destrucción absoluta",
       "Comprender y canalizar el poder del Micelio Negro sin someterse a él",
-      "Guiar y confundir a la vez a quienes atraviesan sus territorios (como Sísmico)",
-      "Mantener un vínculo secreto con Tamen a través de la ecología y la magia"
+      "Guiar y confundir a la vez a quienes atraviesan sus territorios (como <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('sismico'); return false;\">Sísmico</a>)",
+      "Mantener un vínculo secreto con <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('tamen'); return false;\">Tamen</a> a través de la ecología y la magia"
     ],
     "habilidades": [
       "Magia vegetal y micelial",
@@ -191,12 +287,77 @@
       "Escuchar y hablar con las raíces y las aguas profundas"
     ],
     "relaciones": [
-      { "con": "tamen", "tipo": "alianza espiritual/ecológica" },
-      { "con": "sismico", "tipo": "prueba iniciática a través de sus túneles" },
-      { "con": "vaquero-atomico", "tipo": "afinidad energética a distancia" },
-      { "con": "micelio-negro", "tipo": "tensión / dependencia mutua" }
+      {
+        "con": "tamen",
+        "tipo": "alianza espiritual/ecológica"
+      },
+      {
+        "con": "sismico",
+        "tipo": "prueba iniciática a través de sus túneles"
+      },
+      {
+        "con": "vaquero-atomico",
+        "tipo": "afinidad energética a distancia"
+      },
+      {
+        "con": "micelio-negro",
+        "tipo": "tensión / dependencia mutua"
+      }
     ],
     "aparicion": "Relatos, cómic y canción \"Serpenteando\"",
-    "etiquetas": ["bruja", "selva", "micelio", "maru"]
+    "etiquetas": [
+      "bruja",
+      "selva",
+      "micelio",
+      "maru"
+    ]
+  },
+  {
+    "id": "marza",
+    "nombre": "Marza",
+    "rol": "Ingeniera de oídos ultrasónicos",
+    "origen": "Estudiante de ingeniería acústica y energía que entra como becaria en <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>, la empresa dirigida por <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('miguel-mafias'); return false;\">Miguel Mafias (El Muso)</a>. Es protegida de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>, quien es hermana de Miguel y actúa como madrina de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a> dentro del sector. Durante sus prácticas, desarrolla un sistema de sensores acústicos que usa oídos artificiales capaces de mapear el trabajo de los operarios a través del sonido. Su proyecto la lleva a Venezuela, específicamente a las <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-selvas-sin-amor').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Selvas sin Amor</a> del Orinoco, donde en una mina de la selva amazónica descubre la acústica natural de las rocas y observa cómo los murciélagos reaccionan a frecuencias inaudibles para el ser humano. A partir de esa experiencia, diseña un sistema de \"oídos ultrasónicos\" que convierte el entorno en datos y melodías.",
+    "descripcion": "Brillante, intuitiva y un poco rebelde. No soporta las jerarquías, pero sabe moverse entre ellas. Tiene una mirada distinta: ve sonido donde los demás solo ven ruido. Su intención inicial al crear los oídos ultrasónicos era ética: mejorar la seguridad y la comunicación en la empresa. Sin embargo, cuando <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a> descubre el invento, ve su potencial para la manipulación musical masiva y compra los derechos del proyecto, desviando los fondos y trasladando el desarrollo a su torre. Estos sistemas se convierten en la base de la industria musical tóxica que domina el mundo. <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a> es la científica inadvertida que crea la herramienta clave del poder de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('musitoxic'); return false;\">Musitoxic</a>.",
+    "motivaciones": [
+      "Mejorar la seguridad y comunicación en el trabajo a través de la acústica",
+      "Aprender el lenguaje de los animales y replicar su audición ultrasónica",
+      "Crear tecnología que interprete frecuencias subhumanas de forma ética",
+      "Redimirse trabajando en contratecnología del \"micelio blanco\""
+    ],
+    "habilidades": [
+      "Ingeniería acústica avanzada",
+      "Diseño de sistemas de sensores ultrasónicos",
+      "Interpretación de frecuencias subhumanas",
+      "Síntesis de datos acústicos en melodías"
+    ],
+    "relaciones": [
+      {
+        "con": "musitoxic",
+        "tipo": "protección / explotación de su invento"
+      },
+      {
+        "con": "miguel-mafias",
+        "tipo": "empleador / supervisor en Inventrola"
+      },
+      {
+        "con": "amethystos",
+        "tipo": "conexión geográfica: ambas vinculadas a las Selvas sin Amor de Venezuela"
+      },
+      {
+        "con": "vaquero-atomico",
+        "tipo": "referencia indirecta en canción \"Not a Bad Bat\""
+      },
+      {
+        "con": "sismico",
+        "tipo": "referencia indirecta en canción \"Not a Bad Bat\""
+      }
+    ],
+    "aparicion": "Lore histórico y canción \"Not a Bad Bat\"",
+    "etiquetas": [
+      "ingeniera",
+      "acustica",
+      "tecnologia",
+      "industria"
+    ]
   }
 ]

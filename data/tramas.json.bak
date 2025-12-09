@@ -3,91 +3,49 @@
     "id": "origen-nebulosa",
     "titulo": "La Nebulosa que cayó a la Tierra",
     "resumen": "Una nebulosa consciente generada tras la explosión de un cuásar inicia un viaje milenario hacia el Sistema Solar. Allí, se solidifica en forma de diamante cuántico, quedando atrapada en el hielo del Polo Norte hasta ser liberada por el calentamiento global. Este evento marca el despertar del Vaquero Atómico.",
-    "personajes_implicados": [
-      "vaquero-atomico",
-      "sirius"
-    ],
-    "localizaciones": [
-      "polo-norte",
-      "galaxia-origen"
-    ]
+    "personajes_implicados": ["vaquero-atomico", "sirius"],
+    "localizaciones": ["polo-norte", "galaxia-origen"]
   },
   {
     "id": "llegada-a-nueva-york",
     "titulo": "La llegada del Vaquero Atómico a Nueva York",
     "resumen": "Guiado por los Inuit, el Vaquero Atómico navega hacia Nueva York, donde empieza a imitar comportamientos humanos basados en películas del oeste. Su energía descontrolada llama la atención de Jhonny, quien ve en él la oportunidad de ascender dentro de Inventrola.",
-    "personajes_implicados": [
-      "vaquero-atomico",
-      "jhonny"
-    ],
-    "localizaciones": [
-      "nueva-york",
-      "inventrola"
-    ]
+    "personajes_implicados": ["vaquero-atomico", "jhonny"],
+    "localizaciones": ["nueva-york", "inventrola"]
   },
   {
     "id": "desastre-inventrola",
     "titulo": "El desastre nuclear de Inventrola",
     "resumen": "Musitoxic, intentando seducir al Vaquero Atómico y recuperar su poder en la industria musical, comete un error catastrófico que provoca un accidente energético dentro de la fábrica Inventrola. Este evento modifica la ecología de varias regiones y despierta señales energéticas que Tamen y Sirius detectan rápidamente.",
-    "personajes_implicados": [
-      "vaquero-atomico",
-      "musitoxic",
-      "miguel-mafias",
-      "jhonny"
-    ],
-    "localizaciones": [
-      "inventrola"
-    ]
+    "personajes_implicados": ["vaquero-atomico", "musitoxic", "miguel-mafias", "jhonny"],
+    "localizaciones": ["inventrola"]
   },
   {
     "id": "escape-sismico",
     "titulo": "El despertar y escape de Sísmico",
     "resumen": "En una prisión secreta dirigida por Musitoxic, Sísmico recibe un destello enviado por Sirius que desencadena su transformación. Atraviesa un plano cuántico, se desdobla en múltiples versiones y enfrenta dos puertas simbólicas: los amantes de la vida y los amantes de la muerte. Tras recomponerse, rompe un cristal dimensional y aparece en la España vaciada.",
-    "personajes_implicados": [
-      "sismico",
-      "sirius",
-      "musitoxic"
-    ],
-    "localizaciones": [
-      "prision-musitoxic",
-      "espana-vaciada"
-    ]
+    "personajes_implicados": ["sismico", "sirius", "musitoxic"],
+    "localizaciones": ["prision-musitoxic", "espana-vaciada"]
   },
   {
     "id": "tamen-investiga",
     "titulo": "La investigación de Tamen",
     "resumen": "Tamen, periodista humana obsesionada con documentar los ecosistemas de la península ibérica y otros territorios, empieza a registrar anomalías ecológicas causadas por el desastre de Inventrola y por la actividad del Micelio Negro. Su investigación la conecta con Amethystos en las Selvas sin Amor.",
-    "personajes_implicados": [
-      "tamen",
-      "amethystos"
-    ],
-    "localizaciones": [
-      "peninsula-iberica",
-      "selvas-sin-amor"
-    ]
+    "personajes_implicados": ["tamen", "amethystos"],
+    "localizaciones": ["peninsula-iberica", "selvas-sin-amor"]
   },
   {
     "id": "origen-amethystos",
     "titulo": "La bruja de las Selvas sin Amor",
     "resumen": "En las Selvas sin Amor del Orinoco, una joven testigo de incendios, talas y desplazamientos humanos se convierte en Amethystos. Al vincularse con el Micelio Negro, intenta canalizar su dolor en hechizos de destrucción, pero sus conjuros terminan salvando ecosistemas y abriendo caminos de huida para otras criaturas.",
-    "personajes_implicados": [
-      "amethystos"
-    ],
-    "localizaciones": [
-      "selvas-sin-amor"
-    ]
+    "personajes_implicados": ["amethystos"],
+    "localizaciones": ["selvas-sin-amor"]
   },
   {
     "id": "convergencia-espana",
     "titulo": "Convergencia en la España vaciada",
     "resumen": "La línea narrativa se dirige hacia una futura convergencia entre Vaquero Atómico, Sísmico y Tamen en un territorio semidesértico transformado por fuerzas energéticas, ecológicas y cuánticas. Esta sección está en desarrollo según avance el cómic.",
-    "personajes_implicados": [
-      "vaquero-atomico",
-      "sismico",
-      "tamen"
-    ],
-    "localizaciones": [
-      "espana-vaciada"
-    ]
+    "personajes_implicados": ["vaquero-atomico", "sismico", "tamen"],
+    "localizaciones": ["espana-vaciada"]
   }
 ]

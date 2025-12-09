@@ -131,21 +131,25 @@
   },
   {
     "id": "selvas-sin-amor",
-    "nombre": "Selvas sin Amor (Orinoco)",
-    "descripcion": "Lugar de origen de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a>, en la cuenca del Orinoco. Es una selva marcada por talas masivas, incendios y proyectos extractivos. Aun así, bajo la superficie persiste una red de micelio luminoso y corrientes de agua que guardan memoria de todo lo que ha ocurrido.",
+    "nombre": "Selvas sin Amor (Orinoco, Venezuela)",
+    "descripcion": "Lugar de origen de <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a>, en la cuenca del Orinoco en Venezuela. Es una selva marcada por talas masivas, incendios y proyectos extractivos. Aun así, bajo la superficie persiste una red de micelio luminoso y corrientes de agua que guardan memoria de todo lo que ha ocurrido. Esta región también es significativa para <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('marza'); return false;\">Marza</a>, quien durante su proyecto con <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a> viajó a una mina en la selva amazónica venezolana donde descubrió la acústica natural de las rocas y observó cómo los murciélagos reaccionan a frecuencias inaudibles, inspirando su diseño de los oídos ultrasónicos.",
     "tipo": "selva",
     "elementos_clave": [
       "Ríos oscuros con reflejos violetas",
       "Árboles quemados mezclados con nuevos brotes",
       "Túneles miceliales donde <a href=\"#\" class=\"referencia-link\" onclick=\"event.preventDefault(); verFicha('amethystos'); return false;\">Amethystos</a> realiza conjuros",
-      "Ecos de voces humanas y animales atrapados en las raíces"
+      "Ecos de voces humanas y animales atrapados en las raíces",
+      "Cuevas con acústica natural y murciélagos de la fruta",
+      "Minas extractivas relacionadas con proyectos de <a href=\"#localizaciones\" class=\"referencia-link\" onclick=\"event.preventDefault(); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-inventrola').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;\">Inventrola</a>"
     ],
     "tramas_relacionadas": [
-      "tamen-investiga"
+      "tamen-investiga",
+      "origen-amethystos"
     ],
     "personajes_relacionados": [
       "amethystos",
-      "tamen"
+      "tamen",
+      "marza"
     ]
   }
 ]

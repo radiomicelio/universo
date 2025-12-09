@@ -92,16 +92,18 @@
   },
   {
     "id": "selvas-sin-amor",
-    "nombre": "Selvas sin Amor (Orinoco)",
-    "descripcion": "Lugar de origen de Amethystos, en la cuenca del Orinoco. Es una selva marcada por talas masivas, incendios y proyectos extractivos. Aun así, bajo la superficie persiste una red de micelio luminoso y corrientes de agua que guardan memoria de todo lo que ha ocurrido.",
+    "nombre": "Selvas sin Amor (Orinoco, Venezuela)",
+    "descripcion": "Lugar de origen de Amethystos, en la cuenca del Orinoco en Venezuela. Es una selva marcada por talas masivas, incendios y proyectos extractivos. Aun así, bajo la superficie persiste una red de micelio luminoso y corrientes de agua que guardan memoria de todo lo que ha ocurrido. Esta región también es significativa para Marza, quien durante su proyecto con Inventrola viajó a una mina en la selva amazónica venezolana donde descubrió la acústica natural de las rocas y observó cómo los murciélagos reaccionan a frecuencias inaudibles, inspirando su diseño de los oídos ultrasónicos.",
     "tipo": "selva",
     "elementos_clave": [
       "Ríos oscuros con reflejos violetas",
       "Árboles quemados mezclados con nuevos brotes",
       "Túneles miceliales donde Amethystos realiza conjuros",
-      "Ecos de voces humanas y animales atrapados en las raíces"
+      "Ecos de voces humanas y animales atrapados en las raíces",
+      "Cuevas con acústica natural y murciélagos de la fruta",
+      "Minas extractivas relacionadas con proyectos de Inventrola"
     ],
-    "tramas_relacionadas": ["tamen-investiga"],
-    "personajes_relacionados": ["amethystos", "tamen"]
+    "tramas_relacionadas": ["tamen-investiga", "origen-amethystos"],
+    "personajes_relacionados": ["amethystos", "tamen", "marza"]
   }
 ]

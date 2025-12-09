@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-def ejecutar_script(nombre_script):
+def ejecutar_script(nombre_script, usar_conda=False):
     """Ejecuta un script de Python"""
     script_path = Path(nombre_script)
     if not script_path.exists():
@@ -19,8 +19,14 @@ def ejecutar_script(nombre_script):
     print('='*60)
     
     try:
+        if usar_conda:
+            # Usar conda run para ejecutar en el entorno radio
+            cmd = ['conda', 'run', '-n', 'radio', 'python', str(script_path)]
+        else:
+            cmd = [sys.executable, str(script_path)]
+        
         result = subprocess.run(
-            [sys.executable, str(script_path)],
+            cmd,
             check=True,
             capture_output=True,
             text=True
@@ -37,26 +43,45 @@ def ejecutar_script(nombre_script):
 
 def main():
     """Ejecuta todos los scripts de preprocesamiento"""
-    scripts = [
+    # Scripts que no requieren conda (solo biblioteca estándar)
+    scripts_normales = [
         'preprocess_references.py',
         'preprocess_network.py',
         'preprocess_timeline.py'
     ]
     
+    # Scripts que requieren conda (matplotlib, networkx)
+    scripts_conda = [
+        'generate_network_image.py',
+        'generate_timeline_image.py'
+    ]
+    
     print("🚀 Iniciando preprocesamiento de datos...")
     
     exitos = 0
-    for script in scripts:
-        if ejecutar_script(script):
+    total = len(scripts_normales) + len(scripts_conda)
+    
+    # Ejecutar scripts normales
+    for script in scripts_normales:
+        if ejecutar_script(script, usar_conda=False):
             exitos += 1
         else:
             print(f"\n⚠️  Advertencia: {script} falló")
     
+    # Ejecutar scripts que requieren conda
+    for script in scripts_conda:
+        if ejecutar_script(script, usar_conda=True):
+            exitos += 1
+        else:
+            print(f"\n⚠️  Advertencia: {script} falló")
+            print("   💡 Asegúrate de tener el entorno conda 'radio' activado")
+            print("   💡 O ejecuta: conda activate radio")
+    
     print(f"\n{'='*60}")
-    print(f"✅ Preprocesamiento completado: {exitos}/{len(scripts)} scripts exitosos")
+    print(f"✅ Preprocesamiento completado: {exitos}/{total} scripts exitosos")
     print('='*60)
     
-    if exitos == len(scripts):
+    if exitos == total:
         print("\n✓ Todos los datos han sido preprocesados correctamente.")
         print("  Los archivos procesados están en: data/processed/")
         return 0

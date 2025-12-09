@@ -31,8 +31,20 @@ Preprocesa datos del timeline visual, generando items y groups ya procesados con
 **Genera:**
 - `data/processed/timeline_visual_data.json`
 
-### 4. `preprocess_all.py`
-Script maestro que ejecuta todos los scripts de preprocesamiento en orden.
+### 4. `generate_network_image.py`
+Genera una imagen estática de alta calidad (PNG, 300 DPI) del grafo de relaciones usando NetworkX y Matplotlib.
+
+**Genera:**
+- `data/processed/network_graph.png`
+
+### 5. `generate_timeline_image.py`
+Genera una imagen estática de alta calidad (PNG, 300 DPI) del timeline visual usando Matplotlib.
+
+**Genera:**
+- `data/processed/timeline_graph.png`
+
+### 6. `preprocess_all.py`
+Script maestro que ejecuta todos los scripts de preprocesamiento en orden, incluyendo la generación de imágenes.
 
 ## Uso
 
@@ -44,11 +56,26 @@ python3 preprocess_all.py
 
 ### Ejecutar scripts individuales
 
+**Scripts normales (no requieren conda):**
 ```bash
 python3 preprocess_references.py
 python3 preprocess_network.py
 python3 preprocess_timeline.py
 ```
+
+**Scripts de imágenes (requieren conda):**
+```bash
+# Con conda activado, usa 'python' (no 'python3')
+conda activate radio
+python generate_network_image.py
+python generate_timeline_image.py
+
+# O sin activar conda:
+conda run -n radio python generate_network_image.py
+conda run -n radio python generate_timeline_image.py
+```
+
+**Nota:** Cuando conda está activado, `python3` apunta al Python del sistema. Usa `python` para los scripts que requieren conda.
 
 ## Integración con el HTML
 
@@ -74,15 +101,22 @@ universo/
 │   ├── personajes.json          # Datos originales
 │   ├── timeline.json
 │   └── ...
-├── data/processed/               # Datos preprocesados (generados)
+├── data/processed/               # Datos preprocesados e imágenes (generados)
 │   ├── personajes_processed.json
 │   ├── network_data.json
 │   ├── timeline_visual_data.json
+│   ├── network_graph.png         # Imagen del grafo (300 DPI)
+│   ├── network_graph_web.png     # Imagen del grafo (150 DPI, web)
+│   ├── timeline_graph.png        # Imagen del timeline (300 DPI)
+│   ├── timeline_graph_web.png    # Imagen del timeline (150 DPI, web)
 │   └── ...
 ├── preprocess_references.py     # Script de referencias
-├── preprocess_network.py        # Script del grafo
-├── preprocess_timeline.py       # Script del timeline
-└── preprocess_all.py            # Script maestro
+├── preprocess_network.py        # Script del grafo (datos)
+├── preprocess_timeline.py       # Script del timeline (datos)
+├── generate_network_image.py   # Genera imagen del grafo
+├── generate_timeline_image.py   # Genera imagen del timeline
+├── preprocess_all.py            # Script maestro
+└── requirements.txt             # Dependencias Python
 ```
 
 ## Notas
@@ -95,4 +129,33 @@ universo/
 ## Requisitos
 
 - Python 3.6 o superior
-- No se requieren librerías externas (usa solo la biblioteca estándar)
+- **Para scripts de imágenes** (requieren conda o entorno virtual):
+  - `matplotlib` - Para generar imágenes de alta calidad
+  - `networkx` - Para generar el grafo de relaciones
+  - `numpy` - Dependencia de matplotlib
+
+### Instalación con Conda (Recomendado)
+
+El proyecto usa un entorno conda llamado `radio`:
+
+```bash
+# Crear entorno
+conda create -n radio python=3.10 -y
+
+# Activar e instalar dependencias
+conda activate radio
+conda install -y matplotlib networkx numpy -c conda-forge
+```
+
+Ver [README_Conda.md](README_Conda.md) para más detalles sobre el uso con conda.
+
+### Instalación con pip (Alternativa)
+
+```bash
+pip install -r requirements.txt
+```
+
+O manualmente:
+```bash
+pip install matplotlib networkx numpy
+```

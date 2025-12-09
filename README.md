@@ -6,25 +6,27 @@ Sistema de documentación y visualización del universo transmedia Radio Micelio
 
 - 📚 **Biblia completa** del universo con personajes, tramas, localizaciones y canciones
 - 🎨 **Modo oscuro** como tema predeterminado
-- 🔗 **Visualización de relaciones** - Grafo ontológico interactivo de personajes
-- ⏱️ **Timeline visual** - Cronología interactiva de eventos
+- 🔗 **Visualización de relaciones** - Grafo ontológico como imagen de alta calidad (300 DPI)
+- ⏱️ **Timeline visual** - Cronología como imagen de alta calidad (300 DPI)
 - ✏️ **Sistema de edición** con persistencia local
 - 💾 **Guardado automático** en localStorage
+- 🐍 **Preprocesamiento Python** - Scripts para optimizar datos y generar imágenes
 
 ## Visualizaciones
 
 ### Red de Relaciones
-Grafo interactivo que muestra las conexiones entre personajes:
+Imagen estática de alta calidad (300 DPI) que muestra las conexiones entre personajes:
 - Nodos coloreados según tipo (protagonista, antagonista, cósmico)
 - Aristas etiquetadas con el tipo de relación
-- Click en nodos para ver fichas completas
-- Arrastrar y zoom para explorar
+- Generada automáticamente con Python (NetworkX + Matplotlib)
+- Haz clic en la imagen para verla en alta resolución
 
 ### Timeline Visual
-Cronología interactiva de eventos:
+Imagen estática de alta calidad (300 DPI) que muestra la cronología de eventos:
 - Eventos organizados por etapas con colores distintivos
-- Zoom y navegación temporal
-- Click en eventos para ver detalles
+- Escala de porcentajes (0-100%)
+- Generada automáticamente con Python (Matplotlib)
+- Haz clic en la imagen para verla en alta resolución
 
 ## Estructura
 
@@ -104,9 +106,33 @@ Luego visita `http://localhost:8000`
 
 - **HTML5/CSS3** - Estructura y estilos
 - **JavaScript Vanilla** - Lógica de la aplicación
-- **vis-network** - Visualización de grafos
-- **vis-timeline** - Timeline interactivo
+- **Python** - Scripts de preprocesamiento y generación de imágenes
+- **Matplotlib + NetworkX** - Generación de imágenes de alta calidad
 - **localStorage** - Persistencia local
+
+## Visualizaciones como Imágenes
+
+Las visualizaciones del grafo de relaciones y del timeline son **imágenes estáticas de alta calidad** generadas con Python (300 DPI), no son interactivas. Esto reduce significativamente la carga de JavaScript.
+
+Para generar las imágenes:
+
+**Con Conda (Recomendado):**
+```bash
+conda activate radio
+python generate_network_image.py
+python generate_timeline_image.py
+```
+
+**Nota:** Cuando conda está activado, usa `python` (no `python3`).
+
+**O ejecuta todos los scripts de preprocesamiento:**
+```bash
+python3 preprocess_all.py
+```
+
+El script maestro detecta automáticamente qué scripts necesitan conda y los ejecuta en el entorno `radio`.
+
+Ver [README_Conda.md](README_Conda.md) para más detalles sobre la configuración con conda.
 
 ## Licencia
 
