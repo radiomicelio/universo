@@ -2,6 +2,31 @@
 
 Sistema de documentación y visualización del universo transmedia Radio Micelio.
 
+## 🚀 Inicio Rápido
+
+### Opción 1: Servidor Completo (Recomendado)
+
+```bash
+# 1. Instalar dependencias
+pip install -r requirements.txt
+# O con conda:
+conda install fastapi uvicorn python-multipart matplotlib networkx numpy
+
+# 2. Iniciar el servidor
+conda activate radio  # Si usas conda
+uvicorn server:app --host 0.0.0.0 --port 8000 --reload
+
+# 3. Abrir index.html en tu navegador
+```
+
+### Opción 2: Solo Visualización
+
+```bash
+# Servidor HTTP simple
+python -m http.server 8000
+# Luego visita http://localhost:8000
+```
+
 ## Características
 
 - 📚 **Biblia completa** del universo con personajes, tramas, localizaciones y canciones
@@ -46,11 +71,31 @@ universo/
 └── PREPROCESSING.md        # Documentación de preprocesamiento
 ```
 
-## Optimización: Preprocesamiento de Datos
+## Generación de Visualizaciones
 
-Para mejorar el rendimiento, el proyecto incluye scripts de Python que preprocesan los datos JSON y generan versiones optimizadas. Esto reduce significativamente el procesamiento necesario en JavaScript.
+El sistema genera imágenes estáticas de alta calidad (300 DPI) para las visualizaciones del grafo de relaciones y el timeline.
 
-**Ejecutar preprocesamiento:**
+### Generar todas las visualizaciones
+
+**Con conda (Recomendado):**
+```bash
+conda activate radio
+python generate_network_image.py
+python generate_timeline_image.py
+```
+
+**O ejecuta el script maestro que hace todo:**
+```bash
+conda activate radio
+python preprocess_all.py
+```
+
+**Nota:** Cuando conda está activado, usa `python` (no `python3`).
+
+### Preprocesamiento de Datos
+
+Para mejorar el rendimiento, el proyecto incluye scripts de Python que preprocesan los datos JSON y generan versiones optimizadas:
+
 ```bash
 python3 preprocess_all.py
 ```
@@ -80,9 +125,62 @@ Ver [PREPROCESSING.md](PREPROCESSING.md) para más detalles.
 3. **Accede a tu sitio**
    - Tu sitio estará disponible en: `https://tu-usuario.github.io/tu-repo/`
 
-## Uso Local
+## Instalación y Configuración
 
-Simplemente abre `index.html` en tu navegador o usa un servidor local:
+### Requisitos Previos
+
+- Python 3.8 o superior
+- pip o conda (recomendado conda para las visualizaciones)
+
+### Instalación de Dependencias
+
+**Opción 1: Con pip**
+```bash
+pip install -r requirements.txt
+```
+
+**Opción 2: Con conda (recomendado)**
+```bash
+conda install fastapi uvicorn python-multipart matplotlib networkx numpy
+```
+
+O crea un entorno conda específico:
+```bash
+conda create -n radio python=3.10
+conda activate radio
+conda install fastapi uvicorn python-multipart matplotlib networkx numpy
+```
+
+## Uso del Sistema
+
+### Modo 1: Servidor FastAPI (Recomendado - Permite guardar cambios)
+
+Este modo permite guardar cambios directamente desde la interfaz web.
+
+1. **Iniciar el servidor backend:**
+   ```bash
+   # Si usas conda, activa el entorno primero
+   conda activate radio
+   
+   # Iniciar el servidor con uvicorn
+   uvicorn server:app --host 0.0.0.0 --port 8000 --reload
+   ```
+
+2. **Abrir la aplicación:**
+   - Abre `index.html` en tu navegador
+   - O visita `http://localhost:8000` si el servidor sirve archivos estáticos
+
+3. **Usar la interfaz:**
+   - Activa el **Modo Edición** desde el header
+   - Edita cualquier campo haciendo clic en él
+   - Los cambios se guardan automáticamente en el servidor
+   - Los archivos JSON se actualizan directamente en `data/`
+
+**Nota:** El flag `--reload` hace que el servidor se recargue automáticamente cuando cambias el código (modo desarrollo).
+
+### Modo 2: Servidor HTTP Simple (Solo lectura)
+
+Si solo quieres visualizar sin guardar cambios:
 
 ```bash
 # Con Python
@@ -90,17 +188,39 @@ python -m http.server 8000
 
 # Con Node.js
 npx serve
+
+# Con PHP
+php -S localhost:8000
 ```
 
-Luego visita `http://localhost:8000`
+Luego visita `http://localhost:8000` en tu navegador.
+
+### Modo 3: Abrir directamente (Limitado)
+
+Puedes abrir `index.html` directamente en el navegador, pero algunas funcionalidades (como guardar cambios) no funcionarán debido a las restricciones CORS.
 
 ## Sistema de Edición
 
+### Con Servidor FastAPI (Recomendado)
+
+1. Asegúrate de que el servidor esté corriendo:
+   ```bash
+   conda activate radio
+   uvicorn server:app --host 0.0.0.0 --port 8000 --reload
+   ```
+
+2. Activa el **Modo Edición** desde el header
+3. Haz clic en cualquier campo editable para editarlo
+4. Los cambios se guardan automáticamente en el servidor
+5. Los archivos JSON se actualizan directamente en `data/`
+
+### Sin Servidor (Solo lectura local)
+
 1. Activa el **Modo Edición** desde el header
-2. Haz click en **Editar** en cualquier personaje
-3. Los cambios se guardan automáticamente en localStorage
+2. Haz clic en **Editar** en cualquier personaje
+3. Los cambios se guardan en localStorage del navegador
 4. Usa **Guardar en Archivo** para descargar el JSON actualizado
-5. Reemplaza `data/personajes.json` con el archivo descargado
+5. Reemplaza manualmente el archivo en `data/` con el descargado
 
 ## Tecnologías
 
@@ -110,29 +230,37 @@ Luego visita `http://localhost:8000`
 - **Matplotlib + NetworkX** - Generación de imágenes de alta calidad
 - **localStorage** - Persistencia local
 
-## Visualizaciones como Imágenes
+## Documentación Adicional
 
-Las visualizaciones del grafo de relaciones y del timeline son **imágenes estáticas de alta calidad** generadas con Python (300 DPI), no son interactivas. Esto reduce significativamente la carga de JavaScript.
+- **[README_SERVER.md](README_SERVER.md)** - Documentación completa del servidor FastAPI
+- **[README_Conda.md](README_Conda.md)** - Configuración y uso con conda
+- **[PREPROCESSING.md](PREPROCESSING.md)** - Detalles sobre el preprocesamiento de datos
 
-Para generar las imágenes:
+## Comandos Rápidos de Referencia
 
-**Con Conda (Recomendado):**
+### Iniciar el servidor
+```bash
+conda activate radio
+uvicorn server:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### Generar visualizaciones
 ```bash
 conda activate radio
 python generate_network_image.py
 python generate_timeline_image.py
 ```
 
-**Nota:** Cuando conda está activado, usa `python` (no `python3`).
-
-**O ejecuta todos los scripts de preprocesamiento:**
+### Preprocesar todos los datos
 ```bash
-python3 preprocess_all.py
+conda activate radio
+python preprocess_all.py
 ```
 
-El script maestro detecta automáticamente qué scripts necesitan conda y los ejecuta en el entorno `radio`.
-
-Ver [README_Conda.md](README_Conda.md) para más detalles sobre la configuración con conda.
+### Servidor HTTP simple (solo lectura)
+```bash
+python -m http.server 8000
+```
 
 ## Licencia
 

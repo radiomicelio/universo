@@ -45,6 +45,17 @@
       "style": "background-color: #3498db; border-color: #3498db; color: #fff;"
     },
     {
+      "id": "senal-sirius",
+      "content": "Sirius detecta el deshielo y d...",
+      "start": "2020-01-22T16:00:00",
+      "end": "2020-01-29T08:00:00",
+      "group": "despertar",
+      "title": "Sirius detecta el deshielo y despierta a Sísmico\n\nEl observador cósmico Sirius percibe la energía del deshielo del diamante en el Polo Norte y envía un destello dimensional que despierta a Sísmico en la prisión de Musitoxic. Esta señal está en paralelo al momento en que el diamante empieza a reactivarse, antes de Inventrola. El destello altera las defensas de la torre, lo que permitirá también la fuga de Amethystos y los demás prisioneros del zoológico.\n\nProgreso: 21.7% - 28.3%",
+      "className": "timeline-event-despertar",
+      "type": "range",
+      "style": "background-color: #3498db; border-color: #3498db; color: #fff;"
+    },
+    {
       "id": "primer-viaje",
       "content": "Viaje hacia Nueva York con ayu...",
       "start": "2020-01-29T08:00:00",
@@ -100,23 +111,12 @@
       "style": "background-color: #e74c3c; border-color: #e74c3c; color: #fff;"
     },
     {
-      "id": "senal-sirius",
-      "content": "Sirius envía una señal a Sísmi...",
-      "start": "2020-02-25T00:00:00",
-      "end": "2020-03-01T00:00:00",
-      "group": "sismico",
-      "title": "Sirius envía una señal a Sísmico\n\nEl observador cósmico Sirius percibe el desequilibrio energético generado por Inventrola y despierta a Sísmico enviándole un destello dimensional.\n\nProgreso: 55.0% - 60.0%",
-      "className": "timeline-event-sismico",
-      "type": "range",
-      "style": "background-color: #f39c12; border-color: #f39c12; color: #fff;"
-    },
-    {
       "id": "escape-sismico",
       "content": "Sísmico se divide en varias ve...",
-      "start": "2020-03-01T00:00:00",
-      "end": "2020-03-06T00:00:00",
+      "start": "2020-01-22T16:00:00",
+      "end": "2020-01-29T08:00:00",
       "group": "sismico",
-      "title": "Sísmico se divide en varias versiones y escapa\n\nSísmico entra en un plano cuántico fractal, se desdobla y debe elegir entre la vida y la muerte antes de romper un cristal dimensional y escapar.\n\nProgreso: 60.0% - 65.0%",
+      "title": "Sísmico se divide en varias versiones y escapa\n\nLa fuga de Sísmico y el caos en el zoológico suceden en paralelo al deshielo del diamante en el Polo Norte. Sísmico entra en un plano cuántico fractal, se desdobla y debe elegir entre la vida y la muerte antes de romper un cristal dimensional y escapar. La alteración dimensional que genera permite que Amethystos y las criaturas del zoológico aprovechen la oportunidad para ejecutar el pacto de liberación.\n\nProgreso: 21.7% - 28.3%",
       "className": "timeline-event-sismico",
       "type": "range",
       "style": "background-color: #f39c12; border-color: #f39c12; color: #fff;"
@@ -124,10 +124,10 @@
     {
       "id": "entrada-espana",
       "content": "Aparición de Sísmico en la Esp...",
-      "start": "2020-03-06T00:00:00",
+      "start": "2020-02-05T00:00:00",
       "end": null,
       "group": "sismico",
-      "title": "Aparición de Sísmico en la España vaciada\n\nSísmico llega a un desierto verde alterado ecológicamente, donde comienza una nueva etapa de su existencia.\n\nProgreso: 65.0% - 70.0%",
+      "title": "Aparición de Sísmico en la España vaciada\n\nSísmico llega a un desierto verde alterado ecológicamente, donde comienza una nueva etapa de su existencia. Este arco ocurre en paralelo con los eventos de Inventrola.\n\nProgreso: 35.0% - 40.0%",
       "className": "timeline-event-sismico",
       "type": "point",
       "style": "background-color: #f39c12; border-color: #f39c12; color: #fff;"
@@ -136,9 +136,9 @@
       "id": "investigacion-tamen",
       "content": "Tamen registra las primeras an...",
       "start": "2020-03-11T00:00:00",
-      "end": "2020-03-17T16:00:00",
+      "end": "2020-03-21T00:00:00",
       "group": "tamen",
-      "title": "Tamen registra las primeras anomalías\n\nTamen detecta patrones ecológicos inusuales: alteraciones en micelios, cambios climáticos locales y señales energéticas que no cuadran con lo conocido.\n\nProgreso: 70.0% - 76.7%",
+      "title": "Tamen registra las primeras anomalías\n\nTamen detecta patrones ecológicos inusuales: alteraciones en micelios, cambios climáticos locales y señales energéticas que no cuadran con lo conocido.\n\nProgreso: 70.0% - 80.0%",
       "className": "timeline-event-tamen",
       "type": "range",
       "style": "background-color: #27ae60; border-color: #27ae60; color: #fff;"
@@ -146,10 +146,10 @@
     {
       "id": "despertar-amethystos",
       "content": "Despertar de Amethystos en las...",
-      "start": "2020-03-17T16:00:00",
-      "end": "2020-03-24T08:00:00",
+      "start": "2020-03-21T00:00:00",
+      "end": "2020-03-31T00:00:00",
       "group": "tamen",
-      "title": "Despertar de Amethystos en las Selvas sin Amor\n\nTras años viendo arder su territorio, la futura Amethystos realiza un ritual desesperado con raíces, agua y micelio. En lugar de destruirlo todo, el conjuro la fusiona parcialmente con la red micelial, otorgándole poder y condenándola a sentir el dolor de la selva para siempre.\n\nProgreso: 76.7% - 83.3%",
+      "title": "Despertar de Amethystos en las Selvas sin Amor\n\nTras años viendo arder su territorio, la futura Amethystos realiza un ritual desesperado con raíces, agua y micelio. En lugar de destruirlo todo, el conjuro la fusiona parcialmente con la red micelial, otorgándole poder y condenándola a sentir el dolor de la selva para siempre.\n\nProgreso: 80.0% - 90.0%",
       "className": "timeline-event-tamen",
       "type": "range",
       "style": "background-color: #27ae60; border-color: #27ae60; color: #fff;"
@@ -157,21 +157,43 @@
     {
       "id": "tamen-amethystos",
       "content": "Tamen entra en contacto con Am...",
-      "start": "2020-03-24T08:00:00",
-      "end": "2020-03-31T00:00:00",
+      "start": "2020-03-31T00:00:00",
+      "end": "2020-04-05T00:00:00",
       "group": "tamen",
-      "title": "Tamen entra en contacto con Amethystos\n\nDurante su investigación de ecosistemas, Tamen cruza información que la lleva a las Selvas sin Amor, donde forma una alianza con Amethystos.\n\nProgreso: 83.3% - 90.0%",
+      "title": "Tamen entra en contacto con Amethystos\n\nDurante su investigación de ecosistemas, Tamen cruza información que la lleva a las Selvas sin Amor, donde forma una alianza con Amethystos. Sus conversaciones y el desarrollo de su relación se desarrollan mientras en la España vaciada se está gestando la convergencia de Vaquero y Sísmico, aunque ellas estén físicamente en las Selvas sin Amor y otros territorios.\n\nProgreso: 90.0% - 95.0%",
       "className": "timeline-event-tamen",
       "type": "range",
       "style": "background-color: #27ae60; border-color: #27ae60; color: #fff;"
     },
     {
+      "id": "aparicion-basscolgado",
+      "content": "Aparición de Basscolgado en la...",
+      "start": "2020-03-31T00:00:00",
+      "end": null,
+      "group": "futuro",
+      "title": "Aparición de Basscolgado en la España vaciada\n\nBasscolgado se manifiesta en la España vaciada como figura de guía espiritual y musical. Entiende el micelio como una red de frecuencias y aparece colgado de su bajo amplificado por estructuras naturales del desierto. Funciona como nexo entre Sísmico y el Vaquero Atómico, acompañando sus procesos de transformación.\n\nProgreso: 90.0% - 95.0%",
+      "className": "timeline-event-futuro",
+      "type": "point",
+      "style": "background-color: #1abc9c; border-color: #1abc9c; color: #fff;"
+    },
+    {
       "id": "convergencia",
       "content": "Convergencia futura en la Espa...",
       "start": "2020-03-31T00:00:00",
+      "end": "2020-04-05T00:00:00",
+      "group": "futuro",
+      "title": "Convergencia futura en la España Vaciada\n\nBasscolgado actúa como el nexo entre Sísmico y el Vaquero Atómico, funcionando como mentor y guía en la España vaciada. Su papel es fundamental en el viaje del héroe: acompaña a ambos personajes hacia su destino común. Este evento marca el punto donde Sísmico, Vaquero Atómico, Tamen y Amethystos se encaminan a luchar juntxs contra el Micelio Negro.\n\nProgreso: 90.0% - 95.0%",
+      "className": "timeline-event-futuro",
+      "type": "range",
+      "style": "background-color: #1abc9c; border-color: #1abc9c; color: #fff;"
+    },
+    {
+      "id": "muerte-basscolgado",
+      "content": "Muerte de Basscolgado",
+      "start": "2020-04-05T00:00:00",
       "end": "2020-04-10T00:00:00",
       "group": "futuro",
-      "title": "Convergencia futura en la España Vaciada\n\nLas trayectorias de Vaquero Atómico, Sísmico y Tamen apuntan hacia un encuentro inevitable en la España vaciada, donde se cruzan fuerzas energéticas, ecológicas y humanas.\n\nProgreso: 90.0% - 100.0%",
+      "title": "Muerte de Basscolgado\n\nBasscolgado muere como figura de mentor en el viaje del héroe. Su muerte actúa como catalizador emocional que une simbólicamente las trayectorias de Vaquero Atómico, Sísmico, Tamen y Amethystos. Su energía se transforma en el paso del testigo, manteniendo viva la memoria sonora de los lugares abandonados y fortaleciendo la alianza final contra el Micelio Negro.\n\nProgreso: 95.0% - 100.0%",
       "className": "timeline-event-futuro",
       "type": "range",
       "style": "background-color: #1abc9c; border-color: #1abc9c; color: #fff;"

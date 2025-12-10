@@ -14,41 +14,59 @@ def escape_regex(text):
     return re.escape(text)
 
 def crear_enlace_personaje(id_personaje, texto, personajes):
-    """Crea enlace HTML para personaje"""
+    """Crea enlace HTML para personaje - solo data attributes, sin onclick inline"""
     personaje = next((p for p in personajes if p['id'] == id_personaje), None)
     if not personaje:
         return texto or id_personaje
     nombre = texto or personaje['nombre']
-    return f'<a href="#" class="referencia-link" onclick="event.preventDefault(); verFicha(\'{id_personaje}\'); return false;">{nombre}</a>'
+    return f'<a href="#" class="referencia-link" data-tipo="personaje" data-id="{id_personaje}">{nombre}</a>'
 
 def crear_enlace_localizacion(id_localizacion, texto, localizaciones):
-    """Crea enlace HTML para localización"""
+    """Crea enlace HTML para localización - solo data attributes, sin onclick inline"""
     localizacion = next((l for l in localizaciones if l['id'] == id_localizacion), None)
     if not localizacion:
         return texto or id_localizacion
     nombre = texto or localizacion['nombre']
-    return f'<a href="#localizaciones" class="referencia-link" onclick="event.preventDefault(); document.getElementById(\'localizaciones\').scrollIntoView({{behavior: \'smooth\'}}); setTimeout(() => {{ document.getElementById(\'lugar-{id_localizacion}\').scrollIntoView({{behavior: \'smooth\', block: \'center\'}}); }}, 300); return false;">{nombre}</a>'
+    return f'<a href="#localizaciones" class="referencia-link" data-tipo="localizacion" data-id="{id_localizacion}">{nombre}</a>'
 
 def crear_enlace_cancion(id_cancion, texto, canciones):
-    """Crea enlace HTML para canción"""
+    """Crea enlace HTML para canción - solo data attributes, sin onclick inline"""
     cancion = next((c for c in canciones if c['id'] == id_cancion), None)
     if not cancion:
         return texto or id_cancion
     nombre = texto or cancion['titulo']
-    return f'<a href="#canciones" class="referencia-link" onclick="event.preventDefault(); document.getElementById(\'canciones\').scrollIntoView({{behavior: \'smooth\'}}); setTimeout(() => {{ document.getElementById(\'song-{id_cancion}\').scrollIntoView({{behavior: \'smooth\', block: \'center\'}}); }}, 300); return false;">{nombre}</a>'
+    return f'<a href="#canciones" class="referencia-link" data-tipo="cancion" data-id="{id_cancion}">{nombre}</a>'
 
 def crear_enlace_trama(id_trama, texto, tramas):
-    """Crea enlace HTML para trama"""
+    """Crea enlace HTML para trama - solo data attributes, sin onclick inline"""
     trama = next((t for t in tramas if t['id'] == id_trama), None)
     if not trama:
         return texto or id_trama
     nombre = texto or trama['titulo']
-    return f'<a href="#tramas" class="referencia-link" onclick="event.preventDefault(); document.getElementById(\'tramas\').scrollIntoView({{behavior: \'smooth\'}}); setTimeout(() => {{ document.getElementById(\'trama-{id_trama}\').scrollIntoView({{behavior: \'smooth\', block: \'center\'}}); }}, 300); return false;">{nombre}</a>'
+    return f'<a href="#tramas" class="referencia-link" data-tipo="trama" data-id="{id_trama}">{nombre}</a>'
+
+def limpiar_codigo_corrupto(texto):
+    """Limpia código JavaScript corrupto de un string antes de procesar"""
+    if not texto:
+        return texto
+    
+    # Limpiar código corrupto específico que aparece comúnmente
+    # Patrón 1: "'); return false;">" que aparece fuera de tags
+    texto = re.sub(r"'\s*;\s*return\s+false\s*[^>]*>", '', texto, flags=re.IGNORECASE)
+    # Patrón 2: "{ .; }, 300);" que aparece fuera de tags
+    texto = re.sub(r'\{\s*\.\s*;\s*\}\s*,\s*\d+\s*\)\s*;', '', texto)
+    # Normalizar espacios
+    texto = re.sub(r'\s+', ' ', texto).strip()
+    
+    return texto
 
 def procesar_referencias_en_texto(texto, personajes, localizaciones, canciones, tramas):
     """Procesa referencias en texto y las convierte a enlaces HTML"""
     if not texto:
         return texto
+    
+    # Limpiar código corrupto ANTES de procesar
+    texto = limpiar_codigo_corrupto(texto)
     
     # Si el texto ya contiene HTML (enlaces), no procesar para evitar duplicados
     if '<a' in texto or '<span' in texto:
@@ -289,3 +307,4 @@ def procesar_datos():
 
 if __name__ == '__main__':
     procesar_datos()
+

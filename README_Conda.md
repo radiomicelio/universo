@@ -68,3 +68,4 @@ conda run -n radio python -c "import matplotlib; import networkx; print('✓ Tod
 - El entorno conda `radio` solo es necesario para los scripts de generación de imágenes
 - Los otros scripts de preprocesamiento (`preprocess_references.py`, etc.) funcionan con Python estándar
 - Si prefieres usar pip en lugar de conda, puedes crear un entorno virtual normal
+

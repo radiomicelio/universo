@@ -1121,6 +1121,18 @@
         <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem; text-align: center;">
           Timeline generado automáticamente desde los eventos cronológicos.
         </p>
+        <div style="text-align: center; margin-top: 1.5rem;">
+          <a href="/timeline-editor" 
+             style="display: inline-block; background: #3498db; color: white; padding: 0.75rem 1.5rem; 
+                    border-radius: 6px; text-decoration: none; font-weight: bold; transition: background 0.2s;"
+             onmouseover="this.style.background='#2980b9'" 
+             onmouseout="this.style.background='#3498db'">
+            ✏️ Editar Timeline Interactivo
+          </a>
+          <p style="margin-top: 0.5rem; color: #aaa; font-size: 0.85rem;">
+            Arrastra eventos para ajustar su posición temporal
+          </p>
+        </div>
       </div>
       <div id="timeline-content" class="content-block" style="margin-top: 2rem; position: relative; z-index: 2;">
         <h3 style="margin-top: 0;">Eventos del Timeline</h3>
@@ -1692,6 +1704,91 @@
       document.getElementById('reload-btn').addEventListener('click', recargarDesdeArchivos);
       document.getElementById('close-modal').addEventListener('click', cerrarModal);
       
+      // Event delegation para manejar clicks en enlaces de referencia
+      // Esto evita tener código JavaScript inline en los atributos onclick
+      // Si un enlace tiene onclick inline, lo removemos y usamos solo data attributes
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('.referencia-link');
+        if (!link) return;
+        
+        // Si tiene onclick inline, removerlo para evitar código corrupto
+        if (link.hasAttribute('onclick')) {
+          link.removeAttribute('onclick');
+        }
+        
+        e.preventDefault();
+        
+        const tipo = link.getAttribute('data-tipo');
+        const id = link.getAttribute('data-id');
+        
+        // Si no tiene data attributes, intentar extraer del onclick antiguo o href
+        if (!tipo || !id) {
+          // Intentar extraer del href como fallback
+          const href = link.getAttribute('href');
+          if (href === '#') {
+            // Probablemente es un personaje
+            const texto = link.textContent.trim();
+            const personaje = datos.personajes?.find(p => p.nombre === texto);
+            if (personaje) {
+              verFicha(personaje.id);
+              return;
+            }
+          }
+          return;
+        }
+        
+        // Cerrar modal si está abierto
+        if (window.cerrarModalSiAbierto) {
+          window.cerrarModalSiAbierto();
+        }
+        
+        if (tipo === 'personaje') {
+          verFicha(id);
+        } else if (tipo === 'localizacion') {
+          if (window.mostrarIndicadorSeccion) {
+            window.mostrarIndicadorSeccion('localizaciones');
+          }
+          const section = document.getElementById('localizaciones');
+          if (section) {
+            section.scrollIntoView({behavior: 'smooth'});
+            setTimeout(() => {
+              const target = document.getElementById(`lugar-${id}`);
+              if (target) {
+                target.scrollIntoView({behavior: 'smooth', block: 'center'});
+              }
+            }, 300);
+          }
+        } else if (tipo === 'cancion') {
+          if (window.mostrarIndicadorSeccion) {
+            window.mostrarIndicadorSeccion('canciones');
+          }
+          const section = document.getElementById('canciones');
+          if (section) {
+            section.scrollIntoView({behavior: 'smooth'});
+            setTimeout(() => {
+              const target = document.getElementById(`song-${id}`);
+              if (target) {
+                target.scrollIntoView({behavior: 'smooth', block: 'center'});
+              }
+            }, 300);
+          }
+        } else if (tipo === 'trama') {
+          if (window.mostrarIndicadorSeccion) {
+            window.mostrarIndicadorSeccion('tramas');
+          }
+          const section = document.getElementById('tramas');
+          if (section) {
+            section.scrollIntoView({behavior: 'smooth'});
+            setTimeout(() => {
+              const target = document.getElementById(`trama-${id}`);
+              if (target) {
+                target.scrollIntoView({behavior: 'smooth', block: 'center'});
+              }
+            }, 300);
+          }
+        }
+      });
+      
       // Cerrar modal al hacer click fuera
       document.getElementById('personaje-modal').addEventListener('click', (e) => {
         if (e.target.id === 'personaje-modal') {
@@ -2167,6 +2264,53 @@
       return texto;
     }
 
+    // Función para limpiar código JavaScript corrupto de un string
+    function limpiarCodigoCorrupto(texto) {
+      if (!texto) return texto;
+      
+      // Limpiar código JavaScript corrupto que pueda estar mezclado
+      // Patrones específicos de código corrupto común
+      texto = texto.replace(/\{\s*\.\s*;\s*\}\s*,\s*\d+\s*\)\s*;/gi, ''); // Limpiar "{ .; }, 300);"
+      texto = texto.replace(/\'\s*;\s*return\s+false\s*[^>]*>/gi, ''); // Limpiar "'); return false;">"
+      texto = texto.replace(/(?<!onclick="[^"]*)(return\s+false[^>]*>)(?![^"]*")/gi, ''); // Limpiar "return false;" fuera de onclick
+      texto = texto.replace(/(?<!onclick="[^"]*)(onclick="[^"]*")(?![^"]*")/gi, ''); // Limpiar onclick fuera de tags
+      texto = texto.replace(/(?<!<[^>]*)(document\.getElementById\([^)]*\))(?![^<]*>)/gi, ''); // Limpiar getElementById fuera de tags
+      texto = texto.replace(/(?<!<[^>]*)(scrollIntoView\([^)]*\))(?![^<]*>)/gi, ''); // Limpiar scrollIntoView fuera de tags
+      texto = texto.replace(/(?<!<[^>]*)(verFicha\([^)]*\))(?![^<]*>)/gi, ''); // Limpiar verFicha fuera de tags
+      texto = texto.replace(/(?<!<[^>]*)(event\.preventDefault\(\))(?![^<]*>)/gi, ''); // Limpiar preventDefault fuera de tags
+      texto = texto.replace(/(?<!<[^>]*)(window\.[^;]*)(?![^<]*>)/gi, ''); // Limpiar window fuera de tags
+      texto = texto.replace(/(?<!<[^>]*)(setTimeout\([^)]*\))(?![^<]*>)/gi, ''); // Limpiar setTimeout fuera de tags
+      texto = texto.replace(/(?<!<[^>]*)(cerrarModalSiAbierto\(\))(?![^<]*>)/gi, ''); // Limpiar cerrarModal fuera de tags
+      texto = texto.replace(/(?<!<[^>]*)(mostrarIndicadorSeccion\([^)]*\))(?![^<]*>)/gi, ''); // Limpiar mostrarIndicador fuera de tags
+      texto = texto.replace(/\s+/g, ' ').trim();
+      
+      return texto;
+    }
+
+    // Función para extraer texto plano de un string que puede contener HTML
+    // Esta función es crítica para evitar que código JavaScript se guarde como texto
+    function extraerTextoPlanoDeString(texto) {
+      if (!texto) return '';
+      
+      // Primero limpiar código corrupto
+      texto = limpiarCodigoCorrupto(texto);
+      
+      // Si el texto no contiene HTML, retornarlo tal cual
+      if (!texto.includes('<') && !texto.includes('>')) {
+        return texto.trim();
+      }
+      
+      // Crear un elemento temporal para extraer solo el texto
+      const temp = document.createElement('div');
+      temp.innerHTML = texto;
+      let textoPlano = temp.textContent || temp.innerText || '';
+      
+      // Limpieza final de cualquier código residual
+      textoPlano = limpiarCodigoCorrupto(textoPlano);
+      
+      return textoPlano;
+    }
+
     // Función para extraer texto plano de un elemento, eliminando todo HTML y código
     function extraerTextoPlanoDeElemento(elemento) {
       // SIEMPRE usar método agresivo: clonar y extraer texto
@@ -2225,43 +2369,8 @@
       const indice = elemento.getAttribute('data-indice');
       
       // SIEMPRE extraer solo texto plano, sin HTML ni código
-      // Esto es especialmente importante para sinopsis y otros campos de texto
-      // Usar textContent directamente que extrae solo texto, ignorando cualquier HTML renderizado
-      let nuevoValor = '';
-      
-      // Método más seguro: usar textContent que siempre extrae solo texto
-      nuevoValor = elemento.textContent || elemento.innerText || '';
-      
-      // Si textContent está vacío pero hay contenido, intentar método alternativo
-      if (!nuevoValor && elemento.innerHTML) {
-        const temp = document.createElement('div');
-        temp.innerHTML = elemento.innerHTML;
-        nuevoValor = temp.textContent || temp.innerText || '';
-      }
-      
-      // Limpieza final agresiva de cualquier código residual
-      nuevoValor = nuevoValor.replace(/return\s+false[^>]*>/gi, '');
-      nuevoValor = nuevoValor.replace(/onclick="[^"]*"/gi, '');
-      nuevoValor = nuevoValor.replace(/<a[^>]*>/gi, '');
-      nuevoValor = nuevoValor.replace(/<\/a>/gi, '');
-      nuevoValor = nuevoValor.replace(/<[^>]*>/g, '');
-      nuevoValor = nuevoValor.replace(/document\.getElementById\([^)]*\)/gi, '');
-      nuevoValor = nuevoValor.replace(/scrollIntoView\([^)]*\)/gi, '');
-      nuevoValor = nuevoValor.replace(/verFicha\([^)]*\)/gi, '');
-      nuevoValor = nuevoValor.replace(/event\.preventDefault\(\)/gi, '');
-      nuevoValor = nuevoValor.replace(/window\.[^;]*/gi, '');
-      nuevoValor = nuevoValor.replace(/setTimeout\([^)]*\)/gi, '');
-      nuevoValor = nuevoValor.replace(/cerrarModalSiAbierto\(\)/gi, '');
-      nuevoValor = nuevoValor.replace(/mostrarIndicadorSeccion\([^)]*\)/gi, '');
-      nuevoValor = nuevoValor.replace(/getElementById\([^)]*\)/gi, '');
-      nuevoValor = nuevoValor.replace(/href="[^"]*"/gi, '');
-      nuevoValor = nuevoValor.replace(/class="[^"]*"/gi, '');
-      nuevoValor = nuevoValor.replace(/data-[^=]*="[^"]*"/gi, '');
-      nuevoValor = nuevoValor.replace(/behavior:\s*'[^']*'/gi, '');
-      nuevoValor = nuevoValor.replace(/block:\s*'[^']*'/gi, '');
-      nuevoValor = nuevoValor.replace(/lugar-[^'"]*/gi, '');
-      nuevoValor = nuevoValor.replace(/zoologico-[^'"]*/gi, '');
-      nuevoValor = nuevoValor.replace(/\s+/g, ' ').trim();
+      // Usar la función dedicada que garantiza extracción limpia
+      let nuevoValor = extraerTextoPlanoDeElemento(elemento);
 
       if (!tipo || !campo) return;
 
@@ -2350,38 +2459,9 @@
         return;
       }
 
-      // Función para limpiar texto de código mezclado antes de procesar
-      const limpiarTexto = (texto) => {
-        if (!texto) return texto;
-        // Si ya tiene HTML válido (enlaces completos), no limpiar
-        if (texto.includes('<a href') && texto.includes('</a>')) {
-          return texto;
-        }
-        // Si tiene código JavaScript mezclado, limpiarlo
-        if (texto.includes('return false') || texto.includes('onclick=') || texto.includes('getElementById')) {
-          // Extraer solo texto plano
-          const temp = document.createElement('div');
-          temp.innerHTML = texto;
-          let textoLimpio = temp.textContent || temp.innerText || '';
-          // Limpiar código residual
-          textoLimpio = textoLimpio.replace(/return false;.*?>/gi, '');
-          textoLimpio = textoLimpio.replace(/onclick="[^"]*"/gi, '');
-          textoLimpio = textoLimpio.replace(/document\.getElementById\([^)]*\)/gi, '');
-          textoLimpio = textoLimpio.replace(/scrollIntoView\([^)]*\)/gi, '');
-          textoLimpio = textoLimpio.replace(/verFicha\([^)]*\)/gi, '');
-          textoLimpio = textoLimpio.replace(/event\.preventDefault\(\)/gi, '');
-          textoLimpio = textoLimpio.replace(/window\.[^;]*/gi, '');
-          textoLimpio = textoLimpio.replace(/setTimeout\([^)]*\)/gi, '');
-          textoLimpio = textoLimpio.replace(/\s+/g, ' ').trim();
-          return textoLimpio;
-        }
-        return texto;
-      };
-
-      const procesarTexto = (texto) => {
-        const textoLimpio = limpiarTexto(texto);
-        return modoEdicion ? textoLimpio : procesarReferenciasEnTexto(textoLimpio);
-      };
+      // En modo edición, extraer solo texto plano para evitar que código HTML/JS se muestre
+      // En modo visualización, procesar referencias para crear enlaces interactivos
+      const procesarTexto = (texto) => modoEdicion ? extraerTextoPlanoDeString(texto) : procesarReferenciasEnTexto(texto);
 
       cont.innerHTML = `
         <h3>Logline</h3>
@@ -2463,7 +2543,8 @@
           const { porcentaje } = p.completitud;
           const claseCompletitudCard = porcentaje < 50 ? 'bajo' : porcentaje < 80 ? 'medio' : '';
           
-          const procesarTexto = (texto) => modoEdicion ? texto : procesarReferenciasEnTexto(texto);
+          // En modo edición, extraer solo texto plano para evitar que código HTML/JS se muestre
+          const procesarTexto = (texto) => modoEdicion ? extraerTextoPlanoDeString(texto) : procesarReferenciasEnTexto(texto);
           
           return `
             <div class="personaje-card personaje-principal" data-id="${p.id}">
@@ -2513,7 +2594,8 @@
         html += personajesSecundarios.map(p => {
           const { porcentaje } = p.completitud;
           const claseCompletitudCard = porcentaje < 50 ? 'bajo' : porcentaje < 80 ? 'medio' : '';
-          const procesarTexto = (texto) => modoEdicion ? texto : procesarReferenciasEnTexto(texto);
+          // En modo edición, extraer solo texto plano para evitar que código HTML/JS se muestre
+          const procesarTexto = (texto) => modoEdicion ? extraerTextoPlanoDeString(texto) : procesarReferenciasEnTexto(texto);
           
           return `
             <div class="personaje-card" data-id="${p.id}">
@@ -2552,6 +2634,9 @@
       }
       
       cont.innerHTML = html;
+      
+      // Limpiar código corrupto después de renderizar
+      setTimeout(() => limpiarCodigoCorruptoEnDOM(cont), 0);
     }
 
     // Funciones helper para crear enlaces de referencia
@@ -2559,7 +2644,8 @@
       const personaje = datos.personajes?.find(p => p.id === id);
       if (!personaje) return texto || id;
       const nombre = texto || personaje.nombre;
-      return `<a href="#" class="referencia-link" onclick="event.preventDefault(); verFicha('${id}'); return false;">${nombre}</a>`;
+      // Usar solo data attributes, sin onclick inline para evitar código corrupto
+      return `<a href="#" class="referencia-link" data-tipo="personaje" data-id="${id}">${nombre}</a>`;
     }
 
     // Función para cerrar el modal de personaje si está abierto
@@ -2574,28 +2660,83 @@
       const localizacion = datos.localizaciones?.find(l => l.id === id);
       if (!localizacion) return texto || id;
       const nombre = texto || localizacion.nombre;
-      return `<a href="#localizaciones" class="referencia-link" data-tipo="localizacion" data-id="${id}" onclick="event.preventDefault(); window.cerrarModalSiAbierto && window.cerrarModalSiAbierto(); if (window.mostrarIndicadorSeccion) window.mostrarIndicadorSeccion('localizaciones'); document.getElementById('localizaciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('lugar-${id}').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;">${nombre}</a>`;
+      // Usar solo data attributes, sin onclick inline para evitar código corrupto
+      return `<a href="#localizaciones" class="referencia-link" data-tipo="localizacion" data-id="${id}">${nombre}</a>`;
     }
 
     function crearEnlaceCancion(id, texto) {
       const cancion = datos.canciones?.find(c => c.id === id);
       if (!cancion) return texto || id;
       const nombre = texto || cancion.titulo;
-      return `<a href="#canciones" class="referencia-link" data-tipo="cancion" data-id="${id}" onclick="event.preventDefault(); window.cerrarModalSiAbierto && window.cerrarModalSiAbierto(); if (window.mostrarIndicadorSeccion) window.mostrarIndicadorSeccion('canciones'); document.getElementById('canciones').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('song-${id}').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;">${nombre}</a>`;
+      // Usar solo data attributes, sin onclick inline para evitar código corrupto
+      return `<a href="#canciones" class="referencia-link" data-tipo="cancion" data-id="${id}">${nombre}</a>`;
     }
 
     function crearEnlaceTrama(id, texto) {
       const trama = datos.tramas?.find(t => t.id === id);
       if (!trama) return texto || id;
       const nombre = texto || trama.titulo;
-      return `<a href="#tramas" class="referencia-link" data-tipo="trama" data-id="${id}" onclick="event.preventDefault(); window.cerrarModalSiAbierto && window.cerrarModalSiAbierto(); if (window.mostrarIndicadorSeccion) window.mostrarIndicadorSeccion('tramas'); document.getElementById('tramas').scrollIntoView({behavior: 'smooth'}); setTimeout(() => { document.getElementById('trama-${id}').scrollIntoView({behavior: 'smooth', block: 'center'}); }, 300); return false;">${nombre}</a>`;
+      // Usar solo data attributes, sin onclick inline para evitar código corrupto
+      return `<a href="#tramas" class="referencia-link" data-tipo="trama" data-id="${id}">${nombre}</a>`;
     }
 
     function procesarReferenciasEnTexto(texto) {
       if (!texto) return texto;
-      // Si el texto ya contiene HTML (enlaces), no procesar (ya está preprocesado)
+      
+      // Limpiar código JavaScript corrupto que pueda estar mezclado con el texto
+      // Esto puede ocurrir si hubo ediciones previas que guardaron código incorrectamente
+      
+      // Limpiar patrones específicos de código corrupto común ANTES de procesar
+      texto = texto.replace(/\'\s*;\s*return\s+false\s*[^>]*>/gi, ''); // Limpiar "'); return false;">"
+      texto = texto.replace(/\{\s*\.\s*;\s*\}\s*,\s*\d+\s*\)\s*;/gi, ''); // Limpiar "{ .; }, 300);"
+      texto = texto.replace(/return\s+false\s*[^>]*>/gi, ''); // Limpiar cualquier "return false>" suelto
+      
+      // Si el texto ya contiene HTML (enlaces), limpiar código corrupto pero mantener HTML válido
       if (texto.includes('<a') || texto.includes('<span')) {
-        // Si ya tiene enlaces, no procesar para evitar duplicados
+        // Limpiar patrón específico: {id}">{nombre} (ej: "musitoxic">Musitoxic" o "basscolgado">Basscolgado")
+        // Esto ocurre cuando hay texto corrupto que muestra el ID seguido de ">" y luego el nombre
+        // Buscar todos los personajes conocidos y verificar si aparece este patrón
+        if (datos.personajes) {
+          datos.personajes.forEach(personaje => {
+            const id = personaje.id;
+            const nombre = personaje.nombre;
+            // Buscar patrón específico: {id}">{nombre} (ej: "musitoxic">Musitoxic")
+            // Este patrón aparece cuando hay código corrupto que muestra el ID seguido de ">" y luego el nombre
+            const idEscapado = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const nombreEscapado = nombre.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            // Buscar el patrón que no esté dentro de un atributo HTML válido
+            const patron = new RegExp(`([^"'])${idEscapado}">${nombreEscapado}`, 'gi');
+            texto = texto.replace(patron, (match, prefix) => {
+              // Verificar que no estemos dentro de un tag HTML contando tags
+              const pos = texto.indexOf(match);
+              if (pos === -1) return match;
+              const antes = texto.substring(0, pos);
+              const tagsAbiertos = (antes.match(/<a[^>]*>/g) || []).length;
+              const tagsCerrados = (antes.match(/<\/a>/g) || []).length;
+              
+              // Si no estamos dentro de un tag y el prefijo no es parte de un atributo, reemplazar
+              if (tagsAbiertos === tagsCerrados && !prefix.match(/data-id="[^"]*$/)) {
+                return prefix + `<a href="#" class="referencia-link" data-tipo="personaje" data-id="${id}">${nombre}</a>`;
+              }
+              return match;
+            });
+          });
+        }
+        
+        // Limpiar código corrupto específico que aparece después de enlaces de personajes
+        // Patrón 1: "'); return false;">" que aparece después de cierres de tags
+        texto = texto.replace(/<\/a>\s*'\s*;\s*return\s+false\s*[^>]*>/gi, '</a>');
+        texto = texto.replace(/'\s*;\s*return\s+false\s*[^>]*>\s*<a/gi, '<a');
+        // Limpiar cualquier instancia suelta de "'); return false;">"
+        texto = texto.replace(/'\s*;\s*return\s+false\s*[^>]*>/gi, '');
+        // Patrón 2: "{ .; }, 300);"
+        texto = texto.replace(/\{\s*\.\s*;\s*\}\s*,\s*\d+\s*\)\s*;/gi, '');
+        
+        // Limpieza adicional: buscar código corrupto que pueda estar mezclado con el texto
+        // Buscar patrones como "Basscolgado'); return false;">" o "Musitoxic'); return false;">"
+        texto = texto.replace(/([a-zA-ZáéíóúÁÉÍÓÚñÑ]+)\s*'\s*;\s*return\s+false\s*[^>]*>/gi, '$1');
+        
+        texto = texto.replace(/\s+/g, ' ').trim();
         return texto;
       }
       
@@ -3260,7 +3401,8 @@
       const cont = document.getElementById("tramas-list");
       if (!tramas) return;
 
-      const procesarTexto = (texto) => modoEdicion ? texto : procesarReferenciasEnTexto(texto);
+      // En modo edición, extraer solo texto plano para evitar que código HTML/JS se muestre
+      const procesarTexto = (texto) => modoEdicion ? extraerTextoPlanoDeString(texto) : procesarReferenciasEnTexto(texto);
 
       cont.innerHTML = tramas
         .map(t => {
@@ -3294,13 +3436,18 @@
           return contenido;
         })
         .join("");
+      
+      // Limpiar código corrupto después de renderizar
+      setTimeout(() => limpiarCodigoCorruptoEnDOM(cont), 0);
     }
 
     function renderLocalizaciones(localizaciones) {
       const cont = document.getElementById("localizaciones-list");
       if (!localizaciones) return;
 
-      const procesarTexto = (texto) => modoEdicion ? texto : procesarReferenciasEnTexto(texto);
+      // En modo edición, extraer solo texto plano para evitar que código HTML/JS se muestre
+      // En modo visualización, procesar referencias para crear enlaces interactivos
+      const procesarTexto = (texto) => modoEdicion ? extraerTextoPlanoDeString(texto) : procesarReferenciasEnTexto(texto);
 
       cont.innerHTML = localizaciones
         .map(l => {
@@ -3336,11 +3483,77 @@
         .join("");
     }
 
+    // Función para limpiar código corrupto después de renderizar
+    function limpiarCodigoCorruptoEnDOM(container) {
+      if (!container || !datos.personajes) return;
+      
+      // Buscar todos los textos que contengan el patrón {id}">{nombre}
+      const walker = document.createTreeWalker(
+        container,
+        NodeFilter.SHOW_TEXT,
+        {
+          acceptNode: function(node) {
+            // Solo procesar nodos de texto que no estén dentro de un enlace
+            const parent = node.parentElement;
+            if (parent && parent.tagName === 'A') {
+              return NodeFilter.FILTER_REJECT;
+            }
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        },
+        false
+      );
+      
+      const textosACorregir = [];
+      let node;
+      
+      while (node = walker.nextNode()) {
+        const texto = node.textContent;
+        // Buscar patrón: {id}">{nombre} donde id es minúsculas y nombre es capitalizado
+        const patron = /([a-z-]+)">([A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]+)/g;
+        let match;
+        while ((match = patron.exec(texto)) !== null) {
+          const id = match[1];
+          const nombre = match[2].trim();
+          // Verificar si es un personaje conocido
+          const personaje = datos.personajes.find(p => p.id === id && p.nombre === nombre);
+          if (personaje) {
+            textosACorregir.push({ node, id, nombre, matchIndex: match.index });
+          }
+        }
+      }
+      
+      // Corregir los textos encontrados (de atrás hacia adelante para no afectar índices)
+      textosACorregir.reverse().forEach(({ node, id, nombre }) => {
+        const texto = node.textContent;
+        const idEscapado = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const nombreEscapado = nombre.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const nuevoTexto = texto.replace(
+          new RegExp(`${idEscapado}">${nombreEscapado}`, 'g'),
+          `<a href="#" class="referencia-link" data-tipo="personaje" data-id="${id}">${nombre}</a>`
+        );
+        
+        if (nuevoTexto !== texto) {
+          // Crear un contenedor temporal para parsear el HTML
+          const temp = document.createElement('div');
+          temp.innerHTML = nuevoTexto;
+          
+          // Reemplazar el nodo de texto con los nuevos nodos
+          const fragment = document.createDocumentFragment();
+          while (temp.firstChild) {
+            fragment.appendChild(temp.firstChild);
+          }
+          node.parentNode.replaceChild(fragment, node);
+        }
+      });
+    }
+
     function renderCanciones(canciones) {
       const cont = document.getElementById("canciones-list");
       if (!canciones) return;
 
-      const procesarTexto = (texto) => modoEdicion ? texto : procesarReferenciasEnTexto(texto);
+      // En modo edición, extraer solo texto plano para evitar que código HTML/JS se muestre
+      const procesarTexto = (texto) => modoEdicion ? extraerTextoPlanoDeString(texto) : procesarReferenciasEnTexto(texto);
 
       cont.innerHTML = canciones
         .map(c => {

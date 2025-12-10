@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor de Timeline - Radio Micelio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      overflow-x: auto;
+    }
+
+    header {
+      background: #0a0a0a;
+      color: white;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      border-bottom: 1px solid #333;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    button.danger {
+      background: #e74c3c;
+    }
+
+    button.danger:hover {
+      background: #c0392b;
+    }
+
+    button.success {
+      background: #27ae60;
+    }
+
+    button.success:hover {
+      background: #229954;
+    }
+
+    .editor-container {
+      padding: 2rem;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    #timeline-canvas {
+      background: #1a1a1a;
+      border: 2px solid #333;
+      cursor: crosshair;
+      position: relative;
+      margin: 2rem 0;
+    }
+
+    .etapa-container {
+      position: absolute;
+      border-top: 2px solid white;
+      border-bottom: 2px solid white;
+      opacity: 0.3;
+    }
+
+    .etapa-label {
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .evento {
+      position: absolute;
+      cursor: move;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+      border: 2px solid white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      user-select: none;
+    }
+
+    .evento:hover {
+      z-index: 10;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+    }
+
+    .evento.dragging {
+      opacity: 0.7;
+      z-index: 100;
+    }
+
+    .evento.punto {
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-panel {
+      background: #2a2a2a;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      max-width: 600px;
+    }
+
+    .info-panel h3 {
+      margin-top: 0;
+    }
+
+    .info-item {
+      margin: 0.5rem 0;
+    }
+
+    .info-item label {
+      color: #aaa;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-item span {
+      color: white;
+      font-weight: bold;
+    }
+
+    .axis-x {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      border-top: 1px solid #444;
+    }
+
+    .axis-tick {
+      position: absolute;
+      top: 0;
+      width: 1px;
+      height: 10px;
+      background: #666;
+    }
+
+    .axis-label {
+      position: absolute;
+      top: 12px;
+      font-size: 10px;
+      color: #aaa;
+      transform: translateX(-50%);
+    }
+
+    .status {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      background: #2a2a2a;
+      font-size: 0.9rem;
+    }
+
+    .status.success {
+      background: #27ae60;
+      color: white;
+    }
+
+    .status.error {
+      background: #e74c3c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+    <header>
+    <h1>🎵 Editor de Timeline - Radio Micelio</h1>
+    <div class="controls">
+      <a href="/" style="text-decoration: none;">
+        <button>🏠 Volver al Inicio</button>
+      </a>
+      <button onclick="cargarTimeline()">🔄 Recargar</button>
+      <button class="success" onclick="guardarTimeline()">💾 Guardar Cambios</button>
+      <button onclick="exportarJSON()">📥 Exportar JSON</button>
+      <button class="danger" onclick="resetearCambios()">↩️ Resetear</button>
+    </div>
+  </header>
+
+  <div class="editor-container">
+    <div class="info-panel">
+      <h3>Instrucciones</h3>
+      <ul style="margin: 0.5rem 0; padding-left: 1.5rem; color: #aaa;">
+        <li>Arrastra eventos horizontalmente para cambiar su posición en el tiempo</li>
+        <li>La posición vertical determina la etapa (no se puede cambiar arrastrando)</li>
+        <li>El eje X muestra el porcentaje de la historia (0-100%)</li>
+        <li>Haz clic en un evento para ver sus detalles</li>
+      </ul>
+    </div>
+
+    <div id="timeline-canvas"></div>
+
+    <div id="info-panel" class="info-panel" style="display: none;">
+      <h3>Detalles del Evento</h3>
+      <div class="info-item">
+        <label>Título:</label>
+        <span id="info-titulo"></span>
+      </div>
+      <div class="info-item">
+        <label>Porcentaje:</label>
+        <span id="info-porcentaje"></span>
+      </div>
+      <div class="info-item">
+        <label>Etapa:</label>
+        <span id="info-etapa"></span>
+      </div>
+      <div class="info-item">
+        <label>Descripción:</label>
+        <div id="info-descripcion" style="margin-top: 0.25rem; color: #ccc; font-size: 0.9rem;"></div>
+      </div>
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    // Configuración
+    const CANVAS_WIDTH = 2000;
+    const CANVAS_HEIGHT = 800;
+    const ETAPA_HEIGHT = 100;
+    const ETAPA_SPACING = 20;
+    const MARGIN_LEFT = 100;
+    const MARGIN_RIGHT = 50;
+    const MARGIN_TOP = 50;
+    const MARGIN_BOTTOM = 50;
+    const TIMELINE_WIDTH = CANVAS_WIDTH - MARGIN_LEFT - MARGIN_RIGHT;
+
+    // Estado
+    let timelineData = [];
+    let etapasConfig = {};
+    let eventos = [];
+    let eventoSeleccionado = null;
+    let dragging = false;
+    let dragOffset = { x: 0, y: 0 };
+    let timelineOriginal = null;
+
+    // Configuración de etapas
+    const etapasConfigDefault = {
+      'origen': {
+        nombre: 'Origen Cósmico',
+        color: '#9b59b6',
+        porcentajeInicio: 0,
+        porcentajeFin: 15,
+        orden: 0
+      },
+      'despertar': {
+        nombre: 'Despertar',
+        color: '#3498db',
+        porcentajeInicio: 15,
+        porcentajeFin: 35,
+        orden: 1
+      },
+      'inventrola': {
+        nombre: 'Inventrola',
+        color: '#e74c3c',
+        porcentajeInicio: 35,
+        porcentajeFin: 55,
+        orden: 2
+      },
+      'sismico': {
+        nombre: 'Sísmico',
+        color: '#f39c12',
+        porcentajeInicio: 55,
+        porcentajeFin: 70,
+        orden: 3
+      },
+      'tamen': {
+        nombre: 'Tamen y Amethystos',
+        color: '#27ae60',
+        porcentajeInicio: 70,
+        porcentajeFin: 90,
+        orden: 4
+      },
+      'futuro': {
+        nombre: 'Convergencia Futura',
+        color: '#1abc9c',
+        porcentajeInicio: 90,
+        porcentajeFin: 100,
+        orden: 5
+      }
+    };
+
+    // Inicializar canvas
+    function inicializarCanvas() {
+      const canvas = document.getElementById('timeline-canvas');
+      canvas.style.width = CANVAS_WIDTH + 'px';
+      canvas.style.height = CANVAS_HEIGHT + 'px';
+      canvas.style.position = 'relative';
+    }
+
+    // Cargar timeline desde JSON
+    async function cargarTimeline() {
+      try {
+        const response = await fetch('data/timeline.json');
+        if (!response.ok) throw new Error('Error al cargar timeline.json');
+        
+        timelineData = await response.json();
+        timelineOriginal = JSON.parse(JSON.stringify(timelineData));
+        
+        // Cargar configuración de etapas si existe en datos preprocesados
+        try {
+          const processedResponse = await fetch('data/processed/timeline_visual_data.json');
+          if (processedResponse.ok) {
+            const processedData = await processedResponse.json();
+            etapasConfig = processedData.etapas_config || etapasConfigDefault;
+          } else {
+            etapasConfig = etapasConfigDefault;
+          }
+        } catch (e) {
+          etapasConfig = etapasConfigDefault;
+        }
+
+        procesarEventos();
+        renderizarTimeline();
+        mostrarStatus('Timeline cargado correctamente', 'success');
+      } catch (error) {
+        console.error('Error:', error);
+        mostrarStatus('Error al cargar timeline: ' + error.message, 'error');
+      }
+    }
+
+    // Procesar eventos y calcular posiciones iniciales
+    function procesarEventos() {
+      eventos = timelineData.map(evento => {
+        const etapa = evento.etapa || 'futuro';
+        const config = etapasConfig[etapa] || etapasConfigDefault[etapa];
+        
+        // Calcular porcentaje inicial basado en posición en la etapa
+        const eventosEnEtapa = timelineData.filter(e => (e.etapa || 'futuro') === etapa);
+        const indexEnEtapa = eventosEnEtapa.findIndex(e => e.id === evento.id);
+        const rangoEtapa = config.porcentajeFin - config.porcentajeInicio;
+        const porcentajePorEvento = eventosEnEtapa.length > 0 ? rangoEtapa / eventosEnEtapa.length : 1;
+        const porcentajeInicio = config.porcentajeInicio + (indexEnEtapa * porcentajePorEvento);
+        const porcentajeFin = porcentajeInicio + porcentajePorEvento;
+
+        // Los porcentajes iniciales se calcularán normalmente
+        // La simultaneidad se aplicará después de crear todos los eventos
+
+        const titulo = evento.titulo || '';
+        const esPunto = evento.etapa === 'origen' || 
+                       titulo.includes('Explosión') || 
+                       titulo.includes('Caída') || 
+                       titulo.includes('Aparición');
+
+        return {
+          id: evento.id,
+          titulo: titulo,
+          descripcion: evento.descripcion || '',
+          etapa: etapa,
+          porcentaje: porcentajeInicio,
+          porcentajeFin: esPunto ? porcentajeInicio : porcentajeFin,
+          esPunto: esPunto,
+          personajes: evento.personajes_implicados || [],
+          localizacion: evento.localizacion || '',
+          simultaneo_con: evento.simultaneo_con || []
+        };
+      });
+
+      // Segunda pasada: aplicar simultaneidad
+      eventos.forEach(evento => {
+        if (evento.simultaneo_con && evento.simultaneo_con.length > 0) {
+          // Buscar el primer evento de referencia que ya esté procesado
+          const eventoRef = eventos.find(e => evento.simultaneo_con.includes(e.id) && e.id !== evento.id);
+          if (eventoRef) {
+            evento.porcentaje = eventoRef.porcentaje;
+            evento.porcentajeFin = eventoRef.porcentajeFin;
+          }
+        }
+      });
+    }
+
+    // Convertir porcentaje a posición X en canvas
+    function porcentajeAX(porcentaje) {
+      return MARGIN_LEFT + (porcentaje / 100) * TIMELINE_WIDTH;
+    }
+
+    // Convertir posición X en canvas a porcentaje
+    function xAPorcentaje(x) {
+      const xRelativo = x - MARGIN_LEFT;
+      return Math.max(0, Math.min(100, (xRelativo / TIMELINE_WIDTH) * 100));
+    }
+
+    // Obtener Y de una etapa
+    function getEtapaY(etapaKey) {
+      const etapasOrdenadas = Object.keys(etapasConfig).sort(
+        (a, b) => etapasConfig[a].orden - etapasConfig[b].orden
+      );
+      const index = etapasOrdenadas.indexOf(etapaKey);
+      return MARGIN_TOP + (index * (ETAPA_HEIGHT + ETAPA_SPACING)) + ETAPA_HEIGHT / 2;
+    }
+
+    // Renderizar timeline
+    function renderizarTimeline() {
+      const canvas = document.getElementById('timeline-canvas');
+      canvas.innerHTML = '';
+
+      // Dibujar eje X
+      const axisX = document.createElement('div');
+      axisX.className = 'axis-x';
+      canvas.appendChild(axisX);
+
+      for (let i = 0; i <= 100; i += 10) {
+        const tick = document.createElement('div');
+        tick.className = 'axis-tick';
+        tick.style.left = porcentajeAX(i) + 'px';
+        axisX.appendChild(tick);
+
+        const label = document.createElement('div');
+        label.className = 'axis-label';
+        label.textContent = i + '%';
+        label.style.left = porcentajeAX(i) + 'px';
+        axisX.appendChild(label);
+      }
+
+      // Dibujar etapas
+      const etapasOrdenadas = Object.keys(etapasConfig).sort(
+        (a, b) => etapasConfig[a].orden - etapasConfig[b].orden
+      );
+
+      etapasOrdenadas.forEach((etapaKey, index) => {
+        const config = etapasConfig[etapaKey];
+        const y = MARGIN_TOP + (index * (ETAPA_HEIGHT + ETAPA_SPACING));
+        
+        // Contenedor de etapa
+        const etapaDiv = document.createElement('div');
+        etapaDiv.className = 'etapa-container';
+        etapaDiv.style.left = porcentajeAX(config.porcentajeInicio) + 'px';
+        etapaDiv.style.top = y + 'px';
+        etapaDiv.style.width = porcentajeAX(config.porcentajeFin) - porcentajeAX(config.porcentajeInicio) + 'px';
+        etapaDiv.style.height = ETAPA_HEIGHT + 'px';
+        etapaDiv.style.backgroundColor = config.color;
+        canvas.appendChild(etapaDiv);
+
+        // Etiqueta de etapa
+        const label = document.createElement('div');
+        label.className = 'etapa-label';
+        label.textContent = config.nombre;
+        label.style.left = (porcentajeAX(config.porcentajeInicio) + porcentajeAX(config.porcentajeFin)) / 2 + 'px';
+        label.style.top = (y + ETAPA_HEIGHT / 2) + 'px';
+        label.style.transform = 'translate(-50%, -50%)';
+        canvas.appendChild(label);
+      });
+
+      // Dibujar eventos
+      eventos.forEach(evento => {
+        const eventoDiv = document.createElement('div');
+        eventoDiv.className = 'evento' + (evento.esPunto ? ' punto' : '');
+        eventoDiv.dataset.eventoId = evento.id;
+        
+        const x = porcentajeAX(evento.porcentaje);
+        const y = getEtapaY(evento.etapa);
+        
+        eventoDiv.style.left = (evento.esPunto ? x - 10 : x) + 'px';
+        eventoDiv.style.top = (evento.esPunto ? y - 10 : y - 15) + 'px';
+        eventoDiv.style.backgroundColor = etapasConfig[evento.etapa].color;
+        eventoDiv.style.width = evento.esPunto ? '20px' : (porcentajeAX(evento.porcentajeFin) - x) + 'px';
+        eventoDiv.style.height = evento.esPunto ? '20px' : '30px';
+        
+        if (!evento.esPunto) {
+          eventoDiv.textContent = evento.titulo.length > 30 ? evento.titulo.substring(0, 27) + '...' : evento.titulo;
+        }
+
+        eventoDiv.title = evento.titulo + '\n' + evento.porcentaje.toFixed(1) + '%';
+
+        // Eventos de drag
+        eventoDiv.addEventListener('mousedown', iniciarDrag);
+        eventoDiv.addEventListener('click', () => mostrarInfoEvento(evento));
+
+        canvas.appendChild(eventoDiv);
+      });
+    }
+
+    // Iniciar arrastre
+    function iniciarDrag(e) {
+      e.preventDefault();
+      dragging = true;
+      const eventoDiv = e.target.closest('.evento');
+      const eventoId = eventoDiv.dataset.eventoId;
+      eventoSeleccionado = eventos.find(e => e.id === eventoId);
+      
+      const rect = eventoDiv.getBoundingClientRect();
+      const canvasRect = document.getElementById('timeline-canvas').getBoundingClientRect();
+      dragOffset.x = e.clientX - rect.left - canvasRect.left;
+      dragOffset.y = e.clientY - rect.top - canvasRect.top;
+      
+      eventoDiv.classList.add('dragging');
+      document.addEventListener('mousemove', moverDrag);
+      document.addEventListener('mouseup', terminarDrag);
+    }
+
+    // Mover durante arrastre
+    function moverDrag(e) {
+      if (!dragging || !eventoSeleccionado) return;
+      
+      const canvas = document.getElementById('timeline-canvas');
+      const canvasRect = canvas.getBoundingClientRect();
+      const x = e.clientX - canvasRect.left - dragOffset.x;
+      const porcentaje = xAPorcentaje(x + (eventoSeleccionado.esPunto ? 10 : 0));
+      
+      // Actualizar porcentaje del evento
+      eventoSeleccionado.porcentaje = Math.max(0, Math.min(100, porcentaje));
+      if (!eventoSeleccionado.esPunto) {
+        const anchoActual = eventoSeleccionado.porcentajeFin - eventoSeleccionado.porcentaje;
+        eventoSeleccionado.porcentajeFin = eventoSeleccionado.porcentaje + anchoActual;
+      } else {
+        eventoSeleccionado.porcentajeFin = eventoSeleccionado.porcentaje;
+      }
+
+      // Actualizar eventos simultáneos (bidireccional)
+      eventos.forEach(e => {
+        // Si este evento tiene simultaneo_con con el seleccionado
+        if (e.simultaneo_con && e.simultaneo_con.includes(eventoSeleccionado.id)) {
+          e.porcentaje = eventoSeleccionado.porcentaje;
+          e.porcentajeFin = eventoSeleccionado.porcentajeFin;
+        }
+        // Si el seleccionado tiene simultaneo_con con este evento
+        if (eventoSeleccionado.simultaneo_con && eventoSeleccionado.simultaneo_con.includes(e.id)) {
+          e.porcentaje = eventoSeleccionado.porcentaje;
+          e.porcentajeFin = eventoSeleccionado.porcentajeFin;
+        }
+      });
+
+      renderizarTimeline();
+    }
+
+    // Terminar arrastre
+    function terminarDrag() {
+      dragging = false;
+      if (eventoSeleccionado) {
+        const eventoDiv = document.querySelector(`[data-evento-id="${eventoSeleccionado.id}"]`);
+        if (eventoDiv) {
+          eventoDiv.classList.remove('dragging');
+        }
+        eventoSeleccionado = null;
+      }
+      document.removeEventListener('mousemove', moverDrag);
+      document.removeEventListener('mouseup', terminarDrag);
+      mostrarStatus('Posición actualizada. Recuerda guardar los cambios.', 'success');
+    }
+
+    // Mostrar información del evento
+    function mostrarInfoEvento(evento) {
+      const panel = document.getElementById('info-panel');
+      document.getElementById('info-titulo').textContent = evento.titulo;
+      document.getElementById('info-porcentaje').textContent = evento.porcentaje.toFixed(1) + '%';
+      document.getElementById('info-etapa').textContent = etapasConfig[evento.etapa].nombre;
+      document.getElementById('info-descripcion').textContent = evento.descripcion;
+      panel.style.display = 'block';
+    }
+
+    // Guardar timeline usando la API
+    async function guardarTimeline() {
+      try {
+        // Convertir eventos de vuelta a formato timeline.json
+        // Los porcentajes se guardan implícitamente a través del orden y simultaneidad
+        const timelineActualizado = timelineData.map(eventoOriginal => {
+          const eventoEditado = eventos.find(e => e.id === eventoOriginal.id);
+          if (!eventoEditado) return eventoOriginal;
+
+          // Crear copia del evento original
+          const eventoActualizado = { ...eventoOriginal };
+
+          // Detectar eventos simultáneos (misma posición con tolerancia de 1%)
+          // También considerar eventos que ya tienen simultaneo_con definido
+          const eventosSimultaneos = eventos.filter(e => {
+            if (e.id === eventoEditado.id) return false;
+            // Si ya están marcados como simultáneos, mantenerlo
+            if (eventoEditado.simultaneo_con && eventoEditado.simultaneo_con.includes(e.id)) {
+              return true;
+            }
+            // Si están en la misma posición (tolerancia 1%)
+            return Math.abs(e.porcentaje - eventoEditado.porcentaje) < 1.0;
+          });
+
+          if (eventosSimultaneos.length > 0) {
+            // Actualizar simultaneo_con con los IDs de eventos simultáneos
+            eventoActualizado.simultaneo_con = eventosSimultaneos.map(e => e.id);
+          } else if (eventoOriginal.simultaneo_con) {
+            // Si ya no hay simultaneidad, eliminar el campo
+            delete eventoActualizado.simultaneo_con;
+          }
+
+          return eventoActualizado;
+        });
+
+        // Guardar usando la API de FastAPI
+        const response = await fetch('/api/timeline/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ruta: 'data/timeline.json',
+            datos: timelineActualizado
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.detail || 'Error al guardar');
+        }
+
+        const result = await response.json();
+        mostrarStatus(result.message + '. Ejecuta preprocess_timeline.py para regenerar imágenes.', 'success');
+        
+        // Actualizar timeline original para que resetear funcione
+        timelineOriginal = JSON.parse(JSON.stringify(timelineActualizado));
+        timelineData = timelineActualizado;
+      } catch (error) {
+        console.error('Error:', error);
+        mostrarStatus('Error al guardar: ' + error.message, 'error');
+      }
+    }
+
+    // Exportar JSON (solo para debugging)
+    function exportarJSON() {
+      const jsonStr = JSON.stringify(eventos.map(e => ({
+        id: e.id,
+        titulo: e.titulo,
+        porcentaje: e.porcentaje,
+        porcentajeFin: e.porcentajeFin,
+        etapa: e.etapa
+      })), null, 2);
+      
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'timeline_posiciones.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      mostrarStatus('Posiciones exportadas (solo para debugging)', 'success');
+    }
+
+    // Resetear cambios
+    function resetearCambios() {
+      if (confirm('¿Estás seguro de que quieres resetear todos los cambios?')) {
+        timelineData = JSON.parse(JSON.stringify(timelineOriginal));
+        procesarEventos();
+        renderizarTimeline();
+        mostrarStatus('Cambios reseteados', 'success');
+      }
+    }
+
+    // Mostrar estado
+    function mostrarStatus(mensaje, tipo = '') {
+      const status = document.getElementById('status');
+      status.textContent = mensaje;
+      status.className = 'status' + (tipo ? ' ' + tipo : '');
+      setTimeout(() => {
+        status.textContent = '';
+        status.className = 'status';
+      }, 3000);
+    }
+
+    // Inicializar
+    window.addEventListener('DOMContentLoaded', () => {
+      inicializarCanvas();
+      cargarTimeline();
+    });
+  </script>
+</body>
+</html>

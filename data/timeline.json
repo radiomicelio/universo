@@ -32,6 +32,15 @@
     "etapa": "despertar"
   },
   {
+    "id": "senal-sirius",
+    "titulo": "Sirius detecta el deshielo y despierta a Sísmico",
+    "descripcion": "El observador cósmico Sirius percibe la energía del deshielo del diamante en el Polo Norte y envía un destello dimensional que despierta a Sísmico en la prisión de Musitoxic. Esta señal está en paralelo al momento en que el diamante empieza a reactivarse, antes de Inventrola. El destello altera las defensas de la torre, lo que permitirá también la fuga de Amethystos y los demás prisioneros del zoológico.",
+    "personajes_implicados": ["sismico", "sirius", "amethystos"],
+    "localizacion": "polo-norte",
+    "etapa": "despertar",
+    "simultaneo_con": ["deshielo"]
+  },
+  {
     "id": "primer-viaje",
     "titulo": "Viaje hacia Nueva York con ayuda de los Inuit",
     "descripcion": "Tras recuperar una forma inicial, el Vaquero Atómico es ayudado por los Inuit a navegar hacia la civilización, intrigados por su naturaleza.",
@@ -72,28 +81,22 @@
     "etapa": "inventrola"
   },
   {
-    "id": "senal-sirius",
-    "titulo": "Sirius envía una señal a Sísmico",
-    "descripcion": "El observador cósmico Sirius percibe el desequilibrio energético generado por Inventrola y despierta a Sísmico enviándole un destello dimensional.",
-    "personajes_implicados": ["sismico", "sirius"],
-    "localizacion": "prision-musitoxic",
-    "etapa": "sismico"
-  },
-  {
     "id": "escape-sismico",
     "titulo": "Sísmico se divide en varias versiones y escapa",
-    "descripcion": "Sísmico entra en un plano cuántico fractal, se desdobla y debe elegir entre la vida y la muerte antes de romper un cristal dimensional y escapar.",
-    "personajes_implicados": ["sismico"],
+    "descripcion": "La fuga de Sísmico y el caos en el zoológico suceden en paralelo al deshielo del diamante en el Polo Norte. Sísmico entra en un plano cuántico fractal, se desdobla y debe elegir entre la vida y la muerte antes de romper un cristal dimensional y escapar. La alteración dimensional que genera permite que Amethystos y las criaturas del zoológico aprovechen la oportunidad para ejecutar el pacto de liberación.",
+    "personajes_implicados": ["sismico", "amethystos"],
     "localizacion": "prision-musitoxic",
-    "etapa": "sismico"
+    "etapa": "sismico",
+    "simultaneo_con": ["deshielo", "senal-sirius"]
   },
   {
     "id": "entrada-espana",
     "titulo": "Aparición de Sísmico en la España vaciada",
-    "descripcion": "Sísmico llega a un desierto verde alterado ecológicamente, donde comienza una nueva etapa de su existencia.",
+    "descripcion": "Sísmico llega a un desierto verde alterado ecológicamente, donde comienza una nueva etapa de su existencia. Este arco ocurre en paralelo con los eventos de Inventrola.",
     "personajes_implicados": ["sismico"],
     "localizacion": "espana-vaciada",
-    "etapa": "sismico"
+    "etapa": "sismico",
+    "simultaneo_con": ["nueva-york-luces", "captacion-jhonny", "entrada-inventrola", "desastre-inventrola"]
   },
   {
     "id": "investigacion-tamen",
@@ -114,16 +117,34 @@
   {
     "id": "tamen-amethystos",
     "titulo": "Tamen entra en contacto con Amethystos",
-    "descripcion": "Durante su investigación de ecosistemas, Tamen cruza información que la lleva a las Selvas sin Amor, donde forma una alianza con Amethystos.",
+    "descripcion": "Durante su investigación de ecosistemas, Tamen cruza información que la lleva a las Selvas sin Amor, donde forma una alianza con Amethystos. Sus conversaciones y el desarrollo de su relación se desarrollan mientras en la España vaciada se está gestando la convergencia de Vaquero y Sísmico, aunque ellas estén físicamente en las Selvas sin Amor y otros territorios.",
     "personajes_implicados": ["tamen", "amethystos"],
     "localizacion": "selvas-sin-amor",
-    "etapa": "tamen"
+    "etapa": "tamen",
+    "simultaneo_con": ["aparicion-basscolgado", "convergencia"]
+  },
+  {
+    "id": "aparicion-basscolgado",
+    "titulo": "Aparición de Basscolgado en la España vaciada",
+    "descripcion": "Basscolgado se manifiesta en la España vaciada como figura de guía espiritual y musical. Entiende el micelio como una red de frecuencias y aparece colgado de su bajo amplificado por estructuras naturales del desierto. Funciona como nexo entre Sísmico y el Vaquero Atómico, acompañando sus procesos de transformación.",
+    "personajes_implicados": ["basscolgado", "vaquero-atomico", "sismico"],
+    "localizacion": "espana-vaciada",
+    "etapa": "futuro"
   },
   {
     "id": "convergencia",
     "titulo": "Convergencia futura en la España Vaciada",
-    "descripcion": "Las trayectorias de Vaquero Atómico, Sísmico y Tamen apuntan hacia un encuentro inevitable en la España vaciada, donde se cruzan fuerzas energéticas, ecológicas y humanas.",
-    "personajes_implicados": ["vaquero-atomico", "sismico", "tamen"],
+    "descripcion": "Basscolgado actúa como el nexo entre Sísmico y el Vaquero Atómico, funcionando como mentor y guía en la España vaciada. Su papel es fundamental en el viaje del héroe: acompaña a ambos personajes hacia su destino común. Este evento marca el punto donde Sísmico, Vaquero Atómico, Tamen y Amethystos se encaminan a luchar juntxs contra el Micelio Negro.",
+    "personajes_implicados": ["vaquero-atomico", "sismico", "tamen", "amethystos", "basscolgado"],
+    "localizacion": "espana-vaciada",
+    "etapa": "futuro",
+    "simultaneo_con": ["aparicion-basscolgado", "tamen-amethystos"]
+  },
+  {
+    "id": "muerte-basscolgado",
+    "titulo": "Muerte de Basscolgado",
+    "descripcion": "Basscolgado muere como figura de mentor en el viaje del héroe. Su muerte actúa como catalizador emocional que une simbólicamente las trayectorias de Vaquero Atómico, Sísmico, Tamen y Amethystos. Su energía se transforma en el paso del testigo, manteniendo viva la memoria sonora de los lugares abandonados y fortaleciendo la alianza final contra el Micelio Negro.",
+    "personajes_implicados": ["basscolgado", "vaquero-atomico", "sismico", "tamen", "amethystos"],
     "localizacion": "espana-vaciada",
     "etapa": "futuro"
   }

@@ -151,6 +151,63 @@
       },
       "shape": "dot",
       "size": 20
+    },
+    {
+      "id": "marza",
+      "label": "Marza",
+      "title": "Marza\nIngeniera de oídos ultrasónicos",
+      "color": {
+        "background": "#79c0ff",
+        "border": "#fff",
+        "highlight": {
+          "background": "#79c0ff",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "gab",
+      "label": "Gab",
+      "title": "Gab\nMurciélago hipersónico / carcelero forzado / aliado de liberación",
+      "color": {
+        "background": "#79c0ff",
+        "border": "#fff",
+        "highlight": {
+          "background": "#79c0ff",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
+    },
+    {
+      "id": "basscolgado",
+      "label": "Basscolgado",
+      "title": "Basscolgado\nMentor / Nexo entre dimensiones",
+      "color": {
+        "background": "#79c0ff",
+        "border": "#fff",
+        "highlight": {
+          "background": "#79c0ff",
+          "border": "#fff"
+        }
+      },
+      "font": {
+        "color": "#fff",
+        "size": 14
+      },
+      "shape": "dot",
+      "size": 20
     }
   ],
   "edges": [
@@ -199,6 +256,26 @@
       "to": "vaquero-atomico",
       "label": "seducción / manipulación",
       "title": "seducción / manipulación",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "musitoxic",
+      "to": "sismico",
+      "label": "víctima / experimento / enemistad tras el pacto de liberación",
+      "title": "víctima / experimento / enemistad tras el pacto de liberación",
       "color": {
         "color": "#666",
         "highlight": "#79c0ff"
@@ -337,8 +414,8 @@
     {
       "from": "amethystos",
       "to": "tamen",
-      "label": "alianza espiritual/ecológica",
-      "title": "alianza espiritual/ecológica",
+      "label": "alianza espiritual/ecológica / narradora de su historia",
+      "title": "alianza espiritual/ecológica / narradora de su historia",
       "color": {
         "color": "#666",
         "highlight": "#79c0ff"
@@ -357,8 +434,8 @@
     {
       "from": "amethystos",
       "to": "sismico",
-      "label": "prueba iniciática a través de sus túneles",
-      "title": "prueba iniciática a través de sus túneles",
+      "label": "pacto de liberación: ella abre la puerta del zoológico, él abre la del mundo",
+      "title": "pacto de liberación: ella abre la puerta del zoológico, él abre la del mundo",
       "color": {
         "color": "#666",
         "highlight": "#79c0ff"
@@ -379,6 +456,306 @@
       "to": "vaquero-atomico",
       "label": "afinidad energética a distancia",
       "title": "afinidad energética a distancia",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "amethystos",
+      "to": "musitoxic",
+      "label": "cautiverio / enemistad",
+      "title": "cautiverio / enemistad",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "marza",
+      "to": "musitoxic",
+      "label": "protección / explotación de su invento / causante de su internamiento",
+      "title": "protección / explotación de su invento / causante de su internamiento",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "marza",
+      "to": "miguel-mafias",
+      "label": "empleador / supervisor en Inventrola",
+      "title": "empleador / supervisor en Inventrola",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "marza",
+      "to": "amethystos",
+      "label": "inspiración acústica: diseñó los oídos ultrasónicos basándose en su cueva / conexión resonante que persiste desde el psiquiátrico",
+      "title": "inspiración acústica: diseñó los oídos ultrasónicos basándose en su cueva / conexión resonante que persiste desde el psiquiátrico",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "marza",
+      "to": "vaquero-atomico",
+      "label": "referencia indirecta en canción \"Not a Bad Bat\"",
+      "title": "referencia indirecta en canción \"Not a Bad Bat\"",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "marza",
+      "to": "sismico",
+      "label": "referencia indirecta en canción \"Not a Bad Bat\" / aliados en el complot de liberación",
+      "title": "referencia indirecta en canción \"Not a Bad Bat\" / aliados en el complot de liberación",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "gab",
+      "to": "amethystos",
+      "label": "origen común: la magia defectuosa de Amethystos protegió involuntariamente su cueva / pacto de liberación desde el zoológico",
+      "title": "origen común: la magia defectuosa de Amethystos protegió involuntariamente su cueva / pacto de liberación desde el zoológico",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "gab",
+      "to": "sismico",
+      "label": "colaboración en el plan de liberación: Gab crea brechas para que Sísmico pueda moverse",
+      "title": "colaboración en el plan de liberación: Gab crea brechas para que Sísmico pueda moverse",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "gab",
+      "to": "marza",
+      "label": "descubridora y primera comunicación / víctima común de Inventrola / aliados en el complot",
+      "title": "descubridora y primera comunicación / víctima común de Inventrola / aliados en el complot",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "gab",
+      "to": "musitoxic",
+      "label": "cautiverio / enemistad / fingida obediencia como carcelero",
+      "title": "cautiverio / enemistad / fingida obediencia como carcelero",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "gab",
+      "to": "miguel-mafias",
+      "label": "enemistad: Inventrola lo secuestró y explotó su bioacústica",
+      "title": "enemistad: Inventrola lo secuestró y explotó su bioacústica",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "basscolgado",
+      "to": "vaquero-atomico",
+      "label": "mentor / guía en la España vaciada",
+      "title": "mentor / guía en la España vaciada",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "basscolgado",
+      "to": "sismico",
+      "label": "mentor / nexo dimensional",
+      "title": "mentor / nexo dimensional",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "basscolgado",
+      "to": "tamen",
+      "label": "fuente de historias y testimonios",
+      "title": "fuente de historias y testimonios",
+      "color": {
+        "color": "#666",
+        "highlight": "#79c0ff"
+      },
+      "arrows": "to",
+      "font": {
+        "color": "#aaa",
+        "size": 10,
+        "align": "middle"
+      },
+      "smooth": {
+        "type": "curvedCW",
+        "roundness": 0.2
+      }
+    },
+    {
+      "from": "basscolgado",
+      "to": "amethystos",
+      "label": "afinidad espiritual a través de la ecología y el sonido",
+      "title": "afinidad espiritual a través de la ecología y el sonido",
       "color": {
         "color": "#666",
         "highlight": "#79c0ff"
@@ -427,6 +804,18 @@
     "amethystos": {
       "nombre": "Amethystos",
       "rol": "Bruja del Orinoco / avatar de Marú"
+    },
+    "marza": {
+      "nombre": "Marza",
+      "rol": "Ingeniera de oídos ultrasónicos"
+    },
+    "gab": {
+      "nombre": "Gab",
+      "rol": "Murciélago hipersónico / carcelero forzado / aliado de liberación"
+    },
+    "basscolgado": {
+      "nombre": "Basscolgado",
+      "rol": "Mentor / Nexo entre dimensiones"
     }
   }
 }

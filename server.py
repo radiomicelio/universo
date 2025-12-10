@@ -31,6 +31,9 @@ DATA_DIR = BASE_DIR / "data"
 # Montar directorio de datos como estático (para servir los JSON procesados si es necesario)
 app.mount("/data", StaticFiles(directory=str(DATA_DIR)), name="data")
 
+# Montar directorio raíz para servir archivos HTML como timeline_editor.html
+app.mount("/static", StaticFiles(directory=str(BASE_DIR)), name="static")
+
 # Archivos permitidos para guardar (seguridad)
 ALLOWED_FILES = {
     "introduccion.json",
@@ -138,6 +141,61 @@ async def list_files():
     return {"archivos": files}
 
 
+@app.get("/timeline-editor", response_class=HTMLResponse)
+async def timeline_editor():
+    """Sirve el editor de timeline."""
+    editor_path = BASE_DIR / "timeline_editor.html"
+    if editor_path.exists():
+        return FileResponse(editor_path, media_type="text/html")
+    else:
+        return HTMLResponse(
+            content="<h1>Error</h1><p>timeline_editor.html no encontrado</p>",
+            status_code=404
+        )
+
+
+@app.post("/api/timeline/save")
+async def save_timeline(request: SaveRequest):
+    """
+    Guarda el timeline con las posiciones actualizadas.
+    Actualiza simultaneo_con basado en eventos que están en la misma posición.
+    """
+    try:
+        if request.ruta != "data/timeline.json":
+            raise HTTPException(
+                status_code=400,
+                detail="Este endpoint solo guarda timeline.json"
+            )
+        
+        file_path = DATA_DIR / "timeline.json"
+        
+        # Crear backup antes de guardar
+        if file_path.exists():
+            backup_path = file_path.with_suffix('.json.bak')
+            with open(file_path, 'r', encoding='utf-8') as f:
+                backup_data = f.read()
+            with open(backup_path, 'w', encoding='utf-8') as f:
+                f.write(backup_data)
+        
+        # Guardar el archivo
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(request.datos, f, ensure_ascii=False, indent=2)
+        
+        return {
+            "success": True,
+            "message": "✓ Timeline guardado correctamente",
+            "archivo": "timeline.json"
+        }
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error al guardar timeline: {str(e)}"
+        )
+
+
 if __name__ == "__main__":
     import uvicorn
     import sys
@@ -158,3 +216,4 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
+

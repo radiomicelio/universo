@@ -18,9 +18,42 @@ def generar_timeline_imagen():
     output_dir = Path('data/processed')
     output_dir.mkdir(exist_ok=True)
     
-    # Cargar timeline
-    with open(data_dir / 'timeline.json', 'r', encoding='utf-8') as f:
-        timeline_data = json.load(f)
+    # Cargar datos preprocesados que ya tienen las fechas correctas con simultaneidad
+    processed_file = output_dir / 'timeline_visual_data.json'
+    if processed_file.exists():
+        with open(processed_file, 'r', encoding='utf-8') as f:
+            timeline_visual_data = json.load(f)
+        items = timeline_visual_data['items']
+        etapas_config = timeline_visual_data['etapas_config']
+        fecha_base = datetime.fromisoformat(timeline_visual_data['fecha_base'])
+        
+        # Convertir fechas a porcentajes (las fechas ya están en escala 0-100 días)
+        eventos_con_porcentajes = []
+        for item in items:
+            fecha_inicio = datetime.fromisoformat(item['start'])
+            dias_desde_base = (fecha_inicio - fecha_base).days
+            porcentaje = dias_desde_base  # Los días ya representan porcentajes (0-100)
+            
+            if item['end']:
+                fecha_fin = datetime.fromisoformat(item['end'])
+                dias_fin = (fecha_fin - fecha_base).days
+                porcentaje_fin = dias_fin
+            else:
+                porcentaje_fin = porcentaje + 0.5  # Evento puntual: pequeño ancho
+            
+            eventos_con_porcentajes.append({
+                'id': item['id'],
+                'titulo': item['title'].split('\n')[0],  # Extraer título del title completo
+                'porcentaje': porcentaje,
+                'porcentaje_fin': porcentaje_fin,
+                'etapa': item['group'],
+                'es_punto': item['end'] is None
+            })
+    else:
+        # Fallback: cargar timeline original si no hay datos preprocesados
+        with open(data_dir / 'timeline.json', 'r', encoding='utf-8') as f:
+            timeline_data = json.load(f)
+        eventos_con_porcentajes = None
     
     # Definir etapas y sus propiedades
     etapas_config = {
@@ -68,13 +101,24 @@ def generar_timeline_imagen():
         }
     }
     
-    # Organizar eventos por etapa
-    eventos_por_etapa = {}
-    for evento in timeline_data:
-        etapa = evento.get('etapa', 'futuro')
-        if etapa not in eventos_por_etapa:
-            eventos_por_etapa[etapa] = []
-        eventos_por_etapa[etapa].append(evento)
+    # Si no hay datos preprocesados, usar el método antiguo
+    if eventos_con_porcentajes is None:
+        # Organizar eventos por etapa
+        eventos_por_etapa = {}
+        for evento in timeline_data:
+            etapa = evento.get('etapa', 'futuro')
+            if etapa not in eventos_por_etapa:
+                eventos_por_etapa[etapa] = []
+            eventos_por_etapa[etapa].append(evento)
+    else:
+        # Organizar eventos por etapa usando datos preprocesados
+        eventos_por_etapa = {}
+        eventos_dict = {e['id']: e for e in eventos_con_porcentajes}
+        for evento_id, evento_info in eventos_dict.items():
+            etapa = evento_info['etapa']
+            if etapa not in eventos_por_etapa:
+                eventos_por_etapa[etapa] = []
+            eventos_por_etapa[etapa].append(evento_info)
     
     # Crear figura con alta resolución
     fig = plt.figure(figsize=(28, 14), facecolor='#1a1a1a', dpi=100)
@@ -125,18 +169,24 @@ def generar_timeline_imagen():
         )
         
         # Dibujar eventos
-        rango_etapa = config['porcentajeFin'] - config['porcentajeInicio']
-        porcentaje_por_evento = rango_etapa / len(eventos)
-        
         # Primero calcular todas las posiciones de etiquetas para evitar solapamientos
         label_positions = []
         min_label_spacing = 3.0  # Espaciado mínimo entre etiquetas en porcentaje
         
         for index, evento in enumerate(eventos):
-            porcentaje_inicio = config['porcentajeInicio'] + (index * porcentaje_por_evento)
-            porcentaje_fin = porcentaje_inicio + porcentaje_por_evento
-            label_x = porcentaje_inicio + porcentaje_por_evento/2
-            titulo = evento.get('titulo', '')
+            # Si tenemos datos preprocesados, usar porcentajes reales
+            if eventos_con_porcentajes is not None:
+                porcentaje_inicio = evento['porcentaje']
+                porcentaje_fin = evento.get('porcentaje_fin', porcentaje_inicio + 1)
+            else:
+                # Método antiguo: distribuir uniformemente
+                rango_etapa = config['porcentajeFin'] - config['porcentajeInicio']
+                porcentaje_por_evento = rango_etapa / len(eventos)
+                porcentaje_inicio = config['porcentajeInicio'] + (index * porcentaje_por_evento)
+                porcentaje_fin = porcentaje_inicio + porcentaje_por_evento
+            
+            label_x = (porcentaje_inicio + porcentaje_fin) / 2
+            titulo = evento.get('titulo', '') if eventos_con_porcentajes is None else evento['titulo']
             label_text = titulo  # Mostrar texto completo sin truncar
             
             # Determinar posición Y inicial (arriba o abajo)
@@ -166,18 +216,22 @@ def generar_timeline_imagen():
                             label_y_offset -= 0.03
             
             final_y = base_y + label_y_offset
-            label_positions.append((label_x, final_y, porcentaje_por_evento))
+            ancho_evento = porcentaje_fin - porcentaje_inicio
+            label_positions.append((label_x, final_y, ancho_evento))
             
             # Determinar si es evento puntual
-            es_punto = (etapa_key == 'origen' or 
-                       'Explosión' in titulo or 
-                       'Caída' in titulo or 
-                       'Aparición' in titulo)
+            if eventos_con_porcentajes is not None:
+                es_punto = evento.get('es_punto', False)
+            else:
+                es_punto = (etapa_key == 'origen' or 
+                           'Explosión' in titulo or 
+                           'Caída' in titulo or 
+                           'Aparición' in titulo)
             
             if es_punto:
                 # Evento puntual: círculo
                 circle = plt.Circle(
-                    (porcentaje_inicio + porcentaje_por_evento/2, current_y),
+                    (label_x, current_y),
                     0.015,
                     facecolor=config['color'],
                     edgecolor='white',
@@ -187,9 +241,10 @@ def generar_timeline_imagen():
                 ax.add_patch(circle)
             else:
                 # Evento de duración: rectángulo
+                ancho_evento = porcentaje_fin - porcentaje_inicio
                 event_rect = Rectangle(
                     (porcentaje_inicio, current_y - etapa_height/3),
-                    porcentaje_por_evento,
+                    ancho_evento,
                     etapa_height/1.5,
                     facecolor=config['color'],
                     edgecolor='white',
@@ -207,12 +262,17 @@ def generar_timeline_imagen():
             # Etiqueta del evento - dividir texto largo en múltiples líneas
             va_align = 'bottom' if final_y > current_y else 'top'
             
-            # Dividir texto largo en múltiples líneas (máximo 35 caracteres por línea)
-            max_chars_per_line = 35
+            # Dividir texto largo en múltiples líneas (máximo 45 caracteres por línea para mejor legibilidad)
+            max_chars_per_line = 45
             if len(label_text) > max_chars_per_line:
-                wrapped_text = '\n'.join(textwrap.wrap(label_text, width=max_chars_per_line))
+                wrapped_text = '\n'.join(textwrap.wrap(label_text, width=max_chars_per_line, break_long_words=False))
             else:
                 wrapped_text = label_text
+            
+            # Calcular tamaño de fuente basado en el ancho del evento
+            ancho_evento = porcentaje_fin - porcentaje_inicio
+            # Tamaño de fuente más grande: entre 10 y 14, escalado por ancho
+            fontsize = max(10, min(14, int(8 + ancho_evento * 0.15)))
             
             ax.text(
                 label_x,
@@ -220,12 +280,13 @@ def generar_timeline_imagen():
                 wrapped_text,
                 ha='center',
                 va=va_align,
-                fontsize=7,
+                fontsize=fontsize,
                 color='white',
                 rotation=0,
                 zorder=3,
-                bbox=dict(boxstyle='round,pad=0.4', facecolor='#2a2a2a', 
-                         edgecolor=config['color'], alpha=0.9, linewidth=1)
+                weight='bold',  # Texto en negrita para mejor legibilidad
+                bbox=dict(boxstyle='round,pad=0.6', facecolor='#1a1a1a', 
+                         edgecolor=config['color'], alpha=0.95, linewidth=2)
             )
         
         current_y -= (etapa_height + etapa_spacing)
@@ -285,18 +346,24 @@ def generar_timeline_imagen():
                    current_y_web, config['nombre'], ha='center', va='center',
                    fontsize=14, fontweight='bold', color='white', zorder=3)
         
-        rango_etapa = config['porcentajeFin'] - config['porcentajeInicio']
-        porcentaje_por_evento = rango_etapa / len(eventos)
-        
         # Calcular posiciones de etiquetas para evitar solapamientos (versión web)
         label_positions_web = []
         min_label_spacing = 3.0
         
         for index, evento in enumerate(eventos):
-            porcentaje_inicio = config['porcentajeInicio'] + (index * porcentaje_por_evento)
-            porcentaje_fin = porcentaje_inicio + porcentaje_por_evento
-            label_x = porcentaje_inicio + porcentaje_por_evento/2
-            titulo = evento.get('titulo', '')
+            # Si tenemos datos preprocesados, usar porcentajes reales
+            if eventos_con_porcentajes is not None:
+                porcentaje_inicio = evento['porcentaje']
+                porcentaje_fin = evento.get('porcentaje_fin', porcentaje_inicio + 1)
+            else:
+                # Método antiguo: distribuir uniformemente
+                rango_etapa = config['porcentajeFin'] - config['porcentajeInicio']
+                porcentaje_por_evento = rango_etapa / len(eventos)
+                porcentaje_inicio = config['porcentajeInicio'] + (index * porcentaje_por_evento)
+                porcentaje_fin = porcentaje_inicio + porcentaje_por_evento
+            
+            label_x = (porcentaje_inicio + porcentaje_fin) / 2
+            titulo = evento.get('titulo', '') if eventos_con_porcentajes is None else evento['titulo']
             label_text = titulo  # Mostrar texto completo sin truncar
             
             use_top = (index % 2 == 0)
@@ -317,19 +384,24 @@ def generar_timeline_imagen():
                             label_y_offset -= 0.03
             
             final_y = base_y + label_y_offset
-            label_positions_web.append((label_x, final_y, porcentaje_por_evento))
+            ancho_evento = porcentaje_fin - porcentaje_inicio
+            label_positions_web.append((label_x, final_y, ancho_evento))
             
-            es_punto = (etapa_key == 'origen' or 'Explosión' in titulo or 
-                       'Caída' in titulo or 'Aparición' in titulo)
+            if eventos_con_porcentajes is not None:
+                es_punto = evento.get('es_punto', False)
+            else:
+                es_punto = (etapa_key == 'origen' or 'Explosión' in titulo or 
+                           'Caída' in titulo or 'Aparición' in titulo)
             
             if es_punto:
-                circle = plt.Circle((porcentaje_inicio + porcentaje_por_evento/2, current_y_web),
+                circle = plt.Circle((label_x, current_y_web),
                                   0.015, facecolor=config['color'], edgecolor='white',
                                   linewidth=2, zorder=2)
                 ax_web.add_patch(circle)
             else:
+                ancho_evento = porcentaje_fin - porcentaje_inicio
                 event_rect = Rectangle((porcentaje_inicio, current_y_web - etapa_height/3),
-                                       porcentaje_por_evento, etapa_height/1.5,
+                                       ancho_evento, etapa_height/1.5,
                                        facecolor=config['color'], edgecolor='white',
                                        linewidth=1.5, alpha=0.8, zorder=2)
                 ax_web.add_patch(event_rect)
@@ -341,17 +413,23 @@ def generar_timeline_imagen():
             
             va_align = 'bottom' if final_y > current_y_web else 'top'
             
-            # Dividir texto largo en múltiples líneas (máximo 35 caracteres por línea)
-            max_chars_per_line = 35
+            # Dividir texto largo en múltiples líneas (máximo 45 caracteres por línea para mejor legibilidad)
+            max_chars_per_line = 45
             if len(label_text) > max_chars_per_line:
-                wrapped_text = '\n'.join(textwrap.wrap(label_text, width=max_chars_per_line))
+                wrapped_text = '\n'.join(textwrap.wrap(label_text, width=max_chars_per_line, break_long_words=False))
             else:
                 wrapped_text = label_text
             
+            # Calcular tamaño de fuente basado en el ancho del evento
+            ancho_evento = porcentaje_fin - porcentaje_inicio
+            # Tamaño de fuente más grande: entre 10 y 14, escalado por ancho
+            fontsize = max(10, min(14, int(8 + ancho_evento * 0.15)))
+            
             ax_web.text(label_x, final_y, wrapped_text, ha='center', va=va_align,
-                       fontsize=7, color='white', rotation=0, zorder=3,
-                       bbox=dict(boxstyle='round,pad=0.4', facecolor='#2a2a2a',
-                                edgecolor=config['color'], alpha=0.9, linewidth=1))
+                       fontsize=fontsize, color='white', rotation=0, zorder=3,
+                       weight='bold',  # Texto en negrita para mejor legibilidad
+                       bbox=dict(boxstyle='round,pad=0.6', facecolor='#1a1a1a',
+                                edgecolor=config['color'], alpha=0.95, linewidth=2))
         
         current_y_web -= (etapa_height + etapa_spacing)
     
@@ -379,3 +457,4 @@ def generar_timeline_imagen():
 
 if __name__ == '__main__':
     generar_timeline_imagen()
+

@@ -159,3 +159,4 @@ O manualmente:
 ```bash
 pip install matplotlib networkx numpy
 ```
+

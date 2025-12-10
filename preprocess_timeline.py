@@ -75,52 +75,141 @@ def procesar_timeline():
     
     # Mapear eventos a porcentajes según etapa y orden narrativo
     eventos_por_etapa = {}
+    eventos_por_id = {}  # Para buscar eventos por ID cuando hay simultaneidad
     for evento in timeline_data:
         etapa = evento.get('etapa', 'futuro')
         if etapa not in eventos_por_etapa:
             eventos_por_etapa[etapa] = []
         eventos_por_etapa[etapa].append(evento)
+        eventos_por_id[evento['id']] = evento
     
     # Crear items con porcentajes
     fecha_base = datetime(2020, 1, 1)
+    porcentajes_asignados = {}  # Para almacenar porcentajes ya asignados
     
+    # Primera pasada: asignar porcentajes normales a eventos sin simultaneidad
     for etapa_key, config in etapas_config.items():
         eventos = eventos_por_etapa.get(etapa_key, [])
         
         if len(eventos) == 0:
             continue
         
+        # Filtrar eventos que no tienen simultaneidad o que ya tienen porcentaje asignado
+        eventos_sin_simultaneidad = [
+            e for e in eventos 
+            if not e.get('simultaneo_con') and e['id'] not in porcentajes_asignados
+        ]
+        
+        if len(eventos_sin_simultaneidad) == 0:
+            continue
+        
         # Calcular rango de porcentajes para esta etapa
         rango_etapa = config['porcentajeFin'] - config['porcentajeInicio']
-        porcentaje_por_evento = rango_etapa / len(eventos)
+        porcentaje_por_evento = rango_etapa / len(eventos_sin_simultaneidad)
         
-        for index, evento in enumerate(eventos):
+        for index, evento in enumerate(eventos_sin_simultaneidad):
             # Calcular porcentaje para este evento
             porcentaje_inicio = config['porcentajeInicio'] + (index * porcentaje_por_evento)
             porcentaje_fin = porcentaje_inicio + porcentaje_por_evento
             
-            # Convertir porcentaje a fecha (usar escala 0-100 como base de tiempo)
-            fecha_inicio = fecha_base + timedelta(days=porcentaje_inicio)
-            fecha_fin = fecha_base + timedelta(days=porcentaje_fin)
+            porcentajes_asignados[evento['id']] = {
+                'inicio': porcentaje_inicio,
+                'fin': porcentaje_fin,
+                'etapa': etapa_key
+            }
+    
+    # Segunda pasada: asignar porcentajes a eventos simultáneos basándose en sus referencias
+    for etapa_key, config in etapas_config.items():
+        eventos = eventos_por_etapa.get(etapa_key, [])
+        
+        for evento in eventos:
+            evento_id = evento['id']
             
-            # Determinar si es evento puntual o período
-            titulo = evento.get('titulo', '')
-            es_punto = (etapa_key == 'origen' or 
-                       'Explosión' in titulo or 
-                       'Caída' in titulo or 
-                       'Aparición' in titulo)
+            # Si ya tiene porcentaje asignado, continuar
+            if evento_id in porcentajes_asignados:
+                continue
             
-            items.append({
-                'id': evento['id'],
-                'content': titulo[:30] + '...' if len(titulo) > 30 else titulo,
-                'start': fecha_inicio.isoformat(),
-                'end': None if es_punto else fecha_fin.isoformat(),
-                'group': etapa_key,
-                'title': f"{titulo}\n\n{evento.get('descripcion', '')}\n\nProgreso: {porcentaje_inicio:.1f}% - {porcentaje_fin:.1f}%",
-                'className': f'timeline-event-{etapa_key}',
-                'type': 'point' if es_punto else 'range',
-                'style': f'background-color: {config["color"]}; border-color: {config["color"]}; color: #fff;'
-            })
+            # Si tiene simultaneo_con, usar el porcentaje del primer evento referenciado disponible
+            simultaneo_con = evento.get('simultaneo_con', [])
+            if simultaneo_con:
+                porcentaje_encontrado = None
+                for ref_id in simultaneo_con:
+                    if ref_id in porcentajes_asignados:
+                        porcentaje_encontrado = porcentajes_asignados[ref_id]
+                        break
+                
+                if porcentaje_encontrado:
+                    porcentajes_asignados[evento_id] = {
+                        'inicio': porcentaje_encontrado['inicio'],
+                        'fin': porcentaje_encontrado['fin'],
+                        'etapa': etapa_key
+                    }
+                else:
+                    # Si no se encuentra referencia, asignar normalmente
+                    eventos_sin_asignar = [e for e in eventos if e['id'] not in porcentajes_asignados]
+                    if eventos_sin_asignar:
+                        index = eventos_sin_asignar.index(evento)
+                        rango_etapa = config['porcentajeFin'] - config['porcentajeInicio']
+                        porcentaje_por_evento = rango_etapa / len(eventos_sin_asignar)
+                        porcentaje_inicio = config['porcentajeInicio'] + (index * porcentaje_por_evento)
+                        porcentaje_fin = porcentaje_inicio + porcentaje_por_evento
+                        porcentajes_asignados[evento_id] = {
+                            'inicio': porcentaje_inicio,
+                            'fin': porcentaje_fin,
+                            'etapa': etapa_key
+                        }
+            else:
+                # Evento sin simultaneidad que no se asignó antes, asignarlo ahora
+                eventos_sin_asignar = [e for e in eventos if e['id'] not in porcentajes_asignados]
+                if eventos_sin_asignar:
+                    index = eventos_sin_asignar.index(evento)
+                    rango_etapa = config['porcentajeFin'] - config['porcentajeInicio']
+                    porcentaje_por_evento = rango_etapa / len(eventos_sin_asignar)
+                    porcentaje_inicio = config['porcentajeInicio'] + (index * porcentaje_por_evento)
+                    porcentaje_fin = porcentaje_inicio + porcentaje_por_evento
+                    porcentajes_asignados[evento_id] = {
+                        'inicio': porcentaje_inicio,
+                        'fin': porcentaje_fin,
+                        'etapa': etapa_key
+                    }
+    
+    # Tercera pasada: crear items con los porcentajes asignados
+    for evento in timeline_data:
+        evento_id = evento['id']
+        etapa_key = evento.get('etapa', 'futuro')
+        config = etapas_config.get(etapa_key, etapas_config['futuro'])
+        
+        if evento_id not in porcentajes_asignados:
+            # Fallback: asignar al final de la etapa
+            porcentaje_inicio = config['porcentajeFin'] - 1
+            porcentaje_fin = config['porcentajeFin']
+        else:
+            porcentaje_info = porcentajes_asignados[evento_id]
+            porcentaje_inicio = porcentaje_info['inicio']
+            porcentaje_fin = porcentaje_info['fin']
+        
+        # Convertir porcentaje a fecha (usar escala 0-100 como base de tiempo)
+        fecha_inicio = fecha_base + timedelta(days=porcentaje_inicio)
+        fecha_fin = fecha_base + timedelta(days=porcentaje_fin)
+        
+        # Determinar si es evento puntual o período
+        titulo = evento.get('titulo', '')
+        es_punto = (etapa_key == 'origen' or 
+                   'Explosión' in titulo or 
+                   'Caída' in titulo or 
+                   'Aparición' in titulo)
+        
+        items.append({
+            'id': evento_id,
+            'content': titulo[:30] + '...' if len(titulo) > 30 else titulo,
+            'start': fecha_inicio.isoformat(),
+            'end': None if es_punto else fecha_fin.isoformat(),
+            'group': etapa_key,
+            'title': f"{titulo}\n\n{evento.get('descripcion', '')}\n\nProgreso: {porcentaje_inicio:.1f}% - {porcentaje_fin:.1f}%",
+            'className': f'timeline-event-{etapa_key}',
+            'type': 'point' if es_punto else 'range',
+            'style': f'background-color: {config["color"]}; border-color: {config["color"]}; color: #fff;'
+        })
     
     # Estructura de datos para vis-timeline
     timeline_visual_data = {
@@ -141,3 +230,4 @@ def procesar_timeline():
 
 if __name__ == '__main__':
     procesar_timeline()
+

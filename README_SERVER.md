@@ -86,3 +86,4 @@ Todos los archivos se guardan en el directorio `data/` y se crea un backup autom
 - El servidor crea backups automáticos antes de guardar
 - CORS está habilitado para desarrollo (cambiar en producción)
 - El servidor se recarga automáticamente cuando cambias el código (modo desarrollo)
+
