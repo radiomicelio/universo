@@ -69,3 +69,4 @@ conda run -n radio python -c "import matplotlib; import networkx; print('✓ Tod
 - Los otros scripts de preprocesamiento (`preprocess_references.py`, etc.) funcionan con Python estándar
 - Si prefieres usar pip en lugar de conda, puedes crear un entorno virtual normal
 
+

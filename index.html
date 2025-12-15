@@ -497,6 +497,92 @@
       color: #e74c3c;
     }
 
+    /* Imagen de personaje en modal */
+    .personaje-imagen-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid #444;
+    }
+
+    .personaje-imagen {
+      width: 300px;
+      height: 400px;
+      max-width: calc(100% - 1rem);
+      object-fit: contain;
+      border-radius: 8px;
+      border: 2px solid #444;
+      background: #1a1a1a;
+      padding: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      flex-shrink: 0;
+    }
+
+    /* Cuando hay múltiples imágenes, ajustar tamaño para que quepan bien */
+    .personaje-imagen-container:has(.personaje-imagen:nth-child(2)) .personaje-imagen {
+      width: calc((100% - 2rem) / 2);
+      max-width: 280px;
+      height: 373px;
+    }
+
+    .personaje-imagen-container:has(.personaje-imagen:nth-child(3)) .personaje-imagen {
+      width: calc((100% - 3rem) / 3);
+      max-width: 260px;
+      height: 347px;
+    }
+
+    /* Fallback para navegadores sin soporte :has() */
+    @supports not selector(:has(*)) {
+      .personaje-imagen-container.multiple-images .personaje-imagen {
+        width: calc((100% - 2rem) / 2);
+        max-width: 280px;
+        height: 373px;
+      }
+      
+      .personaje-imagen-container.multiple-images-3 .personaje-imagen {
+        width: calc((100% - 3rem) / 3);
+        max-width: 260px;
+        height: 347px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .personaje-imagen-container {
+        flex-direction: column;
+      }
+
+      .personaje-imagen {
+        width: 250px;
+        height: 333px;
+        max-width: 100%;
+      }
+
+      .personaje-imagen-container:has(.personaje-imagen:nth-child(2)) .personaje-imagen,
+      .personaje-imagen-container:has(.personaje-imagen:nth-child(3)) .personaje-imagen {
+        width: 250px;
+        height: 333px;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .personaje-imagen {
+        width: 200px;
+        height: 267px;
+      }
+
+      .personaje-imagen-container:has(.personaje-imagen:nth-child(2)) .personaje-imagen,
+      .personaje-imagen-container:has(.personaje-imagen:nth-child(3)) .personaje-imagen {
+        width: 200px;
+        height: 267px;
+      }
+    }
+
     .ficha-section.incomplete h3 {
       color: #ff6b6b;
     }
@@ -2934,6 +3020,23 @@
       };
     }
 
+    // Mapeo de IDs de personajes a nombres de archivo de imágenes (puede haber múltiples)
+    function obtenerImagenesPersonaje(id) {
+      const mapeoImagenes = {
+        'vaquero-atomico': ['Vaquero.png', 'Vaquero_2.png', 'Vaquero_3.png'],
+        'sismico': ['Sísmico.png'],
+        'tamen': ['Tamen.png'],
+        'musitoxic': ['Musitoxic.png'],
+        'miguel-mafias': ['Miguel Mafias, el Muso.png'],
+        'jhonny': ['Jhonny.png'],
+        'amethystos': ['Amethystos.png'],
+        'gab': ['Gab.png'],
+        'sirius': ['Sirius.JPG', 'Sirius_2.JPG', 'Sirius_3.png'],
+        'basscolgado': ['Basscolgado.png', 'Basscolgado_2.png']
+      };
+      return mapeoImagenes[id] || [];
+    }
+
     // Ver ficha completa
     function verFicha(id) {
       const personaje = datos.personajes.find(p => p.id === id);
@@ -2944,6 +3047,9 @@
       const modalBody = document.getElementById('modal-body');
 
       modalTitle.textContent = personaje.nombre;
+      
+      // Obtener imágenes del personaje (puede haber múltiples)
+      const imagenesPersonaje = obtenerImagenesPersonaje(personaje.id);
       
       // Calcular completitud
       const { porcentaje, campos, esPrincipal, minCaracteresTexto, minMotivaciones, minHabilidades, minRelaciones } = calcularCompletitud(personaje);
@@ -2972,6 +3078,17 @@
       };
       
       modalBody.innerHTML = `
+        ${imagenesPersonaje.length > 0 ? `
+        <div class="personaje-imagen-container">
+          ${imagenesPersonaje.map((nombreImagen, index) => `
+            <img src="data/imagenes/personajes/${nombreImagen}" 
+                 alt="${personaje.nombre} ${index > 0 ? `(${index + 1})` : ''}" 
+                 class="personaje-imagen"
+                 onerror="this.style.display='none'">
+          `).join('')}
+        </div>
+        ` : ''}
+        
         <div class="completitud-header">
           <div class="completitud-info">
             <span class="completitud-porcentaje ${claseCompletitud}">${porcentaje}%</span>
@@ -3068,6 +3185,19 @@
       `;
 
       modal.classList.add('active');
+      
+      // Agregar clases CSS para múltiples imágenes (fallback para navegadores sin :has())
+      setTimeout(() => {
+        const imagenContainer = modalBody.querySelector('.personaje-imagen-container');
+        if (imagenContainer) {
+          const imagenes = imagenContainer.querySelectorAll('.personaje-imagen');
+          if (imagenes.length === 2) {
+            imagenContainer.classList.add('multiple-images');
+          } else if (imagenes.length >= 3) {
+            imagenContainer.classList.add('multiple-images-3');
+          }
+        }
+      }, 0);
       
       // Resetear scroll del modal al inicio
       const modalContent = modal.querySelector('.modal-content');
