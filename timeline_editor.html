@@ -212,7 +212,7 @@
     <header>
     <h1>🎵 Editor de Timeline - Radio Micelio</h1>
     <div class="controls">
-      <a href="/" style="text-decoration: none;">
+      <a href="index.html" style="text-decoration: none;">
         <button>🏠 Volver al Inicio</button>
       </a>
       <button onclick="cargarTimeline()">🔄 Recargar</button>
@@ -593,7 +593,7 @@
       panel.style.display = 'block';
     }
 
-    // Guardar timeline usando la API
+    // Guardar timeline usando la API (solo funciona con servidor FastAPI)
     async function guardarTimeline() {
       try {
         // Convertir eventos de vuelta a formato timeline.json
@@ -628,29 +628,48 @@
           return eventoActualizado;
         });
 
-        // Guardar usando la API de FastAPI
-        const response = await fetch('/api/timeline/save', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ruta: 'data/timeline.json',
-            datos: timelineActualizado
-          })
-        });
+        // Intentar guardar usando la API de FastAPI (solo funciona con servidor local)
+        try {
+          const response = await fetch('/api/timeline/save', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ruta: 'data/timeline.json',
+              datos: timelineActualizado
+            })
+          });
 
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.detail || 'Error al guardar');
+          if (!response.ok) {
+            throw new Error('Servidor no disponible');
+          }
+
+          const result = await response.json();
+          mostrarStatus(result.message + '. Ejecuta preprocess_timeline.py para regenerar imágenes.', 'success');
+          
+          // Actualizar timeline original para que resetear funcione
+          timelineOriginal = JSON.parse(JSON.stringify(timelineActualizado));
+          timelineData = timelineActualizado;
+        } catch (apiError) {
+          // Si no hay servidor (GitHub Pages), ofrecer descargar el JSON
+          mostrarStatus('⚠️ Modo estático: No se puede guardar en GitHub Pages. Usa "Exportar JSON" para descargar los cambios.', 'error');
+          
+          // Auto-exportar el JSON actualizado
+          const jsonStr = JSON.stringify(timelineActualizado, null, 2);
+          const blob = new Blob([jsonStr], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'timeline_actualizado.json';
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          
+          mostrarStatus('✅ JSON descargado. Reemplaza data/timeline.json localmente y ejecuta preprocess_timeline.py', 'success');
         }
-
-        const result = await response.json();
-        mostrarStatus(result.message + '. Ejecuta preprocess_timeline.py para regenerar imágenes.', 'success');
-        
-        // Actualizar timeline original para que resetear funcione
-        timelineOriginal = JSON.parse(JSON.stringify(timelineActualizado));
-        timelineData = timelineActualizado;
       } catch (error) {
         console.error('Error:', error);
         mostrarStatus('Error al guardar: ' + error.message, 'error');

@@ -124,6 +124,22 @@ Ver [PREPROCESSING.md](PREPROCESSING.md) para más detalles.
 
 3. **Accede a tu sitio**
    - Tu sitio estará disponible en: `https://tu-usuario.github.io/tu-repo/`
+   - Página principal: `https://tu-usuario.github.io/tu-repo/index.html`
+   - Editor de Timeline: `https://tu-usuario.github.io/tu-repo/timeline_editor.html`
+
+### Múltiples Páginas en GitHub Pages
+
+GitHub Pages soporta múltiples páginas HTML en el mismo repositorio. Puedes acceder a ellas usando rutas relativas:
+
+- **Página principal**: `index.html` (se accede automáticamente en la raíz)
+- **Editor de Timeline**: `timeline_editor.html`
+
+**Nota sobre el Editor de Timeline en GitHub Pages:**
+- El editor funciona en modo **visualización y edición local**
+- Puedes arrastrar eventos y ver cómo se comporta el gráfico dinámico
+- **No se puede guardar directamente** en GitHub Pages (requiere servidor FastAPI)
+- Usa el botón "Exportar JSON" para descargar los cambios y aplicarlos localmente
+- Para guardar cambios, ejecuta el servidor localmente: `uvicorn server:app --host 0.0.0.0 --port 8000`
 
 ## Instalación y Configuración
 
